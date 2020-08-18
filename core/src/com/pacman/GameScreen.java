@@ -112,15 +112,45 @@ public class GameScreen extends BasicScreen {
         texturePacman[3] = game.getAssetManager().get("datos/pac_man_muerte0.png");
         texturePacman[4] = game.getAssetManager().get("datos/pac_man_muerte1.png");
 
-        Texture [] textureGhost = new Texture[8];
-        textureGhost[0] = game.getAssetManager().get("datos/red ghost/red_ghost_derecha_0.png");
-        textureGhost[1] = game.getAssetManager().get("datos/red ghost/red_ghost_derecha_1.png");
-        textureGhost[2] = game.getAssetManager().get("datos/red ghost/red_ghost_abajo_0.png");
-        textureGhost[3] = game.getAssetManager().get("datos/red ghost/red_ghost_abajo_1.png");
-        textureGhost[4] = game.getAssetManager().get("datos/red ghost/red_ghost_izquierda_0.png");
-        textureGhost[5] = game.getAssetManager().get("datos/red ghost/red_ghost_izquierda_1.png");
-        textureGhost[6] = game.getAssetManager().get("datos/red ghost/red_ghost_arriba_0.png");
-        textureGhost[7] = game.getAssetManager().get("datos/red ghost/red_ghost_arriba_1.png");
+        Texture [] textureRedGhost = new Texture[8];
+        textureRedGhost[0] = game.getAssetManager().get("datos/red ghost/red_ghost_derecha_0.png");
+        textureRedGhost[1] = game.getAssetManager().get("datos/red ghost/red_ghost_derecha_1.png");
+        textureRedGhost[2] = game.getAssetManager().get("datos/red ghost/red_ghost_abajo_0.png");
+        textureRedGhost[3] = game.getAssetManager().get("datos/red ghost/red_ghost_abajo_1.png");
+        textureRedGhost[4] = game.getAssetManager().get("datos/red ghost/red_ghost_izquierda_0.png");
+        textureRedGhost[5] = game.getAssetManager().get("datos/red ghost/red_ghost_izquierda_1.png");
+        textureRedGhost[6] = game.getAssetManager().get("datos/red ghost/red_ghost_arriba_0.png");
+        textureRedGhost[7] = game.getAssetManager().get("datos/red ghost/red_ghost_arriba_1.png");
+
+        Texture [] textureBlueGhost = new Texture[8];
+        textureBlueGhost[0] = game.getAssetManager().get("datos/blue ghost/blue_ghost_derecha_0.png");
+        textureBlueGhost[1] = game.getAssetManager().get("datos/blue ghost/blue_ghost_derecha_1.png");
+        textureBlueGhost[2] = game.getAssetManager().get("datos/blue ghost/blue_ghost_abajo_0.png");
+        textureBlueGhost[3] = game.getAssetManager().get("datos/blue ghost/blue_ghost_abajo_1.png");
+        textureBlueGhost[4] = game.getAssetManager().get("datos/blue ghost/blue_ghost_izquierda_0.png");
+        textureBlueGhost[5] = game.getAssetManager().get("datos/blue ghost/blue_ghost_izquierda_1.png");
+        textureBlueGhost[6] = game.getAssetManager().get("datos/blue ghost/blue_ghost_arriba_0.png");
+        textureBlueGhost[7] = game.getAssetManager().get("datos/blue ghost/blue_ghost_arriba_1.png");
+
+        Texture [] textureOrangeGhost = new Texture[8];
+        textureOrangeGhost[0] = game.getAssetManager().get("datos/orange ghost/orange_ghost_derecha_0.png");
+        textureOrangeGhost[1] = game.getAssetManager().get("datos/orange ghost/orange_ghost_derecha_1.png");
+        textureOrangeGhost[2] = game.getAssetManager().get("datos/orange ghost/orange_ghost_abajo_0.png");
+        textureOrangeGhost[3] = game.getAssetManager().get("datos/orange ghost/orange_ghost_abajo_1.png");
+        textureOrangeGhost[4] = game.getAssetManager().get("datos/orange ghost/orange_ghost_izquierda_0.png");
+        textureOrangeGhost[5] = game.getAssetManager().get("datos/orange ghost/orange_ghost_izquierda_1.png");
+        textureOrangeGhost[6] = game.getAssetManager().get("datos/orange ghost/orange_ghost_arriba_0.png");
+        textureOrangeGhost[7] = game.getAssetManager().get("datos/orange ghost/orange_ghost_arriba_1.png");
+
+        Texture [] texturePinkGhost = new Texture[8];
+        texturePinkGhost[0] = game.getAssetManager().get("datos/pink ghost/pink_ghost_derecha_0.png");
+        texturePinkGhost[1] = game.getAssetManager().get("datos/pink ghost/pink_ghost_derecha_1.png");
+        texturePinkGhost[2] = game.getAssetManager().get("datos/pink ghost/pink_ghost_abajo_0.png");
+        texturePinkGhost[3] = game.getAssetManager().get("datos/pink ghost/pink_ghost_abajo_1.png");
+        texturePinkGhost[4] = game.getAssetManager().get("datos/pink ghost/pink_ghost_izquierda_0.png");
+        texturePinkGhost[5] = game.getAssetManager().get("datos/pink ghost/pink_ghost_izquierda_1.png");
+        texturePinkGhost[6] = game.getAssetManager().get("datos/pink ghost/pink_ghost_arriba_0.png");
+        texturePinkGhost[7] = game.getAssetManager().get("datos/pink ghost/pink_ghost_arriba_1.png");
 
 
 
@@ -131,18 +161,16 @@ public class GameScreen extends BasicScreen {
 
         // creo el actor en la pantalla principal
 
-      /*  fantasmaAzul = new Ghost(this.world, textureGhost, new Vector2(6.3f,3.2f),
+        fantasmaAzul = new Ghost(this.world, textureBlueGhost, new Vector2(6.3f,3.2f),
                 (TiledMapTileLayer)map.getLayers().get("Terreno"),1);
-*/
-/*
-        fantasmaRojo = new Ghost(this.world, textureGhost, new Vector2(6.6f,3.2f),
-                                (TiledMapTileLayer)map.getLayers().get("Terreno"), 2);
-*/
 
- /*       fantasmaRosa = new Ghost(this.world, textureGhost, new Vector2(7.6f,3.2f),
+        fantasmaRojo = new Ghost(this.world, textureRedGhost, new Vector2(6.6f,3.2f),
+                                (TiledMapTileLayer)map.getLayers().get("Terreno"), 2);
+
+        fantasmaRosa = new Ghost(this.world, texturePinkGhost, new Vector2(7.6f,3.2f),
                 (TiledMapTileLayer)map.getLayers().get("Terreno"),3);
-*/
-        fantasmaNaranja = new Ghost(this.world, textureGhost, new Vector2(8.2f,3.2f),
+
+        fantasmaNaranja = new Ghost(this.world, textureOrangeGhost, new Vector2(8.2f,3.2f),
                 (TiledMapTileLayer)map.getLayers().get("Terreno"),4);
 
 
@@ -158,9 +186,9 @@ public class GameScreen extends BasicScreen {
 
         //Agrego los actores al escenario
         stage.addActor(pacman);
-/*        stage.addActor(fantasmaRojo);*/
-    //            stage.addActor(fantasmaRosa);
-  //      stage.addActor(fantasmaAzul);
+        stage.addActor(fantasmaRojo);
+        stage.addActor(fantasmaRosa);
+        stage.addActor(fantasmaAzul);
         stage.addActor(fantasmaNaranja);
 
         stage.addActor(botonIzquierda);
@@ -174,9 +202,9 @@ public class GameScreen extends BasicScreen {
     public void hide() {
         // destruye el body de pacman
         pacman.detach();
-/*        fantasmaRojo.detach();*/
-        //        fantasmaRosa.detach();
-       // fantasmaAzul.detach();
+        fantasmaRojo.detach();
+        fantasmaRosa.detach();
+        fantasmaAzul.detach();
         fantasmaNaranja.detach();
 
         botonIzquierdo.detach();
@@ -186,10 +214,10 @@ public class GameScreen extends BasicScreen {
 
         //remueve el actor del stage;
         pacman.remove();
-        //fantasmaRosa.remove();
-/*        fantasmaRojo.remove();*/
-//        fantasmaAzul.detach();
-          fantasmaNaranja.remove();
+        fantasmaRosa.remove();
+        fantasmaRojo.remove();
+        fantasmaAzul.detach();
+        fantasmaNaranja.remove();
 
         botonIzquierdo.remove();
         botonArriba.remove();

@@ -26,16 +26,21 @@ public class MainGame extends Game {
 		this.manager = new AssetManager();
 
 		// cargamos los recursos
-//		manager.load("datos/pacman32x32.png",Texture.class);
+
+		// Textura de pacman
 		manager.load("datos/pac_man_0.png",Texture.class);
 		manager.load("datos/pac_man_1.png",Texture.class);
 		manager.load("datos/pac_man_2.png",Texture.class);
 		manager.load("datos/pac_man_muerte0.png",Texture.class);
 		manager.load("datos/pac_man_muerte1.png",Texture.class);
+
+		// Texturas de los controles
 		manager.load("datos/flechaArribaBlanca.png",Texture.class);
 		manager.load("datos/flechaIzquierdaBlanca.png",Texture.class);
 		manager.load("datos/flechaDerechaBlanca.png",Texture.class);
 		manager.load("datos/flechaAbajoBlanca.png",Texture.class);
+
+		// textura de los fantasmas
 		manager.load("datos/red ghost/red_ghost_derecha_0.png",Texture.class);
 		manager.load("datos/red ghost/red_ghost_derecha_1.png",Texture.class);
 		manager.load("datos/red ghost/red_ghost_abajo_0.png",Texture.class);
@@ -44,6 +49,33 @@ public class MainGame extends Game {
 		manager.load("datos/red ghost/red_ghost_izquierda_1.png",Texture.class);
 		manager.load("datos/red ghost/red_ghost_arriba_0.png",Texture.class);
 		manager.load("datos/red ghost/red_ghost_arriba_1.png",Texture.class);
+
+		manager.load("datos/blue ghost/blue_ghost_derecha_0.png",Texture.class);
+		manager.load("datos/blue ghost/blue_ghost_derecha_1.png",Texture.class);
+		manager.load("datos/blue ghost/blue_ghost_abajo_0.png",Texture.class);
+		manager.load("datos/blue ghost/blue_ghost_abajo_1.png",Texture.class);
+		manager.load("datos/blue ghost/blue_ghost_izquierda_0.png",Texture.class);
+		manager.load("datos/blue ghost/blue_ghost_izquierda_1.png",Texture.class);
+		manager.load("datos/blue ghost/blue_ghost_arriba_0.png",Texture.class);
+		manager.load("datos/blue ghost/blue_ghost_arriba_1.png",Texture.class);
+
+		manager.load("datos/pink ghost/pink_ghost_derecha_0.png",Texture.class);
+		manager.load("datos/pink ghost/pink_ghost_derecha_1.png",Texture.class);
+		manager.load("datos/pink ghost/pink_ghost_abajo_0.png",Texture.class);
+		manager.load("datos/pink ghost/pink_ghost_abajo_1.png",Texture.class);
+		manager.load("datos/pink ghost/pink_ghost_izquierda_0.png",Texture.class);
+		manager.load("datos/pink ghost/pink_ghost_izquierda_1.png",Texture.class);
+		manager.load("datos/pink ghost/pink_ghost_arriba_0.png",Texture.class);
+		manager.load("datos/pink ghost/pink_ghost_arriba_1.png",Texture.class);
+
+		manager.load("datos/orange ghost/orange_ghost_derecha_0.png",Texture.class);
+		manager.load("datos/orange ghost/orange_ghost_derecha_1.png",Texture.class);
+		manager.load("datos/orange ghost/orange_ghost_abajo_0.png",Texture.class);
+		manager.load("datos/orange ghost/orange_ghost_abajo_1.png",Texture.class);
+		manager.load("datos/orange ghost/orange_ghost_izquierda_0.png",Texture.class);
+		manager.load("datos/orange ghost/orange_ghost_izquierda_1.png",Texture.class);
+		manager.load("datos/orange ghost/orange_ghost_arriba_0.png",Texture.class);
+		manager.load("datos/orange ghost/orange_ghost_arriba_1.png",Texture.class);
 
 		// cargamos los recursos
 		manager.finishLoading();

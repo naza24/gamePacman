@@ -218,18 +218,7 @@ public class Recorrido {
         if(contador<this.direccionRecorrido.length-1){
             this.contador++;
         }else{
-            if(this.numeroRecorrido==1){
-                this.contador=1;
-            }
-            if(this.numeroRecorrido==2){
-                this.contador=1;
-            }
-            if(this.numeroRecorrido==3){
-                this.contador=1;
-            }
-            if(this.numeroRecorrido==4){
-                this.contador=1;
-            }
+            this.contador=1;
         }
     }
 
