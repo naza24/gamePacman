@@ -46,14 +46,14 @@ public class Ghost extends Actor {
     private
     TiledMapTileLayer collisionLayer;
 
-    public Ghost(World myWorld, Texture tex[], Vector2 position, TiledMapTileLayer collision ){
+    public Ghost(World myWorld, Texture tex[], Vector2 position, TiledMapTileLayer collision, int numRecorrido ){
 
         this.world= myWorld;
         this.textureGhostMove = new Texture[]{tex[0] ,tex[1] ,tex[2] , tex[3] ,tex[4] ,tex[5] ,tex[6] ,tex[7]};
         // bloques de colision
         this.collisionLayer= collision;
 
-       this.recorrido = new Recorrido(4,0);
+       this.recorrido = new Recorrido(numRecorrido,0);
 
         // creo el bodyDef que internamente posee el Body
         BodyDef bodyDefGhost = new BodyDef();
@@ -124,7 +124,6 @@ public class Ghost extends Actor {
             if(this.bodyGhost.getLinearVelocity().y < 0){
                 retorno = (Texture) this.animacionMovimientoAbajo.getKeyFrame(time,true);
             }
-
 
             // le doy origen al actor en el centro de masa
             this.setOrigin(getWidth()/2, getHeight()/2);

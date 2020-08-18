@@ -35,20 +35,19 @@ public class GameScreen extends BasicScreen {
 
     // la camara ortogonal ayudara a dibujar el mapa
     private OrthogonalTiledMapRenderer tmr;
-    private OrthographicCamera cam;
 
     // actores
     private Pacman pacman;
     private Ghost fantasmaRojo;
+    private Ghost fantasmaRosa;
+    private Ghost fantasmaAzul;
+    private Ghost fantasmaNaranja;
 
     // botones
     private ControllerButton botonIzquierdo;
     private ControllerButton botonArriba;
     private ControllerButton botonDerecha;
     private ControllerButton botonAbajo;
-
-    // variable que referencia la instancia de game
-    //private MainGame game;
 
     public GameScreen(MainGame game) {
         super(game);
@@ -63,16 +62,6 @@ public class GameScreen extends BasicScreen {
         // Defino el mundo y le paso los paramtros para la gravedad
         world = new World(new Vector2(0,0),true);
 
-
-      /*  this.stage.addListener(new InputListener(){
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                Gdx.app.log("Ejemplo", "se toco la pantalla en  (" + x + ", " + y + ")");
-
-                return true;
-            }
-
-        });*/
     }
 
     // Cuando se muestra la pantalla se carga lo que aparece dentro de este metodo
@@ -93,7 +82,9 @@ public class GameScreen extends BasicScreen {
             }
             @Override
             public void beginContact(Contact contact) {
-                if(colisionaron(contact, "pacman", "ghost")){
+                /* si colisionan dos fantasmas, desactivo la colision en uno al iniciar el
+                 contacto y lo vuelvo a activar al finalizar el choque */
+                if(colisionaron(contact, "ghost", "ghost")){
                   contact.getFixtureA().setSensor(true);
                 }
             }
@@ -114,7 +105,6 @@ public class GameScreen extends BasicScreen {
             }
         });
         // recupero las texturas
-        //Texture texturePacman = game.getAssetManager().get("datos/pacman32x32.png");
         Texture [] texturePacman = new Texture[5];
         texturePacman[0] = game.getAssetManager().get("datos/pac_man_0.png");
         texturePacman[1] = game.getAssetManager().get("datos/pac_man_1.png");
@@ -141,9 +131,21 @@ public class GameScreen extends BasicScreen {
 
         // creo el actor en la pantalla principal
 
+      /*  fantasmaAzul = new Ghost(this.world, textureGhost, new Vector2(6.3f,3.2f),
+                (TiledMapTileLayer)map.getLayers().get("Terreno"),1);
+*/
+/*
+        fantasmaRojo = new Ghost(this.world, textureGhost, new Vector2(6.6f,3.2f),
+                                (TiledMapTileLayer)map.getLayers().get("Terreno"), 2);
+*/
 
-        fantasmaRojo = new Ghost(this.world, textureGhost, new Vector2(7.3f,3.2f),
-                                (TiledMapTileLayer)map.getLayers().get("Terreno"));
+ /*       fantasmaRosa = new Ghost(this.world, textureGhost, new Vector2(7.6f,3.2f),
+                (TiledMapTileLayer)map.getLayers().get("Terreno"),3);
+*/
+        fantasmaNaranja = new Ghost(this.world, textureGhost, new Vector2(8.2f,3.2f),
+                (TiledMapTileLayer)map.getLayers().get("Terreno"),4);
+
+
 
         Pacman pacman = new Pacman(this.world,texturePacman,new Vector2(7.3f,2.1f),
                                   (TiledMapTileLayer)map.getLayers().get(1),// cargo terreno primero
@@ -156,7 +158,10 @@ public class GameScreen extends BasicScreen {
 
         //Agrego los actores al escenario
         stage.addActor(pacman);
-        stage.addActor(fantasmaRojo);
+/*        stage.addActor(fantasmaRojo);*/
+    //            stage.addActor(fantasmaRosa);
+  //      stage.addActor(fantasmaAzul);
+        stage.addActor(fantasmaNaranja);
 
         stage.addActor(botonIzquierda);
         stage.addActor(botonArriba);
@@ -169,15 +174,23 @@ public class GameScreen extends BasicScreen {
     public void hide() {
         // destruye el body de pacman
         pacman.detach();
+/*        fantasmaRojo.detach();*/
+        //        fantasmaRosa.detach();
+       // fantasmaAzul.detach();
+        fantasmaNaranja.detach();
+
         botonIzquierdo.detach();
         botonArriba.detach();
         botonDerecha.detach();
         botonAbajo.detach();
-        fantasmaRojo.detach();
 
         //remueve el actor del stage;
         pacman.remove();
-        fantasmaRojo.remove();
+        //fantasmaRosa.remove();
+/*        fantasmaRojo.remove();*/
+//        fantasmaAzul.detach();
+          fantasmaNaranja.remove();
+
         botonIzquierdo.remove();
         botonArriba.remove();
         botonDerecha.remove();
