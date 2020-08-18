@@ -122,9 +122,16 @@ public class GameScreen extends BasicScreen {
         texturePacman[3] = game.getAssetManager().get("datos/pac_man_muerte0.png");
         texturePacman[4] = game.getAssetManager().get("datos/pac_man_muerte1.png");
 
-        Texture [] textureGhost = new Texture[2];
+        Texture [] textureGhost = new Texture[8];
         textureGhost[0] = game.getAssetManager().get("datos/red ghost/red_ghost_derecha_0.png");
         textureGhost[1] = game.getAssetManager().get("datos/red ghost/red_ghost_derecha_1.png");
+        textureGhost[2] = game.getAssetManager().get("datos/red ghost/red_ghost_abajo_0.png");
+        textureGhost[3] = game.getAssetManager().get("datos/red ghost/red_ghost_abajo_1.png");
+        textureGhost[4] = game.getAssetManager().get("datos/red ghost/red_ghost_izquierda_0.png");
+        textureGhost[5] = game.getAssetManager().get("datos/red ghost/red_ghost_izquierda_1.png");
+        textureGhost[6] = game.getAssetManager().get("datos/red ghost/red_ghost_arriba_0.png");
+        textureGhost[7] = game.getAssetManager().get("datos/red ghost/red_ghost_arriba_1.png");
+
 
 
         Texture textBtnIzquierda = game.getAssetManager().get("datos/flechaIzquierdaBlanca.png");

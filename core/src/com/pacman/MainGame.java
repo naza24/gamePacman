@@ -38,6 +38,12 @@ public class MainGame extends Game {
 		manager.load("datos/flechaAbajoBlanca.png",Texture.class);
 		manager.load("datos/red ghost/red_ghost_derecha_0.png",Texture.class);
 		manager.load("datos/red ghost/red_ghost_derecha_1.png",Texture.class);
+		manager.load("datos/red ghost/red_ghost_abajo_0.png",Texture.class);
+		manager.load("datos/red ghost/red_ghost_abajo_1.png",Texture.class);
+		manager.load("datos/red ghost/red_ghost_izquierda_0.png",Texture.class);
+		manager.load("datos/red ghost/red_ghost_izquierda_1.png",Texture.class);
+		manager.load("datos/red ghost/red_ghost_arriba_0.png",Texture.class);
+		manager.load("datos/red ghost/red_ghost_arriba_1.png",Texture.class);
 
 		// cargamos los recursos
 		manager.finishLoading();

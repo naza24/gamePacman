@@ -21,15 +21,19 @@ import static com.pacman.Constants.PIXELS_IN_METER;
 public class Ghost extends Actor {
     private int direccion;
     // Animacion de movimiento
-    private Animation animacionMovimiento;
+    private Animation animacionMovimientoDerecha;
+    private Animation animacionMovimientoAbajo;
+    private Animation animacionMovimientoIzquierda;
+    private Animation animacionMovimientoArriba;
 
     // arreglo que guarda el recorrido de el fantasma
 //    private int [] recorrido;
 
     private Recorrido recorrido;
 
-    // Necesita conocer su textura
+    // Necesita conocer sus textura, tiene un arreglo por cada direccion
     private Texture[] textureGhostMove;
+
     // tiempo para rotar las animacione
     private float time;
 
@@ -42,26 +46,14 @@ public class Ghost extends Actor {
     private
     TiledMapTileLayer collisionLayer;
 
-    // contador que dice la altura del recorrido , hay que crear una clase recorrido
-    int contador;
-
     public Ghost(World myWorld, Texture tex[], Vector2 position, TiledMapTileLayer collision ){
 
         this.world= myWorld;
-        this.textureGhostMove = new Texture[]{tex[0], tex[1]};
+        this.textureGhostMove = new Texture[]{tex[0] ,tex[1] ,tex[2] , tex[3] ,tex[4] ,tex[5] ,tex[6] ,tex[7]};
         // bloques de colision
         this.collisionLayer= collision;
 
-        // inicializo el contador y el recorrido
-       /* this.recorrido = new int[6];
-        this.recorrido[0] = 1;
-        this.recorrido[1] = 0;
-        this.recorrido[2] = 1;
-        this.recorrido[3] = 2;
-        this.recorrido[4] = -1;
-*/
        this.recorrido = new Recorrido(4,0);
-       this.contador=0;
 
         // creo el bodyDef que internamente posee el Body
         BodyDef bodyDefGhost = new BodyDef();
@@ -82,12 +74,15 @@ public class Ghost extends Actor {
         // le asigno un identificador para las colisiones
         this.fixtureGhost.setUserData("ghost");
 
-        this.animacionMovimiento= new Animation(0.3f,this.textureGhostMove);
+        // objetos que luego se animaran, se le pasa por parametro la textura que ira rotando segun la direccion que tnga el fantasma
+        this.animacionMovimientoDerecha= new Animation(0.3f,this.textureGhostMove[0], this.textureGhostMove[1]);
+        this.animacionMovimientoAbajo= new Animation(0.3f,this.textureGhostMove[2], this.textureGhostMove[3]);
+        this.animacionMovimientoIzquierda= new Animation(0.3f,this.textureGhostMove[4], this.textureGhostMove[5]);
+        this.animacionMovimientoArriba= new Animation(0.3f,this.textureGhostMove[6], this.textureGhostMove[7]);
 
         this.time= 0f;
 
         // declaro el tamaño del actor medio metro
-        // setSize(PIXELS_IN_METER*0.355f ,PIXELS_IN_METER*0.355f);
         setSize(PIXELS_IN_METER*0.45f ,PIXELS_IN_METER*0.45f);
 
         shapeGhost.dispose();
@@ -108,17 +103,31 @@ public class Ghost extends Actor {
     }
 
     private Texture animarGhost(float time) {
-        Texture retorno;
+        Texture retorno = this.textureGhostMove[0];
 
         if(this.bodyGhost.getLinearVelocity().x != 0 || this.bodyGhost.getLinearVelocity().y!=0){
             // recupero el tiempo para saber q frame mostrar
             this.time= time + Gdx.graphics.getDeltaTime();
-            retorno = (Texture) this.animacionMovimiento.getKeyFrame(time,true);
+
+            if(this.bodyGhost.getLinearVelocity().x > 0){
+                retorno = (Texture) this.animacionMovimientoDerecha.getKeyFrame(time,true);
+            }
+
+            if(this.bodyGhost.getLinearVelocity().x < 0){
+                retorno = (Texture) this.animacionMovimientoIzquierda.getKeyFrame(time,true);
+            }
+
+            if(this.bodyGhost.getLinearVelocity().y>0){
+                retorno = (Texture) this.animacionMovimientoArriba.getKeyFrame(time,true);
+            }
+
+            if(this.bodyGhost.getLinearVelocity().y < 0){
+                retorno = (Texture) this.animacionMovimientoAbajo.getKeyFrame(time,true);
+            }
+
+
             // le doy origen al actor en el centro de masa
             this.setOrigin(getWidth()/2, getHeight()/2);
-
-        }else{
-            retorno = this.textureGhostMove[0];
         }
         return retorno;
     }
@@ -242,25 +251,12 @@ public class Ghost extends Actor {
                 .getProperties().containsKey(key);
 */
      boolean aux =false;
-        System.out.print("posicion X "+ posicionX+"  posicion y "+posicionY);
-            //if((aux && contador<this.recorrido.length) || (posicionX==36 && posicionY==20)){
-        System.out.print(" x: "+posicionX + " y: " + posicionY);
+
         if(this.recorrido.getPunto().x == posicionX && this.recorrido.getPunto().y == posicionY ){
             this.recorrido.next();
             aux=true;
 
         }
-       /* if((posicionX==21 && posicionY==12) || (posicionX==15 && posicionY==11) ||
-                (posicionX==16 && posicionY==21) || (posicionX==33 && posicionY==20) ||
-                (posicionX==32 && posicionY==10) || (posicionX==36 && posicionY==11) ||
-                (posicionX==35 && posicionY==21) || (posicionX==39 && posicionY==20) ||
-                (posicionX==38 && posicionY==6)  || (posicionX==29 && posicionY==7)  ||
-                (posicionX==30 && posicionY==0)  || (posicionX==15 && posicionY==1)
-        ){
-                System.out.println("asdasdasd");
-            this.recorrido.next();
-                  aux=true;
-              }*/
         return aux;
     }
 }
