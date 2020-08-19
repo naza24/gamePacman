@@ -137,7 +137,7 @@ public class Ghost extends Actor {
         if (!isFear()){
 
                 // recupero el tiempo para saber q frame mostrar
-                this.time= time + Gdx.graphics.getDeltaTime();
+//                this.time= time + Gdx.graphics.getDeltaTime();
 
                 if(this.bodyGhost.getLinearVelocity().x > 0){
 
@@ -166,7 +166,6 @@ public class Ghost extends Actor {
                 }
 
                 if(this.bodyGhost.getLinearVelocity().y < 0){
-                    retorno = (Texture) this.animacionMovimientoAbajo.getKeyFrame(time,true);
 
                     if(this.isAlive()){
                         retorno = (Texture) this.animacionMovimientoAbajo.getKeyFrame(time,true);

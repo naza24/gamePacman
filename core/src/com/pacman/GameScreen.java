@@ -105,8 +105,6 @@ public class GameScreen extends BasicScreen {
 // por parametro para el user id y segun corresponda matar al fantasma
                 if(colisionaron(contact,"pacman","rojo")){
                         if(pacman.isBonificado()){
-
-                            fantasmaRojo.setFear(false);
                             fantasmaRojo.setAlive(false);
                         }
                     }
@@ -278,6 +276,9 @@ public class GameScreen extends BasicScreen {
                 fantasmaNaranja.setFear(true);
                 fantasmaRosa.setFear(true);
 
+                if(!fantasmaRojo.isAlive()){
+                    fantasmaRojo.setFear(false);
+                }
 //                System.out.print(this.tiempoFear);
 
              /*disminuyo el tiempo de tiempo fear,el proporcional
