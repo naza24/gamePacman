@@ -77,12 +77,19 @@ public class MainGame extends Game {
 		manager.load("datos/orange ghost/orange_ghost_arriba_0.png",Texture.class);
 		manager.load("datos/orange ghost/orange_ghost_arriba_1.png",Texture.class);
 
+		manager.load("datos/afraid ghost/afraid_ghost_0.png",Texture.class);
+		manager.load("datos/afraid ghost/afraid_ghost_1.png",Texture.class);
+		manager.load("datos/afraid ghost/afraid_ghost_2.png",Texture.class);
+		manager.load("datos/afraid ghost/afraid_ghost_3.png",Texture.class);
+		manager.load("datos/dead ghost/dead_ghost_derecha.png",Texture.class);
+		manager.load("datos/dead ghost/dead_ghost_abajo.png",Texture.class);
+		manager.load("datos/dead ghost/dead_ghost_izquierda.png",Texture.class);
+		manager.load("datos/dead ghost/dead_ghost_arriba.png",Texture.class);
+
+
 		// cargamos los recursos
 		manager.finishLoading();
 
-//		while(!this.getAssetManager().update()){
-
-//		}
 		setScreen(gameScreen);
 
 	}

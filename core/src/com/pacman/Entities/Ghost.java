@@ -13,26 +13,34 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.pacman.Recorrido;
 
 import static com.pacman.Constants.PACMAN_VELOCITY;
 import static com.pacman.Constants.PIXELS_IN_METER;
 
 public class Ghost extends Actor {
-    private int direccion;
+
     // Animacion de movimiento
     private Animation animacionMovimientoDerecha;
     private Animation animacionMovimientoAbajo;
     private Animation animacionMovimientoIzquierda;
     private Animation animacionMovimientoArriba;
+    private Animation animacionMovimientoFear;
+    private Animation animacionMovimientoMuerte;
+
+    //estados, miedo y vivo
+    private boolean fear=false;
+    private boolean alive=true;
 
     // arreglo que guarda el recorrido de el fantasma
-//    private int [] recorrido;
-
     private Recorrido recorrido;
 
     // Necesita conocer sus textura, tiene un arreglo por cada direccion
     private Texture[] textureGhostMove;
+
+    // las texturas de el modo fear y de la muerte del fantasma
+    private Texture[] textureGralGhost;
 
     // tiempo para rotar las animacione
     private float time;
@@ -46,13 +54,24 @@ public class Ghost extends Actor {
     private
     TiledMapTileLayer collisionLayer;
 
-    public Ghost(World myWorld, Texture tex[], Vector2 position, TiledMapTileLayer collision, int numRecorrido ){
+
+    public Ghost(World myWorld, Texture tex[], Texture gral[] ,Vector2 position, TiledMapTileLayer collision, int numRecorrido , String id){
+
+        // inicializo el fantasma sin modo fear y vivo
+        this.fear=false;
+        this.alive=true;
 
         this.world= myWorld;
-        this.textureGhostMove = new Texture[]{tex[0] ,tex[1] ,tex[2] , tex[3] ,tex[4] ,tex[5] ,tex[6] ,tex[7]};
+        //texturas de movimiento del fantasma cuando esta vivo
+        this.textureGhostMove = tex;
+
+        // texturas el modo miedo y de la muerte del fantasma
+        this.textureGralGhost = gral;
+
         // bloques de colision
         this.collisionLayer= collision;
 
+        // objeto que guarda el recorrido de cada fantasma
        this.recorrido = new Recorrido(numRecorrido,0);
 
         // creo el bodyDef que internamente posee el Body
@@ -71,8 +90,9 @@ public class Ghost extends Actor {
         // instancio la figura y le paso el poligono
         this.fixtureGhost = bodyGhost.createFixture(shapeGhost,3);
 
-        // le asigno un identificador para las colisiones
-        this.fixtureGhost.setUserData("ghost");
+        // le asigno un identificador para las colisiones, su color y el tipo osea fantasma
+
+        this.fixtureGhost.setUserData(id);
 
         // objetos que luego se animaran, se le pasa por parametro la textura que ira rotando segun la direccion que tnga el fantasma
         this.animacionMovimientoDerecha= new Animation(0.3f,this.textureGhostMove[0], this.textureGhostMove[1]);
@@ -80,6 +100,11 @@ public class Ghost extends Actor {
         this.animacionMovimientoIzquierda= new Animation(0.3f,this.textureGhostMove[4], this.textureGhostMove[5]);
         this.animacionMovimientoArriba= new Animation(0.3f,this.textureGhostMove[6], this.textureGhostMove[7]);
 
+        this.animacionMovimientoFear = new Animation(0.3f, this.textureGralGhost[0],this.textureGralGhost[1],
+                                                                        this.textureGralGhost[2],this.textureGralGhost[3]);
+
+        this.animacionMovimientoMuerte = new Animation(0.3f, this.textureGralGhost[4],this.textureGralGhost[5],
+                                                                          this.textureGralGhost[6],this.textureGralGhost[7]);
         this.time= 0f;
 
         // declaro el tamaño del actor medio metro
@@ -105,31 +130,62 @@ public class Ghost extends Actor {
     private Texture animarGhost(float time) {
         Texture retorno = this.textureGhostMove[0];
 
-        if(this.bodyGhost.getLinearVelocity().x != 0 || this.bodyGhost.getLinearVelocity().y!=0){
-            // recupero el tiempo para saber q frame mostrar
-            this.time= time + Gdx.graphics.getDeltaTime();
+        // recupero el tiempo para saber q frame mostrar
+        this.time= time + Gdx.graphics.getDeltaTime();
 
-            if(this.bodyGhost.getLinearVelocity().x > 0){
-                retorno = (Texture) this.animacionMovimientoDerecha.getKeyFrame(time,true);
-            }
+        // si esta en moviimiento y no esta en modo fear utiliza la textura q debe
+        if (!isFear()){
 
-            if(this.bodyGhost.getLinearVelocity().x < 0){
-                retorno = (Texture) this.animacionMovimientoIzquierda.getKeyFrame(time,true);
-            }
+                // recupero el tiempo para saber q frame mostrar
+                this.time= time + Gdx.graphics.getDeltaTime();
 
-            if(this.bodyGhost.getLinearVelocity().y>0){
-                retorno = (Texture) this.animacionMovimientoArriba.getKeyFrame(time,true);
-            }
+                if(this.bodyGhost.getLinearVelocity().x > 0){
 
-            if(this.bodyGhost.getLinearVelocity().y < 0){
-                retorno = (Texture) this.animacionMovimientoAbajo.getKeyFrame(time,true);
-            }
+                    if(this.isAlive()){
+                        retorno = (Texture) this.animacionMovimientoDerecha.getKeyFrame(time,true);
+                    }else{
+                        retorno =  this.textureGralGhost[4];
+                    }
+                }
+
+                if(this.bodyGhost.getLinearVelocity().x < 0){
+                    if(this.isAlive()){
+                        retorno = (Texture) this.animacionMovimientoIzquierda.getKeyFrame(time,true);
+                    }else{
+                        retorno =  this.textureGralGhost[6];
+                    }
+                }
+
+                if(this.bodyGhost.getLinearVelocity().y>0){
+
+                    if(this.isAlive()){
+                        retorno = (Texture) this.animacionMovimientoArriba.getKeyFrame(time,true);
+                    }else{
+                        retorno =  this.textureGralGhost[7];
+                    }
+                }
+
+                if(this.bodyGhost.getLinearVelocity().y < 0){
+                    retorno = (Texture) this.animacionMovimientoAbajo.getKeyFrame(time,true);
+
+                    if(this.isAlive()){
+                        retorno = (Texture) this.animacionMovimientoAbajo.getKeyFrame(time,true);
+                    }else{
+                        retorno =  this.textureGralGhost[5];
+                    }
+                }
 
             // le doy origen al actor en el centro de masa
             this.setOrigin(getWidth()/2, getHeight()/2);
+
+        }else{
+            // si esta en modo fear carga las texturas de este modo
+            retorno =(Texture)this.animacionMovimientoFear.getKeyFrame(time,true);
+
         }
         return retorno;
     }
+
 
     @Override
     public void act(float delta) {
@@ -246,16 +302,30 @@ public class Ghost extends Actor {
     }
     private boolean collisionedBlock( int posicionX,int posicionY, String key){
 
-     /*   boolean aux = this.collisionLayer.getCell(posicionX,posicionY).getTile()
-                .getProperties().containsKey(key);
-*/
      boolean aux =false;
-
+        // si las posiciones que ingresaron por parametros son las que estan en el recorrido , colisiono sino itero sobre el recorrido
         if(this.recorrido.getPunto().x == posicionX && this.recorrido.getPunto().y == posicionY ){
             this.recorrido.next();
             aux=true;
 
         }
         return aux;
+    }
+
+
+    public void setFear(boolean fear) {
+        this.fear = fear;
+    }
+
+    public void setAlive(boolean alive) {
+        this.alive = alive;
+    }
+
+    public boolean isFear() {
+        return fear;
+    }
+
+    public boolean isAlive() {
+        return alive;
     }
 }

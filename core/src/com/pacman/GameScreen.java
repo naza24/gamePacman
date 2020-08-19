@@ -14,7 +14,9 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.pacman.Controller.ControllerButton;
 import com.pacman.Entities.Ghost;
@@ -43,6 +45,9 @@ public class GameScreen extends BasicScreen {
     private Ghost fantasmaAzul;
     private Ghost fantasmaNaranja;
 
+    // tiempo en segundos que dura el modo fear
+    private float tiempoFear;
+
     // botones
     private ControllerButton botonIzquierdo;
     private ControllerButton botonArriba;
@@ -51,6 +56,10 @@ public class GameScreen extends BasicScreen {
 
     public GameScreen(MainGame game) {
         super(game);
+
+        // recupero el tiempo
+        tiempoFear = 10f;
+
         map = new TmxMapLoader().load("maps/nivel1.tmx");
         tmr = new OrthogonalTiledMapRenderer(map);
 
@@ -74,9 +83,11 @@ public class GameScreen extends BasicScreen {
         // las coordenadas centrales de dond quiero el pad
         Vector2 controls = new Vector2(12,0.9f);
 
+
         world.setContactListener(new ContactListener() {
 
             private boolean colisionaron (Contact contact, Object a, Object b){
+
                 return  (contact.getFixtureA().getUserData().equals(a) && contact.getFixtureB().getUserData().equals(b)) ||
                         (contact.getFixtureB().getUserData().equals(a)  && contact.getFixtureA().getUserData().equals(b));
             }
@@ -84,9 +95,22 @@ public class GameScreen extends BasicScreen {
             public void beginContact(Contact contact) {
                 /* si colisionan dos fantasmas, desactivo la colision en uno al iniciar el
                  contacto y lo vuelvo a activar al finalizar el choque */
-                if(colisionaron(contact, "ghost", "ghost")){
+                if( colisionaron(contact, "rojo", "azul")   || colisionaron(contact, "rojo", "rosa")   ||
+                    colisionaron(contact, "rojo", "naranja")|| colisionaron(contact, "azul", "rosa")   ||
+                    colisionaron(contact, "azul", "naranja")|| colisionaron(contact, "rosa", "naranja")){
                   contact.getFixtureA().setSensor(true);
                 }
+
+/////////////////////////////////////////////////////////////// mandar el color
+// por parametro para el user id y segun corresponda matar al fantasma
+                if(colisionaron(contact,"pacman","rojo")){
+                        if(pacman.isBonificado()){
+
+                            fantasmaRojo.setFear(false);
+                            fantasmaRojo.setAlive(false);
+                        }
+                    }
+
             }
 
             @Override
@@ -152,30 +176,39 @@ public class GameScreen extends BasicScreen {
         texturePinkGhost[6] = game.getAssetManager().get("datos/pink ghost/pink_ghost_arriba_0.png");
         texturePinkGhost[7] = game.getAssetManager().get("datos/pink ghost/pink_ghost_arriba_1.png");
 
-
-
+        // texturas de los botones
         Texture textBtnIzquierda = game.getAssetManager().get("datos/flechaIzquierdaBlanca.png");
         Texture textBtnArriba = game.getAssetManager().get("datos/flechaArribaBlanca.png");
         Texture textBtnDerecha = game.getAssetManager().get("datos/flechaDerechaBlanca.png");
         Texture textBtnAbajo = game.getAssetManager().get("datos/flechaAbajoBlanca.png");
 
+        // texturas varias sobre el moo fear y cuando un fantasma es comido
+        Texture [] textureGralGhost = new Texture[8];
+        textureGralGhost[0] = game.getAssetManager().get("datos/afraid ghost/afraid_ghost_0.png");
+        textureGralGhost[1] = game.getAssetManager().get("datos/afraid ghost/afraid_ghost_1.png");
+        textureGralGhost[2] = game.getAssetManager().get("datos/afraid ghost/afraid_ghost_2.png");
+        textureGralGhost[3] = game.getAssetManager().get("datos/afraid ghost/afraid_ghost_3.png");
+        textureGralGhost[4] = game.getAssetManager().get("datos/dead ghost/dead_ghost_derecha.png");
+        textureGralGhost[5] = game.getAssetManager().get("datos/dead ghost/dead_ghost_abajo.png");
+        textureGralGhost[6] = game.getAssetManager().get("datos/dead ghost/dead_ghost_izquierda.png");
+        textureGralGhost[7] = game.getAssetManager().get("datos/dead ghost/dead_ghost_arriba.png");
+
         // creo el actor en la pantalla principal
+        fantasmaAzul = new Ghost(this.world, textureBlueGhost, textureGralGhost, new Vector2(6.3f,3.2f),
+                (TiledMapTileLayer)map.getLayers().get("Terreno"),1, "azul");
 
-        fantasmaAzul = new Ghost(this.world, textureBlueGhost, new Vector2(6.3f,3.2f),
-                (TiledMapTileLayer)map.getLayers().get("Terreno"),1);
+        fantasmaRojo = new Ghost(this.world, textureRedGhost, textureGralGhost, new Vector2(6.6f,3.2f),
+                                (TiledMapTileLayer)map.getLayers().get("Terreno"), 2, "rojo");
 
-        fantasmaRojo = new Ghost(this.world, textureRedGhost, new Vector2(6.6f,3.2f),
-                                (TiledMapTileLayer)map.getLayers().get("Terreno"), 2);
+        fantasmaRosa = new Ghost(this.world, texturePinkGhost, textureGralGhost, new Vector2(7.6f,3.2f),
+                (TiledMapTileLayer)map.getLayers().get("Terreno"),3,"rosa");
 
-        fantasmaRosa = new Ghost(this.world, texturePinkGhost, new Vector2(7.6f,3.2f),
-                (TiledMapTileLayer)map.getLayers().get("Terreno"),3);
-
-        fantasmaNaranja = new Ghost(this.world, textureOrangeGhost, new Vector2(8.2f,3.2f),
-                (TiledMapTileLayer)map.getLayers().get("Terreno"),4);
-
+        fantasmaNaranja = new Ghost(this.world, textureOrangeGhost, textureGralGhost ,new Vector2(8.2f,3.2f),
+                (TiledMapTileLayer)map.getLayers().get("Terreno"),4, "naranja");
 
 
-        Pacman pacman = new Pacman(this.world,texturePacman,new Vector2(7.3f,2.1f),
+
+        this.pacman = new Pacman(this.world,texturePacman,new Vector2(7.3f,2.1f),
                                   (TiledMapTileLayer)map.getLayers().get(1),// cargo terreno primero
                                   (TiledMapTileLayer) map.getLayers().get(0));// puntos despues
 
@@ -237,13 +270,41 @@ public class GameScreen extends BasicScreen {
 
         // limpio el buffer de video
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        // se ve que no llega a crear el pacman la primer vuelta por eso controlo si no es nulo
+
+            if(this.pacman.isBonificado() ){
+                fantasmaRojo.setFear(true);
+                fantasmaAzul.setFear(true);
+                fantasmaNaranja.setFear(true);
+                fantasmaRosa.setFear(true);
+
+//                System.out.print(this.tiempoFear);
+
+             /*disminuyo el tiempo de tiempo fear,el proporcional
+              de veces por segundo correspondientes a frame*/
+                this.tiempoFear= this.tiempoFear-delta;
+
+                /* cuando llega a 0 o menos lo desactivo,
+                seteo de nuevo el tiempo y desactivo las animaciones*/
+                if(this.tiempoFear<=0){
+                    this.pacman.setBonificado(false);
+                    tiempoFear = 10f;
+                    fantasmaRojo.setFear(false);
+                    fantasmaAzul.setFear(false);
+                    fantasmaNaranja.setFear(false);
+                    fantasmaRosa.setFear(false);
+                }
+
+            }
 
         tmr.setView((OrthographicCamera) stage.getCamera());
 
         tmr.render();
 
+
         // Actualizo los actores
         stage.act();
+
 
         //Actualizo el mundo, delta indica cuando fue la ultima vez que se ejecuto render
         world.step(delta,6,2);
@@ -252,11 +313,12 @@ public class GameScreen extends BasicScreen {
         /*dibujar todos los actores, Siempre dibujar despues de hacer
         las actualizaciones y cualquier comprobacion que se requiera*/
         stage.draw();
+
     }
 
 
     /*Dispose hace que se vacie la memoria de la tarjeta grafica,
-    sin esto cada vez q se inicia el juego se iria sobrecargando la memoria*/
+    sin esto cada vez q se inicia el juego se iria sobrecargando la memoria */
     @Override
     public void dispose() {
         stage.dispose();

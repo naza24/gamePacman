@@ -25,11 +25,16 @@ public class Pacman extends Actor {
 
     // Necesita conocer su textura
     private Texture [] texturePacmanMove;
+
     // tiempo para rotar las animacione
     private float time;
 
     // ultima direccion
     int ultimaDireccion;
+
+    // si pacman esta vivo y si tiene la bonificacion para comer fantasmas
+    private boolean alive=true;
+    private boolean bonificado=false;
 
     // guarda la ultima rotacion para que no gire de golpe
     float ultimaRotacion;
@@ -52,8 +57,13 @@ public class Pacman extends Actor {
     // Al constructor se le pasa el mundo, la textura y un vector con la posicion inicial
     public Pacman(World myWorld, Texture tex[], Vector2 position,TiledMapTileLayer pointsLayer,  TiledMapTileLayer collision ){
 
+        // inicia pacman con estado normal y vivo
+        this.alive=true;
+        this.bonificado=false;
+
         this.world= myWorld;
         this.texturePacmanMove = new Texture[]{tex[0], tex[1], tex[2]};
+
         // bloques de colision
         this.collisionLayer= collision;
 
@@ -93,7 +103,6 @@ public class Pacman extends Actor {
         this.time= 0f;
 
         // declaro el tamaño del actor medio metro
-       // setSize(PIXELS_IN_METER*0.355f ,PIXELS_IN_METER*0.355f);
         setSize(PIXELS_IN_METER*0.45f ,PIXELS_IN_METER*0.45f);
 
 /*
@@ -121,7 +130,6 @@ public class Pacman extends Actor {
         this.setPosition(this.bodyPacman.getPosition().x * PIXELS_IN_METER, this.bodyPacman.getPosition().y *PIXELS_IN_METER);
         /* Lo dibujo con la Textura, Posicion X e Y inicial que q le asignamos previamente
          (SetPosition)con el alto y el ancho que dimos en el metodo setSize*/
-        //batch.draw(frameActual,getX(),getY(),getWidth(),getHeight());
         TextureRegion textureRegion = new TextureRegion(frameActual);
 
         int direccionActual = direccion(); // 0 -1
@@ -132,7 +140,6 @@ public class Pacman extends Actor {
         if(rotacion!=0f){ //
             this.ultimaRotacion= rotacion; // 270°
         }
-       // System.out.print("rotacion"+rotacion);
         batch.draw(textureRegion,getX(),getY(),getOriginX(),getOriginY(),getWidth(),getHeight(),1,1,ultimaRotacion);
     }
 
@@ -180,7 +187,6 @@ public class Pacman extends Actor {
         int posicionx =0;
         int posiciony=0;
 
-
         if((velocidad.x!=0 || velocidad.y!=0) && !collisionX && !collisionY ){
 
        if(velocidad.x!=0){
@@ -209,11 +215,8 @@ public class Pacman extends Actor {
                }else{
                    posicionx = (int) ((getX()+getWidth()/ 2)/ tileWidth);
                    posiciony = (int)(getY() / tileHeight);
-
                }
-
                collisionY = collisionedBlock(posicionx,posiciony,"blocked");
-
            }
        }
             puntajeAux= collisionedPoint(posicionx,posiciony,"valor");
@@ -221,28 +224,28 @@ public class Pacman extends Actor {
             if(puntajeAux!=0){
                 // aumento el puntaje
                 this.score.addScore(puntajeAux);
+
                 System.out.println("puntaje "+this.score.getScore());
+
                 //puede ser que salte error cuando quiera comprobar si no esta celda tiene algo
                 this.pointsLayer.setCell(posicionx,posiciony,null);
             }
 
-        if(collisionX){
-            setX(oldX);
-            this.bodyPacman.setLinearVelocity(0,0);
+            if(collisionX){
+                setX(oldX);
+                this.bodyPacman.setLinearVelocity(0,0);
+            }
+            if(collisionY){
+                setX(oldY);
+                this.bodyPacman.setLinearVelocity(0,0);
+            }
         }
-
-        if(collisionY){
-            setX(oldY);
-            this.bodyPacman.setLinearVelocity(0,0);
-        }
-
-        }
-
     }
+
     private boolean collisionedBlock( int posicionX,int posicionY, String key){
 
-                return this.collisionLayer.getCell(posicionX,posicionY).getTile().getProperties().containsKey(key);
-
+        return this.collisionLayer.getCell(posicionX,posicionY)
+                                  .getTile().getProperties().containsKey(key);
     }
    // retorna 0 si es nulo o si no tiene valor y de lo contrario retorna el valor de ese punto
     private int collisionedPoint( int posicionX,int posicionY, String key){
@@ -254,10 +257,15 @@ public class Pacman extends Actor {
         if(cell != null){
             // recupero el valor de ese punto
             result = (Integer) cell.getTile().getProperties().get("valor");
-            // si recupero algo es por que ese lboque tenia ese atributo
-            if(result !=null){
+            // si recupero algo es por que ese bloque tenia ese atributo
+            if(cell.getTile().getProperties().containsKey("miedo")){
+                this.setBonificado(true);
+                System.out.print("bonificadoooooooooo");
+            }
+//            if(result !=null){
+
                 return result.intValue();
-             }
+  //           }
         }
         return result.intValue();
     }
@@ -394,8 +402,22 @@ public class Pacman extends Actor {
                 break;
             }
         }
-
         return grados;
     }
 
+    public void setAlive(boolean alive) {
+        this.alive = alive;
+    }
+
+    public void setBonificado(boolean bonificado) {
+        this.bonificado = bonificado;
+    }
+
+    public boolean isAlive() {
+        return alive;
+    }
+
+    public boolean isBonificado() {
+        return bonificado;
+    }
 }

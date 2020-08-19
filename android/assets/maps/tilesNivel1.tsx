@@ -327,6 +327,7 @@
  <tile id="64" terrain="0,0,0,0"/>
  <tile id="65" terrain="3,3,3,3">
   <properties>
+   <property name="miedo" value=""/>
    <property name="valor" type="int" value="10"/>
   </properties>
  </tile>
