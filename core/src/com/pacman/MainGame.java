@@ -16,6 +16,7 @@ public class MainGame extends Game {
 
 	// instancia principal a la pantalla de juego
 	private GameScreen gameScreen;
+	private LoadingScreen loadingScreen;
 
 	// creamos un administrador de recursos para cargar las texturas y demas assets
 
@@ -88,10 +89,20 @@ public class MainGame extends Game {
 
 
 		// cargamos los recursos
-		manager.finishLoading();
+	//	manager.finishLoading();
 
+	//	setScreen(gameScreen);
+
+	//}
+	// creo las pantallas
+	loadingScreen = new LoadingScreen(this);
+	setScreen(loadingScreen);
+
+}
+	public void terminarDeCargar (){
+	//	gameOverScreen = new GameOverScreen(this);
+		gameScreen = new GameScreen(this);
 		setScreen(gameScreen);
-
 	}
 
 	//Metodos observadores

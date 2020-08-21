@@ -14,13 +14,14 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.pacman.Controller.ControllerButton;
 import com.pacman.Entities.Ghost;
 import com.pacman.Entities.Pacman;
+
 
 public class GameScreen extends BasicScreen {
 
@@ -48,6 +49,12 @@ public class GameScreen extends BasicScreen {
     // tiempo en segundos que dura el modo fear
     private float tiempoFear;
 
+    // Label que muestar el puntaje
+    private Label labelScore;
+
+    // Skin que contiene los caracteres a usar
+    private Skin skin;
+
     // botones
     private ControllerButton botonIzquierdo;
     private ControllerButton botonArriba;
@@ -56,7 +63,6 @@ public class GameScreen extends BasicScreen {
 
     public GameScreen(MainGame game) {
         super(game);
-
         // recupero el tiempo
         tiempoFear = 10f;
 
@@ -65,6 +71,17 @@ public class GameScreen extends BasicScreen {
 
         // Defino las dimensiones del escenario como para mobile
         stage = new Stage(new FitViewport(640,360));
+
+        // declaro el skin y el cartel (Label) con dicho skin
+        this.skin= new Skin(Gdx.files.internal("skin/uiskin.json"));
+
+
+        // cargo el cartel de puntaje
+        this.labelScore = new Label("0", skin);
+        labelScore.setWidth(0.5F*Constants.PIXELS_IN_METER);
+        labelScore.setHeight(2F*Constants.PIXELS_IN_METER);
+
+        labelScore.setPosition(stage.getWidth() - labelScore.getWidth() , labelScore.getHeight()/7);
 
         Gdx.input.setInputProcessor(stage);
 
@@ -83,37 +100,37 @@ public class GameScreen extends BasicScreen {
         // las coordenadas centrales de dond quiero el pad
         Vector2 controls = new Vector2(12,0.9f);
 
-
         world.setContactListener(new ContactListener() {
-
-            private boolean colisionaron (Contact contact, Object a, Object b){
-
-                return  (contact.getFixtureA().getUserData().equals(a) && contact.getFixtureB().getUserData().equals(b)) ||
-                        (contact.getFixtureB().getUserData().equals(a)  && contact.getFixtureA().getUserData().equals(b));
-            }
             @Override
             public void beginContact(Contact contact) {
                 /* si colisionan dos fantasmas, desactivo la colision en uno al iniciar el
                  contacto y lo vuelvo a activar al finalizar el choque */
-                if( colisionaron(contact, "rojo", "azul")   || colisionaron(contact, "rojo", "rosa")   ||
-                    colisionaron(contact, "rojo", "naranja")|| colisionaron(contact, "azul", "rosa")   ||
-                    colisionaron(contact, "azul", "naranja")|| colisionaron(contact, "rosa", "naranja")){
-                  contact.getFixtureA().setSensor(true);
+
+                String c1 = (String) contact.getFixtureA().getUserData();
+                String c2 = (String) contact.getFixtureB().getUserData();
+
+                if(collisionGhostGhost(contact,c1, c2)){
+                    contact.getFixtureA().setSensor(true);
                 }
 
-/////////////////////////////////////////////////////////////// mandar el color
-// por parametro para el user id y segun corresponda matar al fantasma
                 if(colisionaron(contact,"pacman","rojo")){
+                    /* Si pacman esta bonificado el fantasma muere ,
+                        caso contrario de q ya este muerto evita la colision*/
+
+                    if(pacman.isBonificado() || !fantasmaRojo.isAlive()){
                         if(pacman.isBonificado()){
                             fantasmaRojo.setAlive(false);
                         }
+                        contact.getFixtureA().setSensor(true);
                     }
-
+                }
             }
 
             @Override
             public void endContact(Contact contact) {
+
                 contact.getFixtureA().setSensor(false);
+//                contact.getFixtureB().setSensor(false);
             }
 
             @Override
@@ -125,7 +142,26 @@ public class GameScreen extends BasicScreen {
             public void postSolve(Contact contact, ContactImpulse impulse) {
 
             }
+
+            private boolean colisionaron (Contact contact, Object a, Object b){
+
+                return  (contact.getFixtureA().getUserData().equals(a) && contact.getFixtureB().getUserData().equals(b)) ||
+                        (contact.getFixtureB().getUserData().equals(a)  && contact.getFixtureA().getUserData().equals(b));
+            }
+
+            private boolean collisionGhostGhost(Contact contact, String ghost1, String ghost2){
+                boolean retorno = false;
+
+                if( colisionaron(contact, "rojo", "azul")   || colisionaron(contact, "rojo", "rosa")   ||
+                        colisionaron(contact, "rojo", "naranja")|| colisionaron(contact, "azul", "rosa")   ||
+                        colisionaron(contact, "azul", "naranja")|| colisionaron(contact, "rosa", "naranja")){
+                    retorno = true;
+                }
+                return retorno;
+            }
+
         });
+
         // recupero las texturas
         Texture [] texturePacman = new Texture[5];
         texturePacman[0] = game.getAssetManager().get("datos/pac_man_0.png");
@@ -222,6 +258,8 @@ public class GameScreen extends BasicScreen {
         stage.addActor(fantasmaAzul);
         stage.addActor(fantasmaNaranja);
 
+        stage.addActor(labelScore);
+
         stage.addActor(botonIzquierda);
         stage.addActor(botonArriba);
         stage.addActor(botonDerecha);
@@ -265,7 +303,6 @@ public class GameScreen extends BasicScreen {
     public void render(float delta) {
         // Le aplico color al fondo
         Gdx.gl.glClearColor(0,0,0,1);
-
         // limpio el buffer de video
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         // se ve que no llega a crear el pacman la primer vuelta por eso controlo si no es nulo
@@ -279,7 +316,6 @@ public class GameScreen extends BasicScreen {
                 if(!fantasmaRojo.isAlive()){
                     fantasmaRojo.setFear(false);
                 }
-//                System.out.print(this.tiempoFear);
 
              /*disminuyo el tiempo de tiempo fear,el proporcional
               de veces por segundo correspondientes a frame*/
@@ -302,6 +338,7 @@ public class GameScreen extends BasicScreen {
 
         tmr.render();
 
+        this.labelScore.setText(this.pacman.getPuntaje().toString());
 
         // Actualizo los actores
         stage.act();
@@ -324,5 +361,8 @@ public class GameScreen extends BasicScreen {
     public void dispose() {
         stage.dispose();
         world.dispose();
+        skin.dispose();
     }
+
+
 }

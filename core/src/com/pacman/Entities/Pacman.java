@@ -420,4 +420,8 @@ public class Pacman extends Actor {
     public boolean isBonificado() {
         return bonificado;
     }
+
+    public Score getPuntaje(){
+        return this.score;
+    }
 }

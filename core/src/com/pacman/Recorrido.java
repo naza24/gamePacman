@@ -32,6 +32,7 @@ public class Recorrido {
 
                 // cuando muera arranca desde el 1
                 this.recorrido[0]= new Vector2(22,9);
+
                 this.recorrido[1]= new Vector2(21,12);
                 this.recorrido[2]= new Vector2(15,11);
                 this.recorrido[3]= new Vector2(16,21);
@@ -236,4 +237,11 @@ public class Recorrido {
         return seg;
     }
 
+    public boolean enInicio(){
+        if(this.contador==1){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

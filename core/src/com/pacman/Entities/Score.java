@@ -24,4 +24,20 @@ public class Score  {
         this.score+=valor;
     }
 
+    public String toString(){
+        // este tosctring me va a retornar un string de el score en forma vertical
+        int cociente = this.score; // cociente de la operacion
+        int resto =1;              // resto de la operacion
+        String retorno="";         // cadena que retorna
+
+        while(cociente!=0){
+            resto = (cociente % 10);
+            retorno = resto +"\n"
+                      +retorno;
+            cociente = cociente/10;
+            System.out.println(retorno);
+        }
+
+        return retorno;
+    }
 }

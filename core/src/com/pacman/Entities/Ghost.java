@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
@@ -27,11 +28,14 @@ public class Ghost extends Actor {
     private Animation animacionMovimientoIzquierda;
     private Animation animacionMovimientoArriba;
     private Animation animacionMovimientoFear;
-    private Animation animacionMovimientoMuerte;
+    private Animation animacionMovimientoMuerteDerecha;
+    private Animation animacionMovimientoMuerteAbajo;
+    private Animation animacionMovimientoMuerteIzquierda;
+    private Animation animacionMovimientoMuerteArriba;
 
     //estados, miedo y vivo
-    private boolean fear=false;
-    private boolean alive=true;
+    private boolean fear/*=false*/;
+    private boolean alive/*=true*/;
 
     // arreglo que guarda el recorrido de el fantasma
     private Recorrido recorrido;
@@ -103,8 +107,11 @@ public class Ghost extends Actor {
         this.animacionMovimientoFear = new Animation(0.3f, this.textureGralGhost[0],this.textureGralGhost[1],
                                                                         this.textureGralGhost[2],this.textureGralGhost[3]);
 
-        this.animacionMovimientoMuerte = new Animation(0.3f, this.textureGralGhost[4],this.textureGralGhost[5],
-                                                                          this.textureGralGhost[6],this.textureGralGhost[7]);
+        this.animacionMovimientoMuerteDerecha = new Animation(0.1f, this.textureGralGhost[4],this.textureGralGhost[4],this.textureGralGhost[4]);
+        this.animacionMovimientoMuerteAbajo = new Animation(0.1f, this.textureGralGhost[5],this.textureGralGhost[5],this.textureGralGhost[5]);
+        this.animacionMovimientoMuerteIzquierda = new Animation(0.1f, this.textureGralGhost[6],this.textureGralGhost[6],this.textureGralGhost[6]);
+        this.animacionMovimientoMuerteArriba = new Animation(0.1f, this.textureGralGhost[7],this.textureGralGhost[7],this.textureGralGhost[7]);
+
         this.time= 0f;
 
         // declaro el tamaño del actor medio metro
@@ -125,6 +132,7 @@ public class Ghost extends Actor {
         TextureRegion textureRegion = new TextureRegion(frameActual);
 
         batch.draw(textureRegion,getX(),getY(),getOriginX(),getOriginY(),getWidth(),getHeight(),1,1,0f);
+
     }
 
     private Texture animarGhost(float time) {
@@ -144,7 +152,8 @@ public class Ghost extends Actor {
                     if(this.isAlive()){
                         retorno = (Texture) this.animacionMovimientoDerecha.getKeyFrame(time,true);
                     }else{
-                        retorno =  this.textureGralGhost[4];
+                        retorno = (Texture) this.animacionMovimientoMuerteDerecha.getKeyFrame(0,true);
+//                        retorno =  this.textureGralGhost[4];
                     }
                 }
 
@@ -152,7 +161,8 @@ public class Ghost extends Actor {
                     if(this.isAlive()){
                         retorno = (Texture) this.animacionMovimientoIzquierda.getKeyFrame(time,true);
                     }else{
-                        retorno =  this.textureGralGhost[6];
+                        retorno = (Texture) this.animacionMovimientoMuerteIzquierda.getKeyFrame(0,true);
+//                        retorno =  this.textureGralGhost[6];
                     }
                 }
 
@@ -161,7 +171,8 @@ public class Ghost extends Actor {
                     if(this.isAlive()){
                         retorno = (Texture) this.animacionMovimientoArriba.getKeyFrame(time,true);
                     }else{
-                        retorno =  this.textureGralGhost[7];
+                        retorno = (Texture) this.animacionMovimientoMuerteArriba.getKeyFrame(0,true);
+                        //retorno =  this.textureGralGhost[7];
                     }
                 }
 
@@ -170,7 +181,8 @@ public class Ghost extends Actor {
                     if(this.isAlive()){
                         retorno = (Texture) this.animacionMovimientoAbajo.getKeyFrame(time,true);
                     }else{
-                        retorno =  this.textureGralGhost[5];
+                        retorno = (Texture) this.animacionMovimientoMuerteAbajo.getKeyFrame(0,true);
+//                        retorno =  this.textureGralGhost[5];
                     }
                 }
 
@@ -215,9 +227,11 @@ public class Ghost extends Actor {
         int posiciony=0;
 
 
-            //this.avanzar(recorrido[contador]);
+        if(this.recorrido.enInicio() && !this.alive){
+            this.alive=true;
+        }
             this.avanzar(this.recorrido.getDireccion());
-        velocidad = bodyGhost.getLinearVelocity();
+            velocidad = bodyGhost.getLinearVelocity();
 
             if((velocidad.x!=0 || velocidad.y!=0) && !collisionX && !collisionY ){
 
