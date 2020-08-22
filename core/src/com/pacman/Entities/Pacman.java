@@ -23,8 +23,12 @@ public class Pacman extends Actor {
     // Animacion de movimiento
     private Animation animacionMovimiento;
 
+    // Animacion de movimiento
+    private Animation animacionMuerte;
+
     // Necesita conocer su textura
-    private Texture [] texturePacmanMove;
+    private Texture [] texturePacman;
+
 
     // tiempo para rotar las animacione
     private float time;
@@ -62,7 +66,9 @@ public class Pacman extends Actor {
         this.bonificado=false;
 
         this.world= myWorld;
-        this.texturePacmanMove = new Texture[]{tex[0], tex[1], tex[2]};
+        this.texturePacman = new Texture[]{tex[0], tex[1], tex[2], tex[3], tex[4], tex[5],
+                                           tex[6], tex[7], tex[8], tex[9], tex[10],tex[11],
+                                           tex[12], tex[13]};
 
         // bloques de colision
         this.collisionLayer= collision;
@@ -98,7 +104,13 @@ public class Pacman extends Actor {
         // le asigno un identificador para las colisiones
         this.fixturePacman.setUserData("pacman");
 
-        this.animacionMovimiento= new Animation(0.3f,this.texturePacmanMove);
+        this.animacionMovimiento= new Animation(0.3f, texturePacman[0], texturePacman[1],
+                                                texturePacman[2]);
+
+        this.animacionMuerte= new Animation(0.3f,texturePacman[3], texturePacman[4],
+                                            texturePacman[5], texturePacman[6], texturePacman[7],
+                                            texturePacman[8], texturePacman[9], texturePacman[10],
+                                            texturePacman[11],texturePacman[12],texturePacman[13]);
 
         this.time= 0f;
 
@@ -127,7 +139,8 @@ public class Pacman extends Actor {
         // seria 320 - 22,5 de ancho y 180 - 22.5 de alto
 //        this.setPosition((getStage().getWidth() /2) - getWidth()/2, (getStage().getHeight() /2) - getHeight()/2);
 
-        this.setPosition(this.bodyPacman.getPosition().x * PIXELS_IN_METER, this.bodyPacman.getPosition().y *PIXELS_IN_METER);
+        this.setPosition(this.bodyPacman.getPosition().x * PIXELS_IN_METER,
+                         this.bodyPacman.getPosition().y *PIXELS_IN_METER);
         /* Lo dibujo con la Textura, Posicion X e Y inicial que q le asignamos previamente
          (SetPosition)con el alto y el ancho que dimos en el metodo setSize*/
         TextureRegion textureRegion = new TextureRegion(frameActual);
@@ -141,21 +154,31 @@ public class Pacman extends Actor {
             this.ultimaRotacion= rotacion; // 270°
         }
         batch.draw(textureRegion,getX(),getY(),getOriginX(),getOriginY(),getWidth(),getHeight(),1,1,ultimaRotacion);
+
     }
 
     private Texture animarPacman(float time) {
         Texture retorno;
 
-        if(this.bodyPacman.getLinearVelocity().x != 0 || this.bodyPacman.getLinearVelocity().y!=0){
+        if(!this.alive){
             // recupero el tiempo para saber q frame mostrar
             this.time= time + Gdx.graphics.getDeltaTime();
-            retorno = (Texture) this.animacionMovimiento.getKeyFrame(time,true);
+            retorno = (Texture) this.animacionMuerte.getKeyFrame(time,false);
             // le doy origen al actor en el centro de masa
             this.setOrigin(getWidth()/2, getHeight()/2);
-
         }else{
-            retorno = this.texturePacmanMove[0];
+            if(this.bodyPacman.getLinearVelocity().x != 0 || this.bodyPacman.getLinearVelocity().y!=0){
+                // recupero el tiempo para saber q frame mostrar
+                this.time= time + Gdx.graphics.getDeltaTime();
+                retorno = (Texture) this.animacionMovimiento.getKeyFrame(time,true);
+                // le doy origen al actor en el centro de masa
+                this.setOrigin(getWidth()/2, getHeight()/2);
+
+            }else{
+                retorno = this.texturePacman[0];
+            }
         }
+
         return retorno;
     }
 
@@ -260,7 +283,6 @@ public class Pacman extends Actor {
             // si recupero algo es por que ese bloque tenia ese atributo
             if(cell.getTile().getProperties().containsKey("miedo")){
                 this.setBonificado(true);
-                System.out.print("bonificadoooooooooo");
             }
 //            if(result !=null){
 
@@ -282,20 +304,23 @@ public class Pacman extends Actor {
     public void avanzar(int direccion){
         // agregar esta sentencia cuando se agrega el escenari o
         // agregar primero todos los puntos para comer y luego agregar el escenario encima de estos puntos
-        switch (direccion){
-            case(0):
-                this.bodyPacman.setLinearVelocity(-PACMAN_VELOCITY,0);
-                break;
-            case(1):
-                this.bodyPacman.setLinearVelocity(0,PACMAN_VELOCITY);
-                break;
-            case(2):
-                this.bodyPacman.setLinearVelocity(PACMAN_VELOCITY,0);
-                break;
-            default:
-                this.bodyPacman.setLinearVelocity(0,-PACMAN_VELOCITY);
-                break;
-        }
+     if(isAlive()){
+
+         switch (direccion){
+             case(0):
+                 this.bodyPacman.setLinearVelocity(-PACMAN_VELOCITY,0);
+                 break;
+             case(1):
+                 this.bodyPacman.setLinearVelocity(0,PACMAN_VELOCITY);
+                 break;
+             case(2):
+                 this.bodyPacman.setLinearVelocity(PACMAN_VELOCITY,0);
+                 break;
+             default:
+                 this.bodyPacman.setLinearVelocity(0,-PACMAN_VELOCITY);
+                 break;
+         }
+     }
     }
     // -2 direccion izquierda, 2 direccion derecha, -1 abajo, 1 arriba, 0 detenido
     private int direccion (){
@@ -423,5 +448,10 @@ public class Pacman extends Actor {
 
     public Score getPuntaje(){
         return this.score;
+    }
+
+    public void dead(){
+        this.alive= false;
+        this.bodyPacman.setLinearVelocity(0,0);
     }
 }

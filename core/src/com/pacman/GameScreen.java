@@ -22,7 +22,6 @@ import com.pacman.Controller.ControllerButton;
 import com.pacman.Entities.Ghost;
 import com.pacman.Entities.Pacman;
 
-
 public class GameScreen extends BasicScreen {
 
     // Escenario para el Scene2d, (Es una libreria para dibujar actores en la pantalla)
@@ -77,7 +76,8 @@ public class GameScreen extends BasicScreen {
 
 
         // cargo el cartel de puntaje
-        this.labelScore = new Label("0", skin);
+        this.labelScore = new Label("", skin);
+
         labelScore.setWidth(0.5F*Constants.PIXELS_IN_METER);
         labelScore.setHeight(2F*Constants.PIXELS_IN_METER);
 
@@ -95,24 +95,26 @@ public class GameScreen extends BasicScreen {
     public void show() {
 
         // para entrar en modo debug
-         stage.setDebugAll(true);
+         //stage.setDebugAll(true);
 
         // las coordenadas centrales de dond quiero el pad
         Vector2 controls = new Vector2(12,0.9f);
 
+
         world.setContactListener(new ContactListener() {
             @Override
             public void beginContact(Contact contact) {
-                /* si colisionan dos fantasmas, desactivo la colision en uno al iniciar el
-                 contacto y lo vuelvo a activar al finalizar el choque */
-
                 String c1 = (String) contact.getFixtureA().getUserData();
                 String c2 = (String) contact.getFixtureB().getUserData();
+
+                /* si colisionan dos fantasmas, desactivo la colision en uno al iniciar el
+                 contacto y lo vuelvo a activar al finalizar el choque */
 
                 if(collisionGhostGhost(contact,c1, c2)){
                     contact.getFixtureA().setSensor(true);
                 }
 
+                //////////////////////// hacer un metodo
                 if(colisionaron(contact,"pacman","rojo")){
                     /* Si pacman esta bonificado el fantasma muere ,
                         caso contrario de q ya este muerto evita la colision*/
@@ -123,6 +125,66 @@ public class GameScreen extends BasicScreen {
                         }
                         contact.getFixtureA().setSensor(true);
                     }
+                    if(!pacman.isBonificado()){
+                        //pacman.setAlive(false);
+                            pacman.dead();
+                        // espera unos segundos y lanza la pantalla game over
+                        contact.getFixtureA().setSensor(true);
+                    }
+                }
+                ////////////////////////// hasta aca
+                if(colisionaron(contact,"pacman","azul")){
+                    /* Si pacman esta bonificado el fantasma muere ,
+                        caso contrario de q ya este muerto evita la colision*/
+
+                    if(pacman.isBonificado() || !fantasmaAzul.isAlive()){
+                        if(pacman.isBonificado()){
+                            fantasmaAzul.setAlive(false);
+                        }
+                        contact.getFixtureA().setSensor(true);
+                    }
+                    if(!pacman.isBonificado()){
+//                        pacman.setAlive(false);
+                        pacman.dead();
+                        // espera unos segundos y lanza la pantalla game over
+                        contact.getFixtureA().setSensor(true);
+                    }
+
+                }
+                if(colisionaron(contact,"pacman","rosa")){
+                    /* Si pacman esta bonificado el fantasma muere ,
+                        caso contrario de q ya este muerto evita la colision*/
+
+                    if(pacman.isBonificado() || !fantasmaRosa.isAlive()){
+                        if(pacman.isBonificado()){
+                            fantasmaRosa.setAlive(false);
+                        }
+                        contact.getFixtureA().setSensor(true);
+                    }
+                    if(!pacman.isBonificado()){
+                        //pacman.setAlive(false);
+                        pacman.dead();
+                        // espera unos segundos y lanza la pantalla game over
+                        contact.getFixtureA().setSensor(true);
+                    }
+
+                }
+                if(colisionaron(contact,"pacman","naranja")){
+                    /* Si pacman esta bonificado el fantasma muere ,
+                        caso contrario de q ya este muerto evita la colision*/
+
+                    if(pacman.isBonificado() || !fantasmaNaranja.isAlive()){
+                        if(pacman.isBonificado()){
+                            fantasmaNaranja.setAlive(false);
+                        }
+                        contact.getFixtureA().setSensor(true);
+                    }
+                    if(!pacman.isBonificado()){
+                        //pacman.setAlive(false);
+                        pacman.dead();
+                        // espera unos segundos y lanza la pantalla game over
+                        contact.getFixtureA().setSensor(true);
+                    }
                 }
             }
 
@@ -130,7 +192,6 @@ public class GameScreen extends BasicScreen {
             public void endContact(Contact contact) {
 
                 contact.getFixtureA().setSensor(false);
-//                contact.getFixtureB().setSensor(false);
             }
 
             @Override
@@ -163,12 +224,25 @@ public class GameScreen extends BasicScreen {
         });
 
         // recupero las texturas
-        Texture [] texturePacman = new Texture[5];
+        Texture [] texturePacman = new Texture[14];
         texturePacman[0] = game.getAssetManager().get("datos/pac_man_0.png");
         texturePacman[1] = game.getAssetManager().get("datos/pac_man_1.png");
         texturePacman[2] = game.getAssetManager().get("datos/pac_man_2.png");
-        texturePacman[3] = game.getAssetManager().get("datos/pac_man_muerte0.png");
-        texturePacman[4] = game.getAssetManager().get("datos/pac_man_muerte1.png");
+        //texturePacman[3] = game.getAssetManager().get("datos/pac_man_muerte0.png"); // sacar esto del repo
+        //texturePacman[4] = game.getAssetManager().get("datos/pac_man_muerte1.png"); // sacar esto del repo
+
+        // texturas de la muerte de pacman
+        texturePacman[3] = game.getAssetManager().get("datos/dead pacman/dead_pacman_0.png");
+        texturePacman[4] = game.getAssetManager().get("datos/dead pacman/dead_pacman_1.png");
+        texturePacman[5] = game.getAssetManager().get("datos/dead pacman/dead_pacman_2.png");
+        texturePacman[6] = game.getAssetManager().get("datos/dead pacman/dead_pacman_3.png");
+        texturePacman[7] = game.getAssetManager().get("datos/dead pacman/dead_pacman_4.png");
+        texturePacman[8] = game.getAssetManager().get("datos/dead pacman/dead_pacman_5.png");
+        texturePacman[9] = game.getAssetManager().get("datos/dead pacman/dead_pacman_6.png");
+        texturePacman[10] = game.getAssetManager().get("datos/dead pacman/dead_pacman_7.png");
+        texturePacman[11] = game.getAssetManager().get("datos/dead pacman/dead_pacman_8.png");
+        texturePacman[12] = game.getAssetManager().get("datos/dead pacman/dead_pacman_9.png");
+        texturePacman[13] = game.getAssetManager().get("datos/dead pacman/dead_pacman_10.png");
 
         Texture [] textureRedGhost = new Texture[8];
         textureRedGhost[0] = game.getAssetManager().get("datos/red ghost/red_ghost_derecha_0.png");
@@ -303,9 +377,9 @@ public class GameScreen extends BasicScreen {
     public void render(float delta) {
         // Le aplico color al fondo
         Gdx.gl.glClearColor(0,0,0,1);
+
         // limpio el buffer de video
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        // se ve que no llega a crear el pacman la primer vuelta por eso controlo si no es nulo
 
             if(this.pacman.isBonificado() ){
                 fantasmaRojo.setFear(true);
@@ -315,6 +389,15 @@ public class GameScreen extends BasicScreen {
 
                 if(!fantasmaRojo.isAlive()){
                     fantasmaRojo.setFear(false);
+                }
+                if(!fantasmaAzul.isAlive()){
+                    fantasmaAzul.setFear(false);
+                }
+                if(!fantasmaNaranja.isAlive()){
+                    fantasmaNaranja.setFear(false);
+                }
+                if(!fantasmaRosa.isAlive()){
+                    fantasmaRosa.setFear(false);
                 }
 
              /*disminuyo el tiempo de tiempo fear,el proporcional
@@ -363,6 +446,4 @@ public class GameScreen extends BasicScreen {
         world.dispose();
         skin.dispose();
     }
-
-
 }

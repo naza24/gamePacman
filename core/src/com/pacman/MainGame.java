@@ -32,8 +32,19 @@ public class MainGame extends Game {
 		manager.load("datos/pac_man_0.png",Texture.class);
 		manager.load("datos/pac_man_1.png",Texture.class);
 		manager.load("datos/pac_man_2.png",Texture.class);
-		manager.load("datos/pac_man_muerte0.png",Texture.class);
-		manager.load("datos/pac_man_muerte1.png",Texture.class);
+//		manager.load("datos/pac_man_muerte0.png",Texture.class);
+//		manager.load("datos/pac_man_muerte1.png",Texture.class);
+		manager.load("datos/dead pacman/dead_pacman_0.png",Texture.class);
+		manager.load("datos/dead pacman/dead_pacman_1.png",Texture.class);
+		manager.load("datos/dead pacman/dead_pacman_2.png",Texture.class);
+		manager.load("datos/dead pacman/dead_pacman_3.png",Texture.class);
+		manager.load("datos/dead pacman/dead_pacman_4.png",Texture.class);
+		manager.load("datos/dead pacman/dead_pacman_5.png",Texture.class);
+		manager.load("datos/dead pacman/dead_pacman_6.png",Texture.class);
+		manager.load("datos/dead pacman/dead_pacman_7.png",Texture.class);
+		manager.load("datos/dead pacman/dead_pacman_8.png",Texture.class);
+		manager.load("datos/dead pacman/dead_pacman_9.png",Texture.class);
+		manager.load("datos/dead pacman/dead_pacman_10.png",Texture.class);
 
 		// Texturas de los controles
 		manager.load("datos/flechaArribaBlanca.png",Texture.class);
