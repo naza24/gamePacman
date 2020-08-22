@@ -126,8 +126,10 @@ public class GameScreen extends BasicScreen {
                         contact.getFixtureA().setSensor(true);
                     }
                     if(!pacman.isBonificado()){
-                        //pacman.setAlive(false);
+                        // para que no sigan colisionando
+                        if(pacman.isAlive()){
                             pacman.dead();
+                        }
                         // espera unos segundos y lanza la pantalla game over
                         contact.getFixtureA().setSensor(true);
                     }
@@ -143,9 +145,10 @@ public class GameScreen extends BasicScreen {
                         }
                         contact.getFixtureA().setSensor(true);
                     }
-                    if(!pacman.isBonificado()){
-//                        pacman.setAlive(false);
-                        pacman.dead();
+                    if(pacman.isBonificado()){
+                        if(!pacman.isAlive()){
+                            pacman.dead();
+                        }
                         // espera unos segundos y lanza la pantalla game over
                         contact.getFixtureA().setSensor(true);
                     }
@@ -162,8 +165,9 @@ public class GameScreen extends BasicScreen {
                         contact.getFixtureA().setSensor(true);
                     }
                     if(!pacman.isBonificado()){
-                        //pacman.setAlive(false);
-                        pacman.dead();
+                        if(pacman.isAlive()){
+                            pacman.dead();
+                        }
                         // espera unos segundos y lanza la pantalla game over
                         contact.getFixtureA().setSensor(true);
                     }
@@ -180,8 +184,10 @@ public class GameScreen extends BasicScreen {
                         contact.getFixtureA().setSensor(true);
                     }
                     if(!pacman.isBonificado()){
-                        //pacman.setAlive(false);
-                        pacman.dead();
+                        if(pacman.isAlive()){
+
+                            pacman.dead();
+                        }
                         // espera unos segundos y lanza la pantalla game over
                         contact.getFixtureA().setSensor(true);
                     }

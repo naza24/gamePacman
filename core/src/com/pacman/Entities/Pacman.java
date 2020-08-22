@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -28,7 +27,6 @@ public class Pacman extends Actor {
 
     // Necesita conocer su textura
     private Texture [] texturePacman;
-
 
     // tiempo para rotar las animacione
     private float time;
@@ -107,7 +105,7 @@ public class Pacman extends Actor {
         this.animacionMovimiento= new Animation(0.3f, texturePacman[0], texturePacman[1],
                                                 texturePacman[2]);
 
-        this.animacionMuerte= new Animation(0.3f,texturePacman[3], texturePacman[4],
+        this.animacionMuerte= new Animation(0.2f,texturePacman[3], texturePacman[4],
                                             texturePacman[5], texturePacman[6], texturePacman[7],
                                             texturePacman[8], texturePacman[9], texturePacman[10],
                                             texturePacman[11],texturePacman[12],texturePacman[13]);
@@ -161,8 +159,9 @@ public class Pacman extends Actor {
         Texture retorno;
 
         if(!this.alive){
+
             // recupero el tiempo para saber q frame mostrar
-            this.time= time + Gdx.graphics.getDeltaTime();
+            this.time= time + 0.01f;
             retorno = (Texture) this.animacionMuerte.getKeyFrame(time,false);
             // le doy origen al actor en el centro de masa
             this.setOrigin(getWidth()/2, getHeight()/2);
@@ -247,8 +246,6 @@ public class Pacman extends Actor {
             if(puntajeAux!=0){
                 // aumento el puntaje
                 this.score.addScore(puntajeAux);
-
-                System.out.println("puntaje "+this.score.getScore());
 
                 //puede ser que salte error cuando quiera comprobar si no esta celda tiene algo
                 this.pointsLayer.setCell(posicionx,posiciony,null);
@@ -453,5 +450,6 @@ public class Pacman extends Actor {
     public void dead(){
         this.alive= false;
         this.bodyPacman.setLinearVelocity(0,0);
+        this.time=0f;
     }
 }
