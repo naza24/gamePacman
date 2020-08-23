@@ -15,6 +15,7 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -60,13 +61,12 @@ public class GameScreen extends BasicScreen {
     private ControllerButton botonDerecha;
     private ControllerButton botonAbajo;
 
+    public MainGame game;
+
     public GameScreen(MainGame game) {
         super(game);
-        // recupero el tiempo
-        tiempoFear = 10f;
 
-        map = new TmxMapLoader().load("maps/nivel1.tmx");
-        tmr = new OrthogonalTiledMapRenderer(map);
+        this.game= game;
 
         // Defino las dimensiones del escenario como para mobile
         stage = new Stage(new FitViewport(640,360));
@@ -83,7 +83,6 @@ public class GameScreen extends BasicScreen {
 
         labelScore.setPosition(stage.getWidth() - labelScore.getWidth() , labelScore.getHeight()/7);
 
-        Gdx.input.setInputProcessor(stage);
 
         // Defino el mundo y le paso los paramtros para la gravedad
         world = new World(new Vector2(0,0),true);
@@ -94,12 +93,19 @@ public class GameScreen extends BasicScreen {
     @Override
     public void show() {
 
+        // recupero el tiempo
+        tiempoFear = 10f;
+
         // para entrar en modo debug
          //stage.setDebugAll(true);
 
         // las coordenadas centrales de dond quiero el pad
         Vector2 controls = new Vector2(12,0.9f);
 
+        map = new TmxMapLoader().load("maps/nivel1.tmx");
+        tmr = new OrthogonalTiledMapRenderer(map);
+
+        Gdx.input.setInputProcessor(stage);
 
         world.setContactListener(new ContactListener() {
             @Override
@@ -129,6 +135,28 @@ public class GameScreen extends BasicScreen {
                         // para que no sigan colisionando
                         if(pacman.isAlive()){
                             pacman.dead();
+                            //game.setScreen(game.gameOverScreen);
+                            //falta agregarle el delay
+                            //game.setScreen(game.gameOverScreen);
+                            // addaction es para hacer animaciones
+                            stage.addAction(
+                                    // para efectuar una secuencia de acciones utilizamos Actions Secuences.
+                                    //Que es una secuencia de acciones
+
+                                    // es para dar la accion de esperar unos segundos
+                                    Actions.sequence(
+                                            Actions.delay(5f), // QUE ESPERO 1,5 SEGUNDOS
+                                            // Creo una accion de run para lanzar la pantalla de game Over
+                                            Actions.run(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    // el hilo ejecutara el lanzamiento de la pantalla con
+                                                    // la variable que se inicializo en main game
+                                                    game.setScreen(game.gameOverScreen);
+                                                }
+                                            })
+                                    )
+                            );
                         }
                         // espera unos segundos y lanza la pantalla game over
                         contact.getFixtureA().setSensor(true);
@@ -145,9 +173,30 @@ public class GameScreen extends BasicScreen {
                         }
                         contact.getFixtureA().setSensor(true);
                     }
-                    if(pacman.isBonificado()){
-                        if(!pacman.isAlive()){
+                    if(!pacman.isBonificado()){
+                        if(pacman.isAlive()){
                             pacman.dead();
+                            //game.setScreen(game.gameOverScreen);
+                            // addaction es para hacer animaciones
+                            stage.addAction(
+                                    // para efectuar una secuencia de acciones utilizamos Actions Secuences.
+                                    //Que es una secuencia de acciones
+
+                                    // es para dar la accion de esperar unos segundos
+                                    Actions.sequence(
+                                            Actions.delay(5f), // QUE ESPERO 1,5 SEGUNDOS
+                                            // Creo una accion de run para lanzar la pantalla de game Over
+                                            Actions.run(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    // el hilo ejecutara el lanzamiento de la pantalla con
+                                                    // la variable que se inicializo en main game
+                                                    game.setScreen(game.gameOverScreen);
+                                                }
+                                            })
+                                    )
+                            );
+//                            game.setScreen(game.gameOverScreen);
                         }
                         // espera unos segundos y lanza la pantalla game over
                         contact.getFixtureA().setSensor(true);
@@ -167,7 +216,29 @@ public class GameScreen extends BasicScreen {
                     if(!pacman.isBonificado()){
                         if(pacman.isAlive()){
                             pacman.dead();
+                           // game.setScreen(game.gameOverScreen);
+                       //game.setScreen(game.gameOverScreen);
+                            // addaction es para hacer animaciones
+                            stage.addAction(
+                                    // para efectuar una secuencia de acciones utilizamos Actions Secuences.
+                                    //Que es una secuencia de acciones
+
+                                    // es para dar la accion de esperar unos segundos
+                                    Actions.sequence(
+                                            Actions.delay(5f), // QUE ESPERO 1,5 SEGUNDOS
+                                            // Creo una accion de run para lanzar la pantalla de game Over
+                                            Actions.run(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    // el hilo ejecutara el lanzamiento de la pantalla con
+                                                    // la variable que se inicializo en main game
+                                                    game.setScreen(game.gameOverScreen);
+                                                }
+                                            })
+                                    )
+                            );
                         }
+
                         // espera unos segundos y lanza la pantalla game over
                         contact.getFixtureA().setSensor(true);
                     }
@@ -185,8 +256,27 @@ public class GameScreen extends BasicScreen {
                     }
                     if(!pacman.isBonificado()){
                         if(pacman.isAlive()){
-
                             pacman.dead();
+                            //game.setScreen(game.gameOverScreen);
+                            // addaction es para hacer animaciones
+                            stage.addAction(
+                                    // para efectuar una secuencia de acciones utilizamos Actions Secuences.
+                                    //Que es una secuencia de acciones
+
+                                    // es para dar la accion de esperar unos segundos
+                                    Actions.sequence(
+                                            Actions.delay(5f), // QUE ESPERO 1,5 SEGUNDOS
+                                            // Creo una accion de run para lanzar la pantalla de game Over
+                                            Actions.run(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    // el hilo ejecutara el lanzamiento de la pantalla con
+                                                    // la variable que se inicializo en main game
+                                                   game.setScreen(game.gameOverScreen);
+                                                }
+                                            })
+                                    )
+                            );
                         }
                         // espera unos segundos y lanza la pantalla game over
                         contact.getFixtureA().setSensor(true);
@@ -326,10 +416,10 @@ public class GameScreen extends BasicScreen {
                                   (TiledMapTileLayer)map.getLayers().get(1),// cargo terreno primero
                                   (TiledMapTileLayer) map.getLayers().get(0));// puntos despues
 
-        ControllerButton botonIzquierda= new ControllerButton(this.world,pacman,textBtnIzquierda,0,new Vector2(controls.x-0.6f,controls.y));
-        ControllerButton botonArriba= new ControllerButton(this.world,pacman,textBtnArriba,1,new Vector2(controls.x,controls.y+0.6f));
-        ControllerButton botonDerecha= new ControllerButton(this.world,pacman,textBtnDerecha,2,new Vector2(controls.x+0.6f,controls.y));
-        ControllerButton botonAbajo= new ControllerButton(this.world,pacman,textBtnAbajo,3,new Vector2(controls.x,controls.y-0.6f));
+         botonIzquierdo= new ControllerButton(this.world,pacman,textBtnIzquierda,0,new Vector2(controls.x-0.6f,controls.y));
+         botonArriba= new ControllerButton(this.world,pacman,textBtnArriba,1,new Vector2(controls.x,controls.y+0.6f));
+         botonDerecha= new ControllerButton(this.world,pacman,textBtnDerecha,2,new Vector2(controls.x+0.6f,controls.y));
+         botonAbajo= new ControllerButton(this.world,pacman,textBtnAbajo,3,new Vector2(controls.x,controls.y-0.6f));
 
         //Agrego los actores al escenario
         stage.addActor(pacman);
@@ -340,7 +430,7 @@ public class GameScreen extends BasicScreen {
 
         stage.addActor(labelScore);
 
-        stage.addActor(botonIzquierda);
+        stage.addActor(botonIzquierdo);
         stage.addActor(botonArriba);
         stage.addActor(botonDerecha);
         stage.addActor(botonAbajo);
@@ -362,11 +452,14 @@ public class GameScreen extends BasicScreen {
         botonAbajo.detach();
 
         //remueve el actor del stage;
+
         pacman.remove();
         fantasmaRosa.remove();
         fantasmaRojo.remove();
-        fantasmaAzul.detach();
+        fantasmaAzul.remove();
         fantasmaNaranja.remove();
+
+
 
         botonIzquierdo.remove();
         botonArriba.remove();
@@ -375,8 +468,10 @@ public class GameScreen extends BasicScreen {
 
         map.dispose();
         tmr.dispose();
+
     }
 
+    // FALTA REINICIAR EL CONTADOR CUANDO TOCA OTRO PNTO MAX ,
     /* este metodo es el que se usa para representar la aplicacion o para actualizar el juego ,
         se ejecuta de 30 a 60 veces por segundo muestra imagenes, movimiento de los personajes etc*/
     @Override
@@ -439,7 +534,8 @@ public class GameScreen extends BasicScreen {
 
         /*dibujar todos los actores, Siempre dibujar despues de hacer
         las actualizaciones y cualquier comprobacion que se requiera*/
-        stage.draw();
+
+            stage.draw();
 
     }
 
@@ -448,8 +544,9 @@ public class GameScreen extends BasicScreen {
     sin esto cada vez q se inicia el juego se iria sobrecargando la memoria */
     @Override
     public void dispose() {
+
         stage.dispose();
         world.dispose();
-        skin.dispose();
+
     }
 }

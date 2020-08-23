@@ -15,15 +15,21 @@ public class MainGame extends Game {
 // Game se usa para poder hacer juegos de pantallas multiples, que extiende a AplicationAdapter
 
 	// instancia principal a la pantalla de juego
-	private GameScreen gameScreen;
-	private LoadingScreen loadingScreen;
+	public GameScreen gameScreen;
+
+	// creo la pantalla de juego perdido
+	public GameOverScreen gameOverScreen;
+
+	// pantalla de carga
+	public LoadingScreen loadingScreen;
 
 	// creamos un administrador de recursos para cargar las texturas y demas assets
 
 	private AssetManager manager;
+
 	@Override
 	public void create () {
-		this.gameScreen = new GameScreen(this);
+//		this.gameScreen = new GameScreen(this);
 		this.manager = new AssetManager();
 
 		// cargamos los recursos
@@ -33,7 +39,7 @@ public class MainGame extends Game {
 		manager.load("datos/pac_man_1.png",Texture.class);
 		manager.load("datos/pac_man_2.png",Texture.class);
 //		manager.load("datos/pac_man_muerte0.png",Texture.class);
-//		manager.load("datos/pac_man_muerte1.png",Texture.class);
+//		manager.load("datos/pac_man_muerte1.png",Texture.class)	;
 		manager.load("datos/dead pacman/dead_pacman_0.png",Texture.class);
 		manager.load("datos/dead pacman/dead_pacman_1.png",Texture.class);
 		manager.load("datos/dead pacman/dead_pacman_2.png",Texture.class);
@@ -111,8 +117,8 @@ public class MainGame extends Game {
 
 }
 	public void terminarDeCargar (){
-	//	gameOverScreen = new GameOverScreen(this);
-		gameScreen = new GameScreen(this);
+		this.gameOverScreen = new GameOverScreen(this);
+		this.gameScreen = new GameScreen(this);
 		setScreen(gameScreen);
 	}
 
@@ -120,4 +126,5 @@ public class MainGame extends Game {
 	public AssetManager getAssetManager() {
 		return manager;
 	}
+
 }
