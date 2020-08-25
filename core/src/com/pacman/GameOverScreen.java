@@ -65,16 +65,14 @@ public class GameOverScreen extends BasicScreen{
         retry.addCaptureListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                // a el juego le damos la pantalla del juego principal
+                // a el juego le damos la pantalla del juego principal (una nueva)
                 game.setScreen(new GameScreen(game));
-
             }
         });
     }
 
     @Override
     public void render(float delta) {
-
 
         // color del fondo simulando el cielo
         Gdx.gl.glClearColor(0,0,0,1);
@@ -84,7 +82,6 @@ public class GameOverScreen extends BasicScreen{
 
         // actualizar los actores, x ejemplo acercar el fuego en cada iteracion
         stage.act();
-
 
         //dibujar todos los actores, Siempre dibujar despues de hacer las actualizaciones
         // y cualquier comprobacion que se requiera

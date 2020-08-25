@@ -133,7 +133,7 @@ public class GameScreen extends BasicScreen {
                     }
                     if(!pacman.isBonificado()){
                         // para que no sigan colisionando
-                        if(pacman.isAlive()){
+                        if(pacman.isAlive() && fantasmaRojo.isAlive()){
                             pacman.dead();
                             //game.setScreen(game.gameOverScreen);
                             //falta agregarle el delay
@@ -174,7 +174,7 @@ public class GameScreen extends BasicScreen {
                         contact.getFixtureA().setSensor(true);
                     }
                     if(!pacman.isBonificado()){
-                        if(pacman.isAlive()){
+                        if(pacman.isAlive() && fantasmaAzul.isAlive()){
                             pacman.dead();
                             //game.setScreen(game.gameOverScreen);
                             // addaction es para hacer animaciones
@@ -214,7 +214,7 @@ public class GameScreen extends BasicScreen {
                         contact.getFixtureA().setSensor(true);
                     }
                     if(!pacman.isBonificado()){
-                        if(pacman.isAlive()){
+                        if(pacman.isAlive() && fantasmaRosa.isAlive()){
                             pacman.dead();
                            // game.setScreen(game.gameOverScreen);
                        //game.setScreen(game.gameOverScreen);
@@ -255,7 +255,7 @@ public class GameScreen extends BasicScreen {
                         contact.getFixtureA().setSensor(true);
                     }
                     if(!pacman.isBonificado()){
-                        if(pacman.isAlive()){
+                        if(pacman.isAlive()&& fantasmaNaranja.isAlive()){
                             pacman.dead();
                             //game.setScreen(game.gameOverScreen);
                             // addaction es para hacer animaciones
