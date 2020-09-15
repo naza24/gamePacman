@@ -3,6 +3,7 @@ package com.pacman;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -120,6 +121,10 @@ public class MainGame extends Game {
 		this.gameOverScreen = new GameOverScreen(this);
 		this.gameScreen = new GameScreen(this);
 		setScreen(gameScreen);
+	}
+
+	public void irGameOver(){
+		this.setScreen(gameOverScreen);
 	}
 
 	//Metodos observadores

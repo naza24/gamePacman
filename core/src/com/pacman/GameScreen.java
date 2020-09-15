@@ -152,7 +152,14 @@ public class GameScreen extends BasicScreen {
                                                 public void run() {
                                                     // el hilo ejecutara el lanzamiento de la pantalla con
                                                     // la variable que se inicializo en main game
-                                                    game.setScreen(game.gameOverScreen);
+
+
+                                                    // AGREGAR UN METODO EN MAINGAME PARA MANDAR EL PUNTAJE HACIA LA PANTALLA GAME OVE,,
+                                                    // CUANDO SE APRETE RETRY NO PASA NADA PERO SI APRETAS EL OTRO BOTON QFALTA AGREGAR
+                                                    //RETORNA A MAIN MENU CON EL PUNTAJE Y ESTE DEBE ALMACENARLO EN LA BD
+
+                                                    game.irGameOver();
+                                                   // game.setScreen(game.gameOverScreen);
                                                 }
                                             })
                                     )
@@ -458,8 +465,6 @@ public class GameScreen extends BasicScreen {
         fantasmaRojo.remove();
         fantasmaAzul.remove();
         fantasmaNaranja.remove();
-
-
 
         botonIzquierdo.remove();
         botonArriba.remove();
