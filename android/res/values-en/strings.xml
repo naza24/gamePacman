@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Pacman</string>
+
+    <!--   login page-->
+    <string name="usuarioLog">User</string>
+    <string name="contraseniaLog">Password</string>
+    <string name="ingresarLog">Login</string>
+    <string name="registrarLog">Register</string>
+    <string name="volumen">Sound</string>
+
+    <!--    Main menu-->
+    <string name="jugar">Play</string>
+    <string name="ranking">Ranking</string>
+    <string name="salir">Logout</string>
+    <string name="borrar">Delete</string>
+    <string name="name">Name: </string>
+
+    <!-- Ranking Screen-->
+    <string name="user">User: </string>
+    <string name="pass">Password: </string>
+    <string name="score">Score: </string>
+
+
+</resources>

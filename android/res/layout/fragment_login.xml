@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.LoginFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorFondoLogin"
+        tools:context=".MainActivity">
+
+        <EditText
+            android:id="@+id/etUsuario"
+            android:layout_width="201dp"
+            android:layout_height="37dp"
+            android:layout_marginBottom="172dp"
+            android:background="@color/colorSecundary"
+            android:ems="10"
+            android:hint="@string/usuarioLog"
+            android:importantForAutofill="no"
+            android:inputType="textPersonName"
+            app:layout_constraintBottom_toTopOf="@+id/idBtnRegis"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/idVolumen" />
+
+        <EditText
+            android:id="@+id/etContrasenia"
+            android:layout_width="204dp"
+            android:layout_height="41dp"
+            android:layout_marginBottom="281dp"
+            android:background="@color/colorSecundary"
+            android:ems="10"
+            android:hint="@string/contraseniaLog"
+            android:importantForAutofill="no"
+            android:inputType="textPassword"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etUsuario"
+            app:layout_constraintVertical_bias="0.833" />
+
+        <TextView
+            android:id="@+id/btnRegistrarLogin"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginEnd="28dp"
+            android:layout_marginBottom="123dp"
+            android:text="@string/registrarLog"
+            android:textAlignment="center"
+            android:textColor="@color/colorSecundary"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/etUsuario"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/idVolumen"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="RtlCompat" />
+
+        <Button
+            android:id="@+id/idBtnRegis"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="161dp"
+            android:text="@string/ingresarLog"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etUsuario" />
+
+        <Switch
+            android:id="@+id/idVolumen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="43dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginEnd="148dp"
+            android:layout_marginBottom="121dp"
+            android:text="@string/volumen"
+            android:textColor="@color/colorSecundary"
+            app:layout_constraintBottom_toTopOf="@+id/etUsuario"
+            app:layout_constraintEnd_toStartOf="@+id/btnRegistrarLogin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints,RtlCompat,UseSwitchCompatOrMaterialXml" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

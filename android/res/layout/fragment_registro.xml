@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorFondoLogin"
+    tools:context=".fragments.RegistroFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/contenedorRegistro"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/etUsuario"
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:layout_marginTop="140dp"
+            android:background="@color/colorSecundary"
+            android:ems="10"
+            android:hint="@string/usuarioLog"
+            android:importantForAutofill="no"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/idBtnRegis"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="52dp"
+            android:text="@string/registrarLog"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etContrasenia" />
+
+        <EditText
+            android:id="@+id/etContrasenia"
+            android:layout_width="209dp"
+            android:layout_height="38dp"
+            android:layout_marginTop="44dp"
+            android:background="@color/colorSecundary"
+            android:ems="10"
+            android:hint="@string/contraseniaLog"
+            android:inputType="textPassword"
+            app:layout_constraintStart_toStartOf="@+id/etUsuario"
+            app:layout_constraintTop_toBottomOf="@+id/etUsuario"
+            android:importantForAutofill="no" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
+
