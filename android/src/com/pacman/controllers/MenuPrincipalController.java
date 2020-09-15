@@ -1,17 +1,27 @@
 package com.pacman.controllers;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.fragment.app.FragmentActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+
+import com.badlogic.gdx.backends.android.AndroidApplication;
+
+import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
+import com.pacman.AndroidLauncher;
+import com.pacman.MainActivity;
+import com.pacman.MainGame;
 import com.pacman.R;
+import com.pacman.fragments.MenuPrincipalFragment;
 //import com.example.android.jugadorandroid.R;
 
 // implementar una clase abstracta , session de usuario que guarde una instancia del
 // usuario logueado para que las  clases puedan acceder a ella y no tener variables publicas  y cosas feas
-public class MenuPrincipalController {
+public class MenuPrincipalController extends AndroidApplication {
 
     // contexto de la aplicacion
     private Context miContexto;
@@ -52,4 +62,10 @@ public class MenuPrincipalController {
         navController.navigate(R.id.loginFragment);
     }
 
-}
+//    public void irJuego(){
+//        // llama al juego en libgdx
+//       Intent lanzadorJuego = new Intent(miContexto, AndroidLauncher.class);
+//       // si lo incluyo en el controlador esoty tratando de lanzar un metodo de un activity desde un controlador , salta error
+//       startActivity(lanzadorJuego);
+//        }
+    }

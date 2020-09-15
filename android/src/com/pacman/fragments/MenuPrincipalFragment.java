@@ -1,5 +1,6 @@
 package com.pacman.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.pacman.AndroidLauncher;
+import com.pacman.MainGame;
 import com.pacman.R;
 import com.pacman.controllers.MenuPrincipalController;
 //import com.example.android.jugadorandroid.R;
@@ -25,6 +28,7 @@ public class MenuPrincipalFragment extends Fragment {
 
     private MenuPrincipalController menuPrincipalController;
     TextView usuario;
+    String idUsuario;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -83,10 +87,15 @@ public class MenuPrincipalFragment extends Fragment {
         Button btnBorrar = (Button)view.findViewById(R.id.btnBorrar);
         Button btnRanking = (Button)view.findViewById(R.id.btnRanking);
         Button btnSalir = (Button)view.findViewById(R.id.btnSalir);
+        Button btnJugar = (Button)view.findViewById(R.id.btnJugar);
         usuario = (TextView) view.findViewById(R.id.txtUser);
 
-        // recupero el usuario del bundle q se mando desde el login
-        String idUsuario = getArguments().getString("usuario");
+        /* recupero el usuario del bundle q se mando desde el login, si es nulo por
+         que estoy en la pantalla de juego no lo analizo*/
+        if(usuario!=null){
+          idUsuario = getArguments().getString("usuario");
+        }
+
 
         // creo el controller y le paso el idUsuario por que seguramente se necesite para en futuro actualizar los scores
         this.menuPrincipalController = new MenuPrincipalController(getContext(), view, idUsuario);
@@ -118,6 +127,13 @@ public class MenuPrincipalFragment extends Fragment {
                 menuPrincipalController.irLogin();
             }
         });
+        btnJugar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent lanzadorJuego = new Intent(getContext(), AndroidLauncher.class);
+                startActivity(lanzadorJuego);
+            }
+        });
     }
 
       /* este metodo es el que se sobreescribe para poder guardar los campos antes de rotar el dispositivo,
@@ -136,7 +152,6 @@ public class MenuPrincipalFragment extends Fragment {
         }
 
         outState.putString("etUsuario", nomb);
-
 
     }
     // recupera los campos y los asigna a sus lugares
