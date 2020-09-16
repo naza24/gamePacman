@@ -48,5 +48,9 @@ public interface UsuarioDao {
     @Query("SELECT COUNT(*) FROM "+ Usuario.TABLE_NAME + " WHERE nombre like :nom and contrasenia like :contr")
     int existe2(String nom, String contr);
 
+    /// esta consulta retorna el usuario con ese nombre que seria la key
+    @Query("SELECT * FROM "+ Usuario.TABLE_NAME + " WHERE nombre like :nom ")
+    Usuario getUsuario(String nom);
+
 
 }

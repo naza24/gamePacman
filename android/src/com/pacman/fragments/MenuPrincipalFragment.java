@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -92,11 +93,28 @@ public class MenuPrincipalFragment extends Fragment {
 
         /* recupero el usuario del bundle q se mando desde el login, si es nulo por
          que estoy en la pantalla de juego no lo analizo*/
+
+        Toast.makeText(getContext(), " se ejecuto el metodo onViewCreated", Toast.LENGTH_LONG).show();
+
+        // si es distinto de null es por q esta logueado y estamos en esa pantalla
         if(usuario!=null){
           idUsuario = getArguments().getString("usuario");
+
+          // si retorna de la pantalla de juego con un puntaje
+            Bundle aux= getActivity().getIntent().getExtras();
+            if(aux!=null){
+
+                int pun = getActivity().getIntent().getIntExtra("puntaje",0);
+
+                Toast.makeText(getContext(), " puntaje "+pun, Toast.LENGTH_LONG).show();
+                    //actualizara el puntaje si supera el puntaje anterior
+                    menuPrincipalController.actualizarPuntaje(pun);
+            }
+        }else{
+            Toast.makeText(getContext(), " usuario nulo", Toast.LENGTH_LONG).show();
         }
 
-
+        // despues acomodar esto ,, el controlador esta despues por lo que salta error si llama al controlador
         // creo el controller y le paso el idUsuario por que seguramente se necesite para en futuro actualizar los scores
         this.menuPrincipalController = new MenuPrincipalController(getContext(), view, idUsuario);
 
@@ -150,16 +168,14 @@ public class MenuPrincipalFragment extends Fragment {
         if(usuario!=null){
             nomb= usuario.getText().toString();
         }
-
         outState.putString("etUsuario", nomb);
-
     }
+
     // recupera los campos y los asigna a sus lugares
     private void restaurarCampos(Bundle savedInstanceState) {
         // si el bundle no esta vacio es porq se guardo algo.
         if (savedInstanceState!=null){
             usuario.setText( savedInstanceState.getString("etUsuario",""));
-
         }
     }
 }

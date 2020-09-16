@@ -80,7 +80,6 @@ public class LoginFragment extends Fragment {
     }
 
     // SE SEPARA LO QUE ES LA INICIALIZACION DE LOS COMPONENTES
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

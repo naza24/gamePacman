@@ -15,6 +15,24 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 public class MainGame extends Game {
 // Game se usa para poder hacer juegos de pantallas multiples, que extiende a AplicationAdapter
 
+	// defino la interfaz de callback (llamada de retorno) al android launcher
+	public interface MyGameCallBack{
+		public void volverMenuPrincipal(int puntaje);
+	}
+
+	/*variable local q contendra una referencia a callback*/
+	private MyGameCallBack myGameCallBack;
+
+	// agregamos un seter para que desde la app se pueda setear un callback concreto
+	public void setMyGameCallBack(MyGameCallBack myCall){
+		myGameCallBack=myCall;
+	}
+
+	// agregamos un getter para poder tener acceso a la interfaz desde gameOverScreen
+	public MyGameCallBack getMyGameCallBack(){
+		return myGameCallBack;
+	}
+
 	// instancia principal a la pantalla de juego
 	public GameScreen gameScreen;
 
@@ -30,7 +48,6 @@ public class MainGame extends Game {
 
 	@Override
 	public void create () {
-//		this.gameScreen = new GameScreen(this);
 		this.manager = new AssetManager();
 
 		// cargamos los recursos
@@ -39,8 +56,6 @@ public class MainGame extends Game {
 		manager.load("datos/pac_man_0.png",Texture.class);
 		manager.load("datos/pac_man_1.png",Texture.class);
 		manager.load("datos/pac_man_2.png",Texture.class);
-//		manager.load("datos/pac_man_muerte0.png",Texture.class);
-//		manager.load("datos/pac_man_muerte1.png",Texture.class)	;
 		manager.load("datos/dead pacman/dead_pacman_0.png",Texture.class);
 		manager.load("datos/dead pacman/dead_pacman_1.png",Texture.class);
 		manager.load("datos/dead pacman/dead_pacman_2.png",Texture.class);

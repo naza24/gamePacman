@@ -57,9 +57,14 @@ public class GameOverScreen extends BasicScreen{
         retry.setSize(100,30);
         retry.setPosition(stage.getWidth()/2 -this.retry.getWidth()/2 ,stage.getHeight()/4 );
 
+        quit.setSize(100,30);
+        quit.setPosition(stage.getWidth()/2 -this.retry.getWidth()/2 ,stage.getHeight()/5 );
+
+
         // agrego el cartel y el boton al escenario
         stage.addActor(gameover);
         stage.addActor(retry);
+        stage.addActor(quit);
 
         // LE PONEMOS UN LISTENER A EL BOTON PARA QUE SEPA CUANDO FUE PRESIONADO
         retry.addCaptureListener(new ChangeListener() {
@@ -67,6 +72,15 @@ public class GameOverScreen extends BasicScreen{
             public void changed(ChangeEvent event, Actor actor) {
                 // a el juego le damos la pantalla del juego principal (una nueva)
                 game.setScreen(new GameScreen(game));
+            }
+        });
+
+        quit.addCaptureListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                // obtenemos la llamada de retorno de mainGame y ejecutamos
+                // el metodo para volver al menu principal con el puntaje
+                 game.getMyGameCallBack().volverMenuPrincipal(3);
             }
         });
     }
