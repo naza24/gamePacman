@@ -87,7 +87,7 @@ public class LoginFragment extends Fragment {
         TextView registro = (TextView)view.findViewById(R.id.btnRegistrarLogin);
         Button ingresar = (Button)view.findViewById(R.id.idBtnRegis);
         nombre = (EditText) view.findViewById(R.id.etUsuario);
-        contrasenia = (EditText) view.findViewById(R.id.etUsuario);
+        contrasenia = (EditText) view.findViewById(R.id.etContrasenia);
 
         loginController = new LoginController(getContext(),view);
 

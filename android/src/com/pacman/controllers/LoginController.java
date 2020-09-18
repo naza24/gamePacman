@@ -13,6 +13,7 @@ import androidx.room.Room;
 import com.pacman.R;
 import com.pacman.config.Constantes;
 import com.pacman.database.AppDatabase;
+import com.pacman.entidades.Usuario;
 
 
 public class LoginController {
@@ -28,7 +29,7 @@ public class LoginController {
 
     private EditText nombre, contrasenia;
 
-    public LoginController(Context context, View vista){
+    public LoginController(Context context, View vista) {
         this.miContexto = context;
 
         /* instanciar el acceso a la bd, le pasamos el contexto de la aplicacion,
@@ -47,66 +48,46 @@ public class LoginController {
 
     }
 
-    public void loguearUsuario (){
+    public void loguearUsuario() {
 
         // variable auxiliares
         String nombreAux = nombre.getText().toString();
         String contraseniaAux = contrasenia.getText().toString();
 
-        if(existeUsuarioContrasenia(nombreAux, contraseniaAux)) {
+        if (existeUsuarioContrasenia(nombreAux, contraseniaAux)) {
 
             irMenuPrincipal(nombreAux);
             Toast.makeText(miContexto, " LOGEO correctamente: " + nombre, Toast.LENGTH_LONG).show();
             nombre.setText("");
             contrasenia.setText("");
-        }else{
-            Toast.makeText(miContexto, ""+nombre+", usuario o contrasenia no existe", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(miContexto, "" + nombre + ", usuario o contrasenia no existe", Toast.LENGTH_LONG).show();
             contrasenia.setText("");
         }
     }
 
     // Este metodo retorna true si el usuario con su respectiva contraseña existe, de lo contrario false
-    private boolean existeUsuarioContrasenia(String usuario, String contrasenia){
-        boolean retorno =true;
+    private boolean existeUsuarioContrasenia(String usuario, String contrasenia) {
+        boolean retorno = true;
 
         // si no existe el usuario retorna false
-        if(bd.usuarioDao().existe2(usuario,contrasenia)==0){
+        if (bd.usuarioDao().existe2(usuario, contrasenia) == 0) {
             retorno = false;
         }
         return retorno;
     }
 
-    private void irMenuPrincipal(String nombre){
+    private void irMenuPrincipal(String nombre) {
         // simplemente deriba al llamador a la pantalla de menu principal y le paso el usuario q logueo
         Bundle arg = new Bundle();
-        arg.putString("usuario",nombre);
+        arg.putString("usuario", nombre);
 
         navController.navigate(R.id.menuPrincipalFragment, arg);
     }
 
 
-    public void irPantallaRegistro(){
+    public void irPantallaRegistro() {
         // simplemente deriba al llamador a la pantalla de registro
         navController.navigate(R.id.registroFragment);
     }
-
-//    // recupera los campos y los asigna a sus lugares
-//    public void restaurarCampos(Bundle savedInstanceState) {
-//        // si el bundle no esta vacio es porq se guardo algo.
-//        if (savedInstanceState!=null){
-//            this.nombre.setText( savedInstanceState.getString("etUsuario",""));
-//            this.contrasenia.setText(savedInstanceState.getString("etContrasenia",""));
-//
-//        }
-//    }
-
-    // este metodo se encarga de guardar los campos que quiero que se conserven
-//    public void guardarCampos(Bundle outState) {
-//
-//        String nomb= nombre.getText().toString();
-//        String contr= contrasenia.getText().toString();
-//
-//        outState.putString("etUsuario", nomb);
-//        outState.putString("etContrasenia", contr);
-//    }
 }

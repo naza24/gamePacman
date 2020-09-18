@@ -30,7 +30,7 @@ public class MenuPrincipalFragment extends Fragment {
     private MenuPrincipalController menuPrincipalController;
     TextView usuario;
     String idUsuario;
-
+    int puntaje;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -66,6 +66,8 @@ public class MenuPrincipalFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
+            this.puntaje = getArguments().getInt("puntaje");
+            Toast.makeText(getContext(),"  la huevada esta es  "+puntaje, Toast.LENGTH_LONG).show();
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
@@ -77,6 +79,7 @@ public class MenuPrincipalFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_menu_principal, container, false);
     }
@@ -94,14 +97,12 @@ public class MenuPrincipalFragment extends Fragment {
         /* recupero el usuario del bundle q se mando desde el login, si es nulo por
          que estoy en la pantalla de juego no lo analizo*/
 
-        Toast.makeText(getContext(), " se ejecuto el metodo onViewCreated", Toast.LENGTH_LONG).show();
-
         // si es distinto de null es por q esta logueado y estamos en esa pantalla
         if(usuario!=null){
           idUsuario = getArguments().getString("usuario");
 
           // si retorna de la pantalla de juego con un puntaje
-            Bundle aux= getActivity().getIntent().getExtras();
+           /* Bundle aux= getActivity().getIntent().getExtras();
             if(aux!=null){
 
                 int pun = getActivity().getIntent().getIntExtra("puntaje",0);
@@ -111,12 +112,14 @@ public class MenuPrincipalFragment extends Fragment {
                     menuPrincipalController.actualizarPuntaje(pun);
             }
         }else{
-            Toast.makeText(getContext(), " usuario nulo", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), " usuario nulo", Toast.LENGTH_LONG).show();*/
         }
 
         // despues acomodar esto ,, el controlador esta despues por lo que salta error si llama al controlador
         // creo el controller y le paso el idUsuario por que seguramente se necesite para en futuro actualizar los scores
         this.menuPrincipalController = new MenuPrincipalController(getContext(), view, idUsuario);
+
+
 
         // cargo el txtView con el idUsuario
         usuario.setText("Usuario: "+idUsuario);
