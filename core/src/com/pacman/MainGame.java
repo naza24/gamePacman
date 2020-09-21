@@ -17,7 +17,7 @@ public class MainGame extends Game {
 
 	// defino la interfaz de callback (llamada de retorno) al android launcher
 	public interface MyGameCallBack{
-		public void volverMenuPrincipal(int puntaje);
+		public void volverMenuPrincipal(String usuario, int puntaje);
 	}
 
 	/*variable local q contendra una referencia a callback*/
@@ -35,6 +35,9 @@ public class MainGame extends Game {
 
 	// instancia principal a la pantalla de juego
 	public GameScreen gameScreen;
+
+	// Usuario del juego
+	private String usuario;
 
 	// creo la pantalla de juego perdido
 	public GameOverScreen gameOverScreen;
@@ -147,4 +150,11 @@ public class MainGame extends Game {
 		return manager;
 	}
 
+	public String getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(String idUsuario) {
+		this.usuario =idUsuario;
+	}
 }

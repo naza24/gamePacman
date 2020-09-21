@@ -30,6 +30,7 @@ public class MenuPrincipalFragment extends Fragment {
     private MenuPrincipalController menuPrincipalController;
     TextView usuario;
     String idUsuario;
+
     int puntaje;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -98,31 +99,17 @@ public class MenuPrincipalFragment extends Fragment {
          que estoy en la pantalla de juego no lo analizo*/
 
         // si es distinto de null es por q esta logueado y estamos en esa pantalla
-        if(usuario!=null){
-          idUsuario = getArguments().getString("usuario");
+        if(usuario!=null) {
+            idUsuario = getArguments().getString("usuario");
 
-          // si retorna de la pantalla de juego con un puntaje
-           /* Bundle aux= getActivity().getIntent().getExtras();
-            if(aux!=null){
+            // cargo el txtView con el idUsuario
+            usuario.setText("Usuario: "+idUsuario);
 
-                int pun = getActivity().getIntent().getIntExtra("puntaje",0);
-
-                Toast.makeText(getContext(), " puntaje "+pun, Toast.LENGTH_LONG).show();
-                    //actualizara el puntaje si supera el puntaje anterior
-                    menuPrincipalController.actualizarPuntaje(pun);
-            }
-        }else{
-            Toast.makeText(getContext(), " usuario nulo", Toast.LENGTH_LONG).show();*/
         }
-
         // despues acomodar esto ,, el controlador esta despues por lo que salta error si llama al controlador
         // creo el controller y le paso el idUsuario por que seguramente se necesite para en futuro actualizar los scores
-        this.menuPrincipalController = new MenuPrincipalController(getContext(), view, idUsuario);
+        this.menuPrincipalController = new MenuPrincipalController(this);
 
-
-
-        // cargo el txtView con el idUsuario
-        usuario.setText("Usuario: "+idUsuario);
 
          /*llamamos a este metodo que se encarga de cargar los campos que se
          recuperaron luego de la nueva creacion del fragment */
@@ -152,10 +139,15 @@ public class MenuPrincipalFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent lanzadorJuego = new Intent(getContext(), AndroidLauncher.class);
-                startActivity(lanzadorJuego);
+                // Le mando el usuario al juego
+                Bundle bun = new Bundle();
+                bun.putString("usuario",idUsuario);
+
+                startActivity(lanzadorJuego,bun);
             }
         });
     }
+
 
       /* este metodo es el que se sobreescribe para poder guardar los campos antes de rotar el dispositivo,
      cuando se rota el dispositivo se destruye la activity o fragment y se crea uno nuevo */
@@ -181,4 +173,15 @@ public class MenuPrincipalFragment extends Fragment {
             usuario.setText( savedInstanceState.getString("etUsuario",""));
         }
     }
-}
+
+        // retorno el nombre en un string para analizarlo desde el controlador
+        public String getUsuarioLogeado() {
+            return idUsuario;
+        }
+
+        //Muestra un texto por pantalla segun lo que el controlador le pase de text
+        public void mostrarText(String text){
+            Toast.makeText(getContext(),text, Toast.LENGTH_SHORT).show();
+        }
+
+    }

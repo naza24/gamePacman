@@ -14,6 +14,7 @@ import com.pacman.R;
 import com.pacman.config.Constantes;
 import com.pacman.database.AppDatabase;
 import com.pacman.entidades.Usuario;
+import com.pacman.fragments.LoginFragment;
 
 
 public class LoginController {
@@ -21,49 +22,44 @@ public class LoginController {
     // acceso a la bd
     private AppDatabase bd;
 
-    // contexto de la aplicacion
-    private Context miContexto;
-
     // navigation
     private final NavController navController;
 
-    private EditText nombre, contrasenia;
+    private LoginFragment miVista;
 
-    public LoginController(Context context, View vista) {
-        this.miContexto = context;
+    public LoginController(LoginFragment vista) {
+
+        // referencia a la vista
+        miVista = vista;
 
         /* instanciar el acceso a la bd, le pasamos el contexto de la aplicacion,
        la clase q se encarga de crear el acceso y el nombre de la bd*/
 
         // allow es para permitir varias consultas simultaneas a la bd sqlite
-        this.bd = Room.databaseBuilder(miContexto, AppDatabase.class, Constantes.BD_NAME)
+        this.bd = Room.databaseBuilder(miVista.getContext(), AppDatabase.class, Constantes.BD_NAME)
                 .allowMainThreadQueries().build();
 
         // inicializo el navegador
-        navController = Navigation.findNavController(vista);
-
-        nombre = (EditText) vista.findViewById(R.id.etUsuario);
-        contrasenia = (EditText) vista.findViewById(R.id.etContrasenia);
-
+        navController = Navigation.findNavController(miVista.getView());
 
     }
 
     public void loguearUsuario() {
 
         // variable auxiliares
-        String nombreAux = nombre.getText().toString();
-        String contraseniaAux = contrasenia.getText().toString();
+        String nombreAux = miVista.getNombre();
+        String contraseniaAux = miVista.getContraseña();
 
         if (existeUsuarioContrasenia(nombreAux, contraseniaAux)) {
+            miVista.mostrarText("LOGEO correctamente: " + nombreAux);
+            miVista.vaciarNombre();
 
             irMenuPrincipal(nombreAux);
-            Toast.makeText(miContexto, " LOGEO correctamente: " + nombre, Toast.LENGTH_LONG).show();
-            nombre.setText("");
-            contrasenia.setText("");
+
         } else {
-            Toast.makeText(miContexto, "" + nombre + ", usuario o contrasenia no existe", Toast.LENGTH_LONG).show();
-            contrasenia.setText("");
-        }
+            miVista.mostrarText(" usuario o contrasenia no existe ");
+       }
+        miVista.vaciarContraseña();
     }
 
     // Este metodo retorna true si el usuario con su respectiva contraseña existe, de lo contrario false
@@ -84,7 +80,6 @@ public class LoginController {
 
         navController.navigate(R.id.menuPrincipalFragment, arg);
     }
-
 
     public void irPantallaRegistro() {
         // simplemente deriba al llamador a la pantalla de registro

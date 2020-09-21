@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -84,11 +85,11 @@ public class RegistroFragment extends Fragment {
 
 
         nombre = (EditText) view.findViewById(R.id.etUsuario);
-        contrasenia = (EditText) view.findViewById(R.id.etUsuario);
+        contrasenia = (EditText) view.findViewById(R.id.etContrasenia);
         Button btnRegistrar = (Button) view.findViewById(R.id.idBtnRegis);
 
         // creo el controlador y le mando la vista
-        this.controller = new RegistroController(getContext(),view);
+        this.controller = new RegistroController(this);
 
         /*llamamos a este metodo que se encarga de cargar los campos que se
          recuperaron luego de la nueva creacion del fragment */
@@ -97,7 +98,6 @@ public class RegistroFragment extends Fragment {
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                controller.registrarUsuario();
             }
         });
@@ -138,4 +138,26 @@ public class RegistroFragment extends Fragment {
 
         }
     }
+
+    // seteo los valores en vacio
+    public void vaciarCampos(){
+        this.nombre.setText("");
+        this.contrasenia.setText("");
+    }
+
+    // retorno el nombre en un string para analizarlo desde el controlador
+    public String getNombre() {
+        return nombre.getText().toString();
+    }
+
+    // retorno la contraseña en un string para analizarlo desde el controlador
+    public String getContraseña() {
+        return contrasenia.getText().toString();
+    }
+
+    //Muestra un texto por pantalla segun lo que el controlador le pase de text
+    public void mostrarText(String text){
+        Toast.makeText(getContext(),text, Toast.LENGTH_SHORT).show();
+    }
+
 }

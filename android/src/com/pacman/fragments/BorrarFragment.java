@@ -1,11 +1,13 @@
 package com.pacman.fragments;
 
 import android.os.Bundle;
+import android.sax.TextElementListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,7 +27,10 @@ import com.pacman.controllers.BorrarController;
 public class BorrarFragment extends Fragment {
 
     private BorrarController borrarController;
+
     Spinner spinner;
+
+    String idUsuario;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -84,9 +89,9 @@ public class BorrarFragment extends Fragment {
         Button btn_borrar = (Button)view.findViewById(R.id.btnBorrar);
 
         // recupero el usuario del bundle q se mando desde el login
-        String idUsuario = getArguments().getString("usuario");
+        idUsuario = getArguments().getString("usuario");
 
-        this.borrarController = new BorrarController(getContext(),view , idUsuario);
+        this.borrarController = new BorrarController(this);
 
         // inicializo el spinner junto con su comportamiento
         borrarController.logicaBorrado();
@@ -96,12 +101,20 @@ public class BorrarFragment extends Fragment {
         btn_borrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 borrarController.borrarUsuario();
-
             }
         });
 
     }
+    public String getUsuarioLogueado(){
+        return idUsuario;
+    }
 
+    public Spinner getSpinner(){
+        return spinner;
+    }
+
+    public void mostrarText ( String text){
+        Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
+    }
 }

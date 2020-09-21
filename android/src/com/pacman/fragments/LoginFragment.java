@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -89,7 +90,7 @@ public class LoginFragment extends Fragment {
         nombre = (EditText) view.findViewById(R.id.etUsuario);
         contrasenia = (EditText) view.findViewById(R.id.etContrasenia);
 
-        loginController = new LoginController(getContext(),view);
+        loginController = new LoginController(this);
 
         /*llamamos a este metodo que se encarga de cargar los campos que se
          recuperaron luego de la nueva creacion del fragment */
@@ -124,15 +125,14 @@ public class LoginFragment extends Fragment {
         String contr="";
 
         if(nombre!=null){
-            nomb= nombre.getText().toString();
+            nomb= getNombre();
         }
         if(contrasenia!=null){
-            contr= contrasenia.getText().toString();
+            contr= getContraseña();
         }
 
         outState.putString("etUsuario", nomb);
         outState.putString("etContrasenia", contr);
-
 
     }
     // recupera los campos y los asigna a sus lugares
@@ -145,4 +145,28 @@ public class LoginFragment extends Fragment {
         }
     }
 
+    // seteo el nombre vacia
+    public void vaciarNombre(){
+        this.nombre.setText("");
+    }
+
+    // seteo la contraseña vacia
+    public void vaciarContraseña(){
+        this.contrasenia.setText("");
+    }
+
+    // retorno el nombre en un string para analizarlo desde el controlador
+    public String getNombre() {
+        return nombre.getText().toString();
+    }
+
+    // retorno la contraseña en un string para analizarlo desde el controlador
+    public String getContraseña() {
+        return this.contrasenia.getText().toString();
+    }
+
+    //Muestra un texto por pantalla segun lo que el controlador le pase de text
+    public void mostrarText(String text){
+        Toast.makeText(getContext(),text, Toast.LENGTH_SHORT).show();
+    }
 }

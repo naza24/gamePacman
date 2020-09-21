@@ -1,29 +1,19 @@
 package com.pacman.controllers;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Toast;
 
-import androidx.fragment.app.FragmentActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.RecyclerView;
+
 import androidx.room.Room;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 
-import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
-import com.pacman.AndroidLauncher;
-import com.pacman.MainActivity;
-import com.pacman.MainGame;
 import com.pacman.R;
 import com.pacman.config.Constantes;
 import com.pacman.database.AppDatabase;
 import com.pacman.entidades.Usuario;
 import com.pacman.fragments.MenuPrincipalFragment;
-//import com.example.android.jugadorandroid.R;
 
 // implementar una clase abstracta , session de usuario que guarde una instancia del
 // usuario logueado para que las  clases puedan acceder a ella y no tener variables publicas  y cosas feas
@@ -33,27 +23,26 @@ public class MenuPrincipalController extends AndroidApplication {
     // acceso a la bd
     private AppDatabase bd;
 
-    // contexto de la aplicacion
-    private Context miContexto;
-
     // navigation
     private final NavController navController;
 
     //guardo el id de usuario
     private String idUsuarioLog;
 
-    public MenuPrincipalController(Context context, View vista, String user){
-        this.miContexto = context;
+    private MenuPrincipalFragment miVista;
+
+    public MenuPrincipalController(MenuPrincipalFragment  vista){
+
+        miVista= vista;
 
         // inicializo el navegador
-        navController = Navigation.findNavController(vista);
+        navController = Navigation.findNavController(miVista.getView());
 
         // allow es para permitir varias consultas simultaneas a la bd sqlite
-        this.bd = Room.databaseBuilder(miContexto, AppDatabase.class, Constantes.BD_NAME)
+        this.bd = Room.databaseBuilder(miVista.getContext(), AppDatabase.class, Constantes.BD_NAME)
                 .allowMainThreadQueries().build();
 
-        // referencia al id de usuario
-        idUsuarioLog = user;
+        idUsuarioLog = miVista.getUsuarioLogeado();
     }
 
     public void irRanking(){
@@ -79,16 +68,10 @@ public class MenuPrincipalController extends AndroidApplication {
 
         if(userAux.getPuntajeMaximo()<pun){
             userAux.setPuntajeMaximo(pun);
+
             // actualizo el usuario en la bd
             bd.usuarioDao().updateEntities(userAux);
-            Toast.makeText(miContexto, "Se actualizo el puntaje", Toast.LENGTH_SHORT).show();
+            miVista.mostrarText("Se actualizo el puntaje");
         }
     }
-
-//    public void irJuego(){
-//        // llama al juego en libgdx
-//       Intent lanzadorJuego = new Intent(miContexto, AndroidLauncher.class);
-//       // si lo incluyo en el controlador esoty tratando de lanzar un metodo de un activity desde un controlador , salta error
-//       startActivity(lanzadorJuego);
-//        }
-    }
+}

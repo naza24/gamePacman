@@ -81,7 +81,7 @@ public class GameOverScreen extends BasicScreen{
                 // obtenemos la llamada de retorno de mainGame y ejecutamos
                 // el metodo para volver al menu principal con el puntaje
 
-                game.getMyGameCallBack().volverMenuPrincipal(3);
+                game.getMyGameCallBack().volverMenuPrincipal(game.getUsuario(),3);
             }
         });
     }

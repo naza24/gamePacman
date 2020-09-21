@@ -13,9 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.pacman.R;
 import com.pacman.controllers.RankingController;
 
-//import com.example.android.jugadorandroid.R;
-//import com.example.android.jugadorandroid.controllers.RankingController;
-
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link RankingFragment#newInstance} factory method to
@@ -23,7 +20,7 @@ import com.pacman.controllers.RankingController;
  */
 public class RankingFragment extends Fragment {
 
-    private RankingController rankingController;
+    private RecyclerView recycler;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -77,9 +74,12 @@ public class RankingFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // referencio a el reciclerview y se lo mando al constructor en lugar d toda la vista
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.idRecicler);
+        recycler = (RecyclerView) view.findViewById(R.id.idRecicler);
 
-        this.rankingController = new RankingController(getContext(), recyclerView);
+        RankingController rankingController = new RankingController(this);
+    }
 
+    public RecyclerView getRecycler(){
+        return recycler;
     }
 }
