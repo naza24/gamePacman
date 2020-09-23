@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
@@ -14,11 +13,10 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.pacman.Recorrido;
+import com.pacman.Constantes.Recorrido;
 
-import static com.pacman.Constants.PACMAN_VELOCITY;
-import static com.pacman.Constants.PIXELS_IN_METER;
+import static com.pacman.Constantes.Constants.PACMAN_VELOCITY;
+import static com.pacman.Constantes.Constants.PIXELS_IN_METER;
 
 public class Ghost extends Actor {
 
@@ -144,16 +142,12 @@ public class Ghost extends Actor {
         // si esta en moviimiento y no esta en modo fear utiliza la textura q debe
         if (!isFear()){
 
-                // recupero el tiempo para saber q frame mostrar
-//                this.time= time + Gdx.graphics.getDeltaTime();
-
                 if(this.bodyGhost.getLinearVelocity().x > 0){
 
                     if(this.isAlive()){
                         retorno = (Texture) this.animacionMovimientoDerecha.getKeyFrame(time,true);
                     }else{
                         retorno = (Texture) this.animacionMovimientoMuerteDerecha.getKeyFrame(0,true);
-//                        retorno =  this.textureGralGhost[4];
                     }
                 }
 
@@ -162,7 +156,6 @@ public class Ghost extends Actor {
                         retorno = (Texture) this.animacionMovimientoIzquierda.getKeyFrame(time,true);
                     }else{
                         retorno = (Texture) this.animacionMovimientoMuerteIzquierda.getKeyFrame(0,true);
-//                        retorno =  this.textureGralGhost[6];
                     }
                 }
 
@@ -172,7 +165,6 @@ public class Ghost extends Actor {
                         retorno = (Texture) this.animacionMovimientoArriba.getKeyFrame(time,true);
                     }else{
                         retorno = (Texture) this.animacionMovimientoMuerteArriba.getKeyFrame(0,true);
-                        //retorno =  this.textureGralGhost[7];
                     }
                 }
 
@@ -182,7 +174,6 @@ public class Ghost extends Actor {
                         retorno = (Texture) this.animacionMovimientoAbajo.getKeyFrame(time,true);
                     }else{
                         retorno = (Texture) this.animacionMovimientoMuerteAbajo.getKeyFrame(0,true);
-//                        retorno =  this.textureGralGhost[5];
                     }
                 }
 
@@ -222,7 +213,7 @@ public class Ghost extends Actor {
         // retorno la velocidad
         Vector2 velocidad =null;
 
-        // valor del puntaje del bloque
+        // valor del posicionamiento del bloque
         int posicionx =0;
         int posiciony=0;
 
@@ -265,7 +256,6 @@ public class Ghost extends Actor {
                         }
 
                         collisionY = collisionedBlock(posicionx,posiciony,"blocked");
-
                     }
                 }
 
@@ -278,8 +268,6 @@ public class Ghost extends Actor {
                     setX(oldY);
                     this.bodyGhost.setLinearVelocity(0,0);
                 }
-
-
         }
 
     }

@@ -1,6 +1,7 @@
-package com.pacman;
+package com.pacman.Pantallas;
 
 import com.badlogic.gdx.Screen;
+import com.pacman.MainGame;
 
 // se usa clase abstracta para evitar implementar todos los metodos
 // ,cuando se usa, simplemente heredamos esta clase y redefinimos lo que necesitamos de ella

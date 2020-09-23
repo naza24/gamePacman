@@ -13,11 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.pacman.Entities.Pacman;
-import com.pacman.MainGame;
 
-import java.security.Policy;
-
-import static com.pacman.Constants.PIXELS_IN_METER;
+import static com.pacman.Constantes.Constants.PIXELS_IN_METER;
 
 public class ControllerButton extends Actor {
 

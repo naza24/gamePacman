@@ -1,15 +1,11 @@
 package com.pacman;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.pacman.Pantallas.GameOverScreen;
+import com.pacman.Pantallas.GameScreen;
+import com.pacman.Pantallas.LoadingScreen;
 
 
 public class MainGame extends Game {
@@ -34,20 +30,20 @@ public class MainGame extends Game {
 	}
 
 	// instancia principal a la pantalla de juego
-	public GameScreen gameScreen;
-
-	// Usuario del juego
-	private String usuario;
+	public com.pacman.Pantallas.GameScreen gameScreen;
 
 	// creo la pantalla de juego perdido
-	public GameOverScreen gameOverScreen;
+	public com.pacman.Pantallas.GameOverScreen gameOverScreen;
 
 	// pantalla de carga
-	public LoadingScreen loadingScreen;
+	public com.pacman.Pantallas.LoadingScreen loadingScreen;
 
 	// creamos un administrador de recursos para cargar las texturas y demas assets
 
 	private AssetManager manager;
+
+	// player que esta jugando
+	private String idPlayer;
 
 	@Override
 	public void create () {
@@ -123,21 +119,17 @@ public class MainGame extends Game {
 		manager.load("datos/dead ghost/dead_ghost_izquierda.png",Texture.class);
 		manager.load("datos/dead ghost/dead_ghost_arriba.png",Texture.class);
 
-
-		// cargamos los recursos
-	//	manager.finishLoading();
-
-	//	setScreen(gameScreen);
-
-	//}
-	// creo las pantallas
+	// creo las pantallas, inicialmente creo la de carga
 	loadingScreen = new LoadingScreen(this);
 	setScreen(loadingScreen);
 
 }
+
 	public void terminarDeCargar (){
 		this.gameOverScreen = new GameOverScreen(this);
 		this.gameScreen = new GameScreen(this);
+		// setear el player al game screen aca , gamescreen tendra PLAYER Y SCORE
+		// se lo pasara al gameover y en caso de apretar retry el score se volvera a 0
 		setScreen(gameScreen);
 	}
 
@@ -150,11 +142,10 @@ public class MainGame extends Game {
 		return manager;
 	}
 
-	public String getUsuario() {
-		return usuario;
-	}
+	public String getUsuario() {return idPlayer; }
 
+	//Metodos Modificadores
 	public void setUsuario(String idUsuario) {
-		this.usuario =idUsuario;
+		idPlayer =idUsuario;
 	}
 }

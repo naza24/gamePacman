@@ -1,4 +1,4 @@
-package com.pacman;
+package com.pacman.Constantes;
 
 import com.badlogic.gdx.math.Vector2;
 

@@ -1,4 +1,4 @@
-package com.pacman;
+package com.pacman.Constantes;
 
 public class Constants {
     /*Box2D y Scene2d trabajan en dimensiones distintas, box2d trabaja en  metros y scene2d en pixels

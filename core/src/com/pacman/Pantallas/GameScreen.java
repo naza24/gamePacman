@@ -1,4 +1,4 @@
-package com.pacman;
+package com.pacman.Pantallas;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -19,9 +19,11 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.pacman.Constantes.Constants;
 import com.pacman.Controller.ControllerButton;
 import com.pacman.Entities.Ghost;
 import com.pacman.Entities.Pacman;
+import com.pacman.MainGame;
 
 public class GameScreen extends BasicScreen {
 
@@ -78,7 +80,7 @@ public class GameScreen extends BasicScreen {
         // cargo el cartel de puntaje
         this.labelScore = new Label("", skin);
 
-        labelScore.setWidth(0.5F*Constants.PIXELS_IN_METER);
+        labelScore.setWidth(0.5F* Constants.PIXELS_IN_METER);
         labelScore.setHeight(2F*Constants.PIXELS_IN_METER);
 
         labelScore.setPosition(stage.getWidth() - labelScore.getWidth() , labelScore.getHeight()/7);
@@ -107,6 +109,13 @@ public class GameScreen extends BasicScreen {
 
         Gdx.input.setInputProcessor(stage);
 
+
+
+        // AGREGAR UN METODO EN MAINGAME PARA MANDAR EL PUNTAJE HACIA LA PANTALLA GAME OVE,,
+        // CUANDO SE APRETE RETRY NO PASA NADA PERO SI APRETAS EL OTRO BOTON QFALTA AGREGAR
+        //RETORNA A MAIN MENU CON EL PUNTAJE Y ESTE DEBE ALMACENARLO EN LA BD
+
+
         world.setContactListener(new ContactListener() {
             @Override
             public void beginContact(Contact contact) {
@@ -120,174 +129,32 @@ public class GameScreen extends BasicScreen {
                     contact.getFixtureA().setSensor(true);
                 }
 
-                //////////////////////// hacer un metodo
                 if(colisionaron(contact,"pacman","rojo")){
                     /* Si pacman esta bonificado el fantasma muere ,
                         caso contrario de q ya este muerto evita la colision*/
 
-                    if(pacman.isBonificado() || !fantasmaRojo.isAlive()){
-                        if(pacman.isBonificado()){
-                            fantasmaRojo.setAlive(false);
-                        }
-                        contact.getFixtureA().setSensor(true);
-                    }
-                    if(!pacman.isBonificado()){
-                        // para que no sigan colisionando
-                        if(pacman.isAlive() && fantasmaRojo.isAlive()){
-                            pacman.dead();
-                            //game.setScreen(game.gameOverScreen);
-                            //falta agregarle el delay
-                            //game.setScreen(game.gameOverScreen);
-                            // addaction es para hacer animaciones
-                            stage.addAction(
-                                    // para efectuar una secuencia de acciones utilizamos Actions Secuences.
-                                    //Que es una secuencia de acciones
-
-                                    // es para dar la accion de esperar unos segundos
-                                    Actions.sequence(
-                                            Actions.delay(5f), // QUE ESPERO 1,5 SEGUNDOS
-                                            // Creo una accion de run para lanzar la pantalla de game Over
-                                            Actions.run(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    // el hilo ejecutara el lanzamiento de la pantalla con
-                                                    // la variable que se inicializo en main game
-
-
-                                                    // AGREGAR UN METODO EN MAINGAME PARA MANDAR EL PUNTAJE HACIA LA PANTALLA GAME OVE,,
-                                                    // CUANDO SE APRETE RETRY NO PASA NADA PERO SI APRETAS EL OTRO BOTON QFALTA AGREGAR
-                                                    //RETORNA A MAIN MENU CON EL PUNTAJE Y ESTE DEBE ALMACENARLO EN LA BD
-
-                                                    game.irGameOver();
-                                                   // game.setScreen(game.gameOverScreen);
-                                                }
-                                            })
-                                    )
-                            );
-                        }
-                        // espera unos segundos y lanza la pantalla game over
-                        contact.getFixtureA().setSensor(true);
-                    }
+                    pacmanChocoFantasma(pacman, fantasmaRojo, contact);
                 }
-                ////////////////////////// hasta aca
+
                 if(colisionaron(contact,"pacman","azul")){
                     /* Si pacman esta bonificado el fantasma muere ,
                         caso contrario de q ya este muerto evita la colision*/
 
-                    if(pacman.isBonificado() || !fantasmaAzul.isAlive()){
-                        if(pacman.isBonificado()){
-                            fantasmaAzul.setAlive(false);
-                        }
-                        contact.getFixtureA().setSensor(true);
-                    }
-                    if(!pacman.isBonificado()){
-                        if(pacman.isAlive() && fantasmaAzul.isAlive()){
-                            pacman.dead();
-                            //game.setScreen(game.gameOverScreen);
-                            // addaction es para hacer animaciones
-                            stage.addAction(
-                                    // para efectuar una secuencia de acciones utilizamos Actions Secuences.
-                                    //Que es una secuencia de acciones
-
-                                    // es para dar la accion de esperar unos segundos
-                                    Actions.sequence(
-                                            Actions.delay(5f), // QUE ESPERO 1,5 SEGUNDOS
-                                            // Creo una accion de run para lanzar la pantalla de game Over
-                                            Actions.run(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    // el hilo ejecutara el lanzamiento de la pantalla con
-                                                    // la variable que se inicializo en main game
-                                                    game.setScreen(game.gameOverScreen);
-                                                }
-                                            })
-                                    )
-                            );
-//                            game.setScreen(game.gameOverScreen);
-                        }
-                        // espera unos segundos y lanza la pantalla game over
-                        contact.getFixtureA().setSensor(true);
-                    }
+                    pacmanChocoFantasma(pacman, fantasmaAzul, contact);
 
                 }
                 if(colisionaron(contact,"pacman","rosa")){
                     /* Si pacman esta bonificado el fantasma muere ,
                         caso contrario de q ya este muerto evita la colision*/
 
-                    if(pacman.isBonificado() || !fantasmaRosa.isAlive()){
-                        if(pacman.isBonificado()){
-                            fantasmaRosa.setAlive(false);
-                        }
-                        contact.getFixtureA().setSensor(true);
-                    }
-                    if(!pacman.isBonificado()){
-                        if(pacman.isAlive() && fantasmaRosa.isAlive()){
-                            pacman.dead();
-                           // game.setScreen(game.gameOverScreen);
-                       //game.setScreen(game.gameOverScreen);
-                            // addaction es para hacer animaciones
-                            stage.addAction(
-                                    // para efectuar una secuencia de acciones utilizamos Actions Secuences.
-                                    //Que es una secuencia de acciones
-
-                                    // es para dar la accion de esperar unos segundos
-                                    Actions.sequence(
-                                            Actions.delay(5f), // QUE ESPERO 1,5 SEGUNDOS
-                                            // Creo una accion de run para lanzar la pantalla de game Over
-                                            Actions.run(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    // el hilo ejecutara el lanzamiento de la pantalla con
-                                                    // la variable que se inicializo en main game
-                                                    game.setScreen(game.gameOverScreen);
-                                                }
-                                            })
-                                    )
-                            );
-                        }
-
-                        // espera unos segundos y lanza la pantalla game over
-                        contact.getFixtureA().setSensor(true);
-                    }
+                    pacmanChocoFantasma(pacman, fantasmaRosa, contact);
 
                 }
                 if(colisionaron(contact,"pacman","naranja")){
                     /* Si pacman esta bonificado el fantasma muere ,
                         caso contrario de q ya este muerto evita la colision*/
 
-                    if(pacman.isBonificado() || !fantasmaNaranja.isAlive()){
-                        if(pacman.isBonificado()){
-                            fantasmaNaranja.setAlive(false);
-                        }
-                        contact.getFixtureA().setSensor(true);
-                    }
-                    if(!pacman.isBonificado()){
-                        if(pacman.isAlive()&& fantasmaNaranja.isAlive()){
-                            pacman.dead();
-                            //game.setScreen(game.gameOverScreen);
-                            // addaction es para hacer animaciones
-                            stage.addAction(
-                                    // para efectuar una secuencia de acciones utilizamos Actions Secuences.
-                                    //Que es una secuencia de acciones
-
-                                    // es para dar la accion de esperar unos segundos
-                                    Actions.sequence(
-                                            Actions.delay(5f), // QUE ESPERO 1,5 SEGUNDOS
-                                            // Creo una accion de run para lanzar la pantalla de game Over
-                                            Actions.run(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    // el hilo ejecutara el lanzamiento de la pantalla con
-                                                    // la variable que se inicializo en main game
-                                                   game.setScreen(game.gameOverScreen);
-                                                }
-                                            })
-                                    )
-                            );
-                        }
-                        // espera unos segundos y lanza la pantalla game over
-                        contact.getFixtureA().setSensor(true);
-                    }
+                    pacmanChocoFantasma(pacman, fantasmaNaranja, contact);
                 }
             }
 
@@ -316,12 +183,50 @@ public class GameScreen extends BasicScreen {
             private boolean collisionGhostGhost(Contact contact, String ghost1, String ghost2){
                 boolean retorno = false;
 
-                if( colisionaron(contact, "rojo", "azul")   || colisionaron(contact, "rojo", "rosa")   ||
-                        colisionaron(contact, "rojo", "naranja")|| colisionaron(contact, "azul", "rosa")   ||
-                        colisionaron(contact, "azul", "naranja")|| colisionaron(contact, "rosa", "naranja")){
-                    retorno = true;
-                }
+                if( colisionaron(contact, "rojo", "azul")
+                 || colisionaron(contact, "rojo", "rosa")
+                 || colisionaron(contact, "rojo", "naranja")
+                 || colisionaron(contact, "azul", "rosa")
+                 || colisionaron(contact, "azul", "naranja")
+                 || colisionaron(contact, "rosa", "naranja")){ retorno = true;}
+
                 return retorno;
+            }
+            private void pacmanChocoFantasma(Pacman pacman, Ghost fantasma, Contact contact){
+
+                if(pacman.isBonificado() || !fantasma.isAlive()){
+                    if(pacman.isBonificado()){
+                        fantasma.setAlive(false);
+                    }
+                    contact.getFixtureA().setSensor(true);
+                }
+                if(!pacman.isBonificado()){
+                    if(pacman.isAlive()&& fantasma.isAlive()){
+                        pacman.dead();
+                        //game.setScreen(game.gameOverScreen);
+                        // addaction es para hacer animaciones
+                        stage.addAction(
+                                // para efectuar una secuencia de acciones utilizamos Actions Secuences.
+                                //Que es una secuencia de acciones
+
+                                // es para dar la accion de esperar unos segundos
+                                Actions.sequence(
+                                        Actions.delay(5f), // QUE ESPERO 1,5 SEGUNDOS
+                                        // Creo una accion de run para lanzar la pantalla de game Over
+                                        Actions.run(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                // el hilo ejecutara el lanzamiento de la pantalla con
+                                                // la variable que se inicializo en main game
+                                                game.setScreen(game.gameOverScreen);
+                                            }
+                                        })
+                                )
+                        );
+                    }
+                    // espera unos segundos y lanza la pantalla game over
+                    contact.getFixtureA().setSensor(true);
+                }
             }
 
         });

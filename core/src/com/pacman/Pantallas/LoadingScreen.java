@@ -1,4 +1,4 @@
-package com.pacman;
+package com.pacman.Pantallas;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.FillViewport;
-import com.pacman.BasicScreen;
+import com.pacman.MainGame;
 
 public class LoadingScreen extends BasicScreen {
     private Stage stage;

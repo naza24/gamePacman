@@ -14,15 +14,15 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-import static com.pacman.Constants.PACMAN_VELOCITY;
-import static com.pacman.Constants.PIXELS_IN_METER;
+import static com.pacman.Constantes.Constants.PACMAN_VELOCITY;
+import static com.pacman.Constantes.Constants.PIXELS_IN_METER;
 
 public class Pacman extends Actor {
 
     // Animacion de movimiento
     private Animation animacionMovimiento;
 
-    // Animacion de movimiento
+    // Animacion de muerte
     private Animation animacionMuerte;
 
     // Necesita conocer su textura
@@ -34,8 +34,10 @@ public class Pacman extends Actor {
     // ultima direccion
     int ultimaDireccion;
 
-    // si pacman esta vivo y si tiene la bonificacion para comer fantasmas
+    // si pacman esta vivo
     private boolean alive=true;
+
+    //tiene la bonificacion para comer fantasmas
     private boolean bonificado=false;
 
     // guarda la ultima rotacion para que no gire de golpe
@@ -163,20 +165,19 @@ public class Pacman extends Actor {
             // recupero el tiempo para saber q frame mostrar
             this.time= time + 0.01f;
             retorno = (Texture) this.animacionMuerte.getKeyFrame(time,false);
-            // le doy origen al actor en el centro de masa
-            this.setOrigin(getWidth()/2, getHeight()/2);
+
         }else{
             if(this.bodyPacman.getLinearVelocity().x != 0 || this.bodyPacman.getLinearVelocity().y!=0){
                 // recupero el tiempo para saber q frame mostrar
                 this.time= time + Gdx.graphics.getDeltaTime();
                 retorno = (Texture) this.animacionMovimiento.getKeyFrame(time,true);
-                // le doy origen al actor en el centro de masa
-                this.setOrigin(getWidth()/2, getHeight()/2);
 
             }else{
                 retorno = this.texturePacman[0];
             }
         }
+        // le doy origen al actor en el centro de masa
+        this.setOrigin(getWidth()/2, getHeight()/2);
 
         return retorno;
     }
@@ -267,7 +268,8 @@ public class Pacman extends Actor {
         return this.collisionLayer.getCell(posicionX,posicionY)
                                   .getTile().getProperties().containsKey(key);
     }
-   // retorna 0 si es nulo o si no tiene valor y de lo contrario retorna el valor de ese punto
+
+   // retorna 0 si es nulo o si no tiene valor y de lo contrario retorna el valor de ese punto con el que colisiono
     private int collisionedPoint( int posicionX,int posicionY, String key){
 
         Integer result= new Integer(0);
@@ -281,10 +283,7 @@ public class Pacman extends Actor {
             if(cell.getTile().getProperties().containsKey("miedo")){
                 this.setBonificado(true);
             }
-//            if(result !=null){
-
                 return result.intValue();
-  //           }
         }
         return result.intValue();
     }
