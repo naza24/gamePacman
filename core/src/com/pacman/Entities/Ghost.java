@@ -32,8 +32,8 @@ public class Ghost extends Actor {
     private Animation animacionMovimientoMuerteArriba;
 
     //estados, miedo y vivo
-    private boolean fear/*=false*/;
-    private boolean alive/*=true*/;
+    private boolean fear;
+    private boolean alive;
 
     // arreglo que guarda el recorrido de el fantasma
     private Recorrido recorrido;
@@ -147,7 +147,7 @@ public class Ghost extends Actor {
                     if(this.isAlive()){
                         retorno = (Texture) this.animacionMovimientoDerecha.getKeyFrame(time,true);
                     }else{
-                        retorno = (Texture) this.animacionMovimientoMuerteDerecha.getKeyFrame(0,true);
+                        retorno = (Texture) this.animacionMovimientoMuerteDerecha.getKeyFrame(time,true);
                     }
                 }
 
@@ -155,7 +155,7 @@ public class Ghost extends Actor {
                     if(this.isAlive()){
                         retorno = (Texture) this.animacionMovimientoIzquierda.getKeyFrame(time,true);
                     }else{
-                        retorno = (Texture) this.animacionMovimientoMuerteIzquierda.getKeyFrame(0,true);
+                        retorno = (Texture) this.animacionMovimientoMuerteIzquierda.getKeyFrame(time,true);
                     }
                 }
 
@@ -164,7 +164,7 @@ public class Ghost extends Actor {
                     if(this.isAlive()){
                         retorno = (Texture) this.animacionMovimientoArriba.getKeyFrame(time,true);
                     }else{
-                        retorno = (Texture) this.animacionMovimientoMuerteArriba.getKeyFrame(0,true);
+                        retorno = (Texture) this.animacionMovimientoMuerteArriba.getKeyFrame(time,true);
                     }
                 }
 
@@ -173,7 +173,7 @@ public class Ghost extends Actor {
                     if(this.isAlive()){
                         retorno = (Texture) this.animacionMovimientoAbajo.getKeyFrame(time,true);
                     }else{
-                        retorno = (Texture) this.animacionMovimientoMuerteAbajo.getKeyFrame(0,true);
+                        retorno = (Texture) this.animacionMovimientoMuerteAbajo.getKeyFrame(time,true);
                     }
                 }
 
@@ -254,7 +254,6 @@ public class Ghost extends Actor {
                             posiciony = (int)(getY() / tileHeight);
 
                         }
-
                         collisionY = collisionedBlock(posicionx,posiciony,"blocked");
                     }
                 }

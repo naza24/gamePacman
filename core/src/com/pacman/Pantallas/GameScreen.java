@@ -328,10 +328,10 @@ public class GameScreen extends BasicScreen {
                                   (TiledMapTileLayer)map.getLayers().get(1),// cargo terreno primero
                                   (TiledMapTileLayer) map.getLayers().get(0));// puntos despues
 
-         botonIzquierdo= new ControllerButton(this.world,pacman,textBtnIzquierda,0,new Vector2(controls.x-0.6f,controls.y));
+         botonIzquierdo= new ControllerButton(this.world,pacman,textBtnIzquierda,-2,new Vector2(controls.x-0.6f,controls.y));
          botonArriba= new ControllerButton(this.world,pacman,textBtnArriba,1,new Vector2(controls.x,controls.y+0.6f));
          botonDerecha= new ControllerButton(this.world,pacman,textBtnDerecha,2,new Vector2(controls.x+0.6f,controls.y));
-         botonAbajo= new ControllerButton(this.world,pacman,textBtnAbajo,3,new Vector2(controls.x,controls.y-0.6f));
+         botonAbajo= new ControllerButton(this.world,pacman,textBtnAbajo,-1,new Vector2(controls.x,controls.y-0.6f));
 
         //Agrego los actores al escenario
         stage.addActor(pacman);

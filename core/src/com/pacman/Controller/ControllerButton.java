@@ -26,7 +26,7 @@ public class ControllerButton extends Actor {
 
     private int direccion;
 
-    // direction 0->izquierda, 1->arriba 2->derecha 3->abajo
+    // direction -2->izquierda, 1->arriba 2->derecha -1->abajo
 
     public ControllerButton(final World myWorld, final Pacman pacman, Texture textureButton, final int direccion, Vector2 posicion ){
     //Genera el boton y desde la clase externa creara un rectangulo q contendra los botones

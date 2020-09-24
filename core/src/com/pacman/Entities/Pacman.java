@@ -31,17 +31,14 @@ public class Pacman extends Actor {
     // tiempo para rotar las animacione
     private float time;
 
-    // ultima direccion
-    int ultimaDireccion;
-
     // si pacman esta vivo
     private boolean alive=true;
 
     //tiene la bonificacion para comer fantasmas
     private boolean bonificado=false;
 
-    // guarda la ultima rotacion para que no gire de golpe
-    float ultimaRotacion;
+    // almacena la direccion y segun esta su rotacion
+    Direccion direccion;
 
     // necesita conocer su figura, su body y su world
     private Fixture fixturePacman;
@@ -79,11 +76,8 @@ public class Pacman extends Actor {
         // inicializo el contador de puntaje
         this.score = new Score();
 
-        // la direccion inicial es 0
-        this.ultimaDireccion=0;
-
-        // doy la rotacion inicial de 0 grados
-        this.ultimaRotacion = 0f;
+        // inicializo las direcciones con el constructor
+        direccion = new Direccion();
 
         // creo el bodyDef que internamente posee el Body
         BodyDef bodyDefPacman = new BodyDef();
@@ -117,17 +111,6 @@ public class Pacman extends Actor {
         // declaro el tamaño del actor medio metro
         setSize(PIXELS_IN_METER*0.45f ,PIXELS_IN_METER*0.45f);
 
-/*
-        this.addListener(new InputListener(){
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                Gdx.app.log("Example", "touch started at (" + x + ", " + y + ")");
-                return true;
-            }
-
-        });
-*/
-
         shapePacman.dispose();
     }
 
@@ -136,8 +119,6 @@ public class Pacman extends Actor {
     public void draw(Batch batch, float parentAlpha) {
         Texture frameActual = animarPacman(time);
         // aqui agrego la altura y ancho de pixeles dnd quier colocar las cosas
-        // seria 320 - 22,5 de ancho y 180 - 22.5 de alto
-//        this.setPosition((getStage().getWidth() /2) - getWidth()/2, (getStage().getHeight() /2) - getHeight()/2);
 
         this.setPosition(this.bodyPacman.getPosition().x * PIXELS_IN_METER,
                          this.bodyPacman.getPosition().y *PIXELS_IN_METER);
@@ -145,15 +126,8 @@ public class Pacman extends Actor {
          (SetPosition)con el alto y el ancho que dimos en el metodo setSize*/
         TextureRegion textureRegion = new TextureRegion(frameActual);
 
-        int direccionActual = direccion(); // 0 -1
-        float rotacion = rotar(direccionActual); //0°  270°
 
-        this.ultimaDireccion = direccionActual; // 0   -1
-
-        if(rotacion!=0f){ //
-            this.ultimaRotacion= rotacion; // 270°
-        }
-        batch.draw(textureRegion,getX(),getY(),getOriginX(),getOriginY(),getWidth(),getHeight(),1,1,ultimaRotacion);
+        batch.draw(textureRegion,getX(),getY(),getOriginX(),getOriginY(),getWidth(),getHeight(),1,1,direccion.getRotacion());
 
     }
 
@@ -251,14 +225,15 @@ public class Pacman extends Actor {
                 //puede ser que salte error cuando quiera comprobar si no esta celda tiene algo
                 this.pointsLayer.setCell(posicionx,posiciony,null);
             }
-
-            if(collisionX){
-                setX(oldX);
+            // si colisiono entra
+            if(collisionX || collisionY ){
+                if(collisionX){
+                    setX(oldX);
+                }else{
+                    setY(oldY);
+                }
                 this.bodyPacman.setLinearVelocity(0,0);
-            }
-            if(collisionY){
-                setX(oldY);
-                this.bodyPacman.setLinearVelocity(0,0);
+                direccion.parar();
             }
         }
     }
@@ -297,133 +272,32 @@ public class Pacman extends Actor {
         world.destroyBody(bodyPacman);
     }
 
-    public void avanzar(int direccion){
+    // este metodo es el que comunica el controlador de los botones de movimiento con pacman
+    public void avanzar(int sentido){
         // agregar esta sentencia cuando se agrega el escenari o
         // agregar primero todos los puntos para comer y luego agregar el escenario encima de estos puntos
      if(isAlive()){
 
-         switch (direccion){
-             case(0):
+         switch (sentido){
+             case(2):
+                 this.bodyPacman.setLinearVelocity(PACMAN_VELOCITY,0);
+                 direccion.irDerecha();
+                 break;
+             case(-2):
                  this.bodyPacman.setLinearVelocity(-PACMAN_VELOCITY,0);
+                 direccion.irIzquierda();
                  break;
              case(1):
                  this.bodyPacman.setLinearVelocity(0,PACMAN_VELOCITY);
+                 direccion.irArriba();
                  break;
-             case(2):
-                 this.bodyPacman.setLinearVelocity(PACMAN_VELOCITY,0);
-                 break;
+                 // el default es hacia abajo
              default:
                  this.bodyPacman.setLinearVelocity(0,-PACMAN_VELOCITY);
+                 direccion.irAbajo();
                  break;
          }
      }
-    }
-    // -2 direccion izquierda, 2 direccion derecha, -1 abajo, 1 arriba, 0 detenido
-    private int direccion (){
-        Vector2 movimiento = this.bodyPacman.getLinearVelocity();
-        int direccion = 0;
-
-        if(movimiento.x != 0 || movimiento.y!=0){
-            if(movimiento.x >0){
-                direccion=2;
-            }else{
-                if(movimiento.x<0){
-                    direccion=-2;
-                }
-            }
-
-            if(movimiento.y>0){
-                direccion = 1;
-            }else{
-                if(movimiento.y<0){
-                    direccion=-1;
-                }
-            }
-        }
-        return direccion;
-    }
-
-    private float rotar(int direccion){
-    float grados =0 ;
-
-        if( this.ultimaDireccion == 0 || this.ultimaDireccion == 2){
-            switch (direccion){
-                case (-2):
-                    grados = 180f;
-                    break;
-                case (-1):
-                    grados=270f;
-                    break;
-                case (1):
-                    grados=90f;
-                    break;
-                case(0):
-                    grados=this.ultimaRotacion;
-                break;
-                case(2):
-                    grados=360f;
-                    break;
-            }
-        }
-
-        if(ultimaDireccion == -2){
-            switch(direccion){
-                case(1):
-                grados = 90f;
-                break;
-                case(2):
-                grados = 360f;
-                break;
-                case(-1):
-                grados = 270f;
-                break;
-                case(-2):
-                grados = 0f;
-                break;
-                case(0):
-                    grados=this.ultimaRotacion;
-                break;
-            }
-        }
-        if(ultimaDireccion == 1){
-            switch(direccion){
-                case(1):
-                    grados = 0f;
-                    break;
-                case(2):
-                    grados = 360f;
-                    break;
-                case(-1):
-                    grados = 270f;
-                    break;
-                case(-2):
-                    grados = 180f;
-                    break;
-                case(0):
-                    grados=this.ultimaRotacion;
-                    break;
-            }
-        }
-        if(ultimaDireccion == -1){
-            switch(direccion){
-                case(1):
-                    grados = 90f;
-                    break;
-                case(2):
-                    grados = 270f;
-                    break;
-                case(-1):
-                    grados = 0f;
-                    break;
-                case(-2):
-                    grados = 180f;
-                    break;
-                case(0):
-                    grados=this.ultimaRotacion;
-                break;
-            }
-        }
-        return grados;
     }
 
     public void setAlive(boolean alive) {
