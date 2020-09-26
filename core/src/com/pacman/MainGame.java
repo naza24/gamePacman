@@ -30,13 +30,13 @@ public class MainGame extends Game {
 	}
 
 	// instancia principal a la pantalla de juego
-	public com.pacman.Pantallas.GameScreen gameScreen;
+	public GameScreen gameScreen;
 
 	// creo la pantalla de juego perdido
-	public com.pacman.Pantallas.GameOverScreen gameOverScreen;
+	public GameOverScreen gameOverScreen;
 
 	// pantalla de carga
-	public com.pacman.Pantallas.LoadingScreen loadingScreen;
+	public LoadingScreen loadingScreen;
 
 	// creamos un administrador de recursos para cargar las texturas y demas assets
 
@@ -45,9 +45,12 @@ public class MainGame extends Game {
 	// player que esta jugando
 	private String idPlayer;
 
+	private int puntajePlayer;
+
 	@Override
 	public void create () {
-		this.manager = new AssetManager();
+		manager = new AssetManager();
+		puntajePlayer=0;
 
 		// cargamos los recursos
 
@@ -144,8 +147,15 @@ public class MainGame extends Game {
 
 	public String getUsuario() {return idPlayer; }
 
+	public int getPuntajePlayer() { return puntajePlayer; }
+
 	//Metodos Modificadores
+
 	public void setUsuario(String idUsuario) {
 		idPlayer =idUsuario;
+	}
+
+	public void setPuntajePlayer(int puntajePlayer) {
+		this.puntajePlayer = puntajePlayer;
 	}
 }

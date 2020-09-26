@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.pacman.AndroidLauncher;
+import com.pacman.MainActivity;
 import com.pacman.MainGame;
 import com.pacman.R;
 import com.pacman.controllers.MenuPrincipalController;
@@ -66,9 +67,12 @@ public class MenuPrincipalFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
+        if (getArguments() != null) {/*
             this.puntaje = getArguments().getInt("puntaje");
-            Toast.makeText(getContext(),"  la huevada esta es  "+puntaje, Toast.LENGTH_LONG).show();
+            this.idUsuario = getArguments().getString("usuario");
+
+            Toast.makeText(getContext(),"  puntaje: "+puntaje+" usuario: "+idUsuario, Toast.LENGTH_LONG).show();*/
+
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
@@ -101,10 +105,12 @@ public class MenuPrincipalFragment extends Fragment {
         // si es distinto de null es por q esta logueado y estamos en esa pantalla
         if(usuario!=null) {
             idUsuario = getArguments().getString("usuario");
+            puntaje = getArguments().getInt("puntaje");
 
             // cargo el txtView con el idUsuario
             usuario.setText("Usuario: "+idUsuario);
 
+            Toast.makeText(getContext(),"  puntaje: "+puntaje+" usuario: "+idUsuario, Toast.LENGTH_LONG).show();
         }
         // despues acomodar esto ,, el controlador esta despues por lo que salta error si llama al controlador
         // creo el controller y le paso el idUsuario por que seguramente se necesite para en futuro actualizar los scores
@@ -138,18 +144,24 @@ public class MenuPrincipalFragment extends Fragment {
         btnJugar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent lanzadorJuego = new Intent(getContext(), AndroidLauncher.class);
+                Intent lanzadorJuego = new Intent(getActivity(), AndroidLauncher.class);
                 // Le mando el usuario al juego
                 Bundle bun = new Bundle();
                 bun.putString("usuario",idUsuario);
+                Toast.makeText(getContext(), "idUsuario : "+ idUsuario , Toast.LENGTH_SHORT).show();
+                lanzadorJuego.putExtras(bun);
 
-                startActivity(lanzadorJuego,bun);
+                Toast.makeText(getContext(), "la concha de tu madre "+idUsuario, Toast.LENGTH_SHORT).show();
+                startActivity(lanzadorJuego);
+
+                // finalizo la mainActivity antes de lanzar el juego
+               getActivity().finish();
+
             }
         });
     }
 
-
-      /* este metodo es el que se sobreescribe para poder guardar los campos antes de rotar el dispositivo,
+    /* este metodo es el que se sobreescribe para poder guardar los campos antes de rotar el dispositivo,
      cuando se rota el dispositivo se destruye la activity o fragment y se crea uno nuevo */
 
     // recordar que para que un textview se mantenga hay q agregar en el xml android:freezesText="true"

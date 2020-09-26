@@ -15,10 +15,15 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 public class AndroidLauncher extends AndroidApplication implements MainGame.MyGameCallBack {
+
+	String idUsuario;
+
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
+
+		idUsuario="";
 
 		// creamos una instancia de juego y le seteamos la callBack
 		MainGame game = new MainGame();
@@ -26,20 +31,26 @@ public class AndroidLauncher extends AndroidApplication implements MainGame.MyGa
 		// como androidLauncher implementa la interfaz solo le pasamos la referencia a la clase
 		game.setMyGameCallBack(this);
 
-//		String idUsuario = getIntent().getExtras().getString("usuario");
-		// Le asigno el usuario
-//		game.setUsuario(idUsuario);
+		// recupero el idUsuario y se lo asigno al MainGame
+		Bundle bundle = getIntent().getExtras();
 
+		if(bundle!=null) {
+		   idUsuario = bundle.getString("usuario");
+		}
+
+		System.out.println("usuario en andoridLauncher: "+idUsuario);
+		game.setUsuario(idUsuario);
+
+		// lanzo el juego
 		initialize(game, config);
 	}
 
 	@Override
 	public void volverMenuPrincipal(String idUsuario, int puntaje) {
 
-		// lanzo una activity principal , pero con las banderas hago q limpie la pila hasta la propia instancia de mainActivity
-		Intent intent = new Intent(this, MainActivity.class)
-								  .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP
-										  	| Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		// lanzo una activity principal
+		Intent intent = new Intent(this, MainActivity.class);
+
 		Bundle arg = new Bundle();
 
 		arg.putInt("puntaje", puntaje);

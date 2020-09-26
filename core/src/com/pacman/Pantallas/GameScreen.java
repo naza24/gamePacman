@@ -98,9 +98,6 @@ public class GameScreen extends BasicScreen {
         // recupero el tiempo
         tiempoFear = 10f;
 
-        // para entrar en modo debug
-         //stage.setDebugAll(true);
-
         // las coordenadas centrales de dond quiero el pad
         Vector2 controls = new Vector2(12,0.9f);
 
@@ -108,12 +105,6 @@ public class GameScreen extends BasicScreen {
         tmr = new OrthogonalTiledMapRenderer(map);
 
         Gdx.input.setInputProcessor(stage);
-
-
-
-        // AGREGAR UN METODO EN MAINGAME PARA MANDAR EL PUNTAJE HACIA LA PANTALLA GAME OVE,,
-        // CUANDO SE APRETE RETRY NO PASA NADA PERO SI APRETAS EL OTRO BOTON QFALTA AGREGAR
-        //RETORNA A MAIN MENU CON EL PUNTAJE Y ESTE DEBE ALMACENARLO EN LA BD
 
 
         world.setContactListener(new ContactListener() {
@@ -137,30 +128,20 @@ public class GameScreen extends BasicScreen {
                 }
 
                 if(colisionaron(contact,"pacman","azul")){
-                    /* Si pacman esta bonificado el fantasma muere ,
-                        caso contrario de q ya este muerto evita la colision*/
-
                     pacmanChocoFantasma(pacman, fantasmaAzul, contact);
-
                 }
+
                 if(colisionaron(contact,"pacman","rosa")){
-                    /* Si pacman esta bonificado el fantasma muere ,
-                        caso contrario de q ya este muerto evita la colision*/
-
                     pacmanChocoFantasma(pacman, fantasmaRosa, contact);
-
                 }
-                if(colisionaron(contact,"pacman","naranja")){
-                    /* Si pacman esta bonificado el fantasma muere ,
-                        caso contrario de q ya este muerto evita la colision*/
 
+                if(colisionaron(contact,"pacman","naranja")){
                     pacmanChocoFantasma(pacman, fantasmaNaranja, contact);
                 }
             }
 
             @Override
             public void endContact(Contact contact) {
-
                 contact.getFixtureA().setSensor(false);
             }
 
@@ -217,8 +198,11 @@ public class GameScreen extends BasicScreen {
                                             @Override
                                             public void run() {
                                                 // el hilo ejecutara el lanzamiento de la pantalla con
-                                                // la variable que se inicializo en main game
-                                                game.setScreen(game.gameOverScreen);
+                                                // la variable que se inicializo en main game, pero antes le asigno el puntaje
+                                                String aux = labelScore.getText().toString().trim();
+                                                int score = Integer.parseInt(aux);
+                                                game.setPuntajePlayer(score);
+                                                game.irGameOver();
                                             }
                                         })
                                 )

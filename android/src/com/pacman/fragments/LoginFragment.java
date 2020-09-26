@@ -8,16 +8,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
 import com.pacman.R;
 import com.pacman.controllers.LoginController;
 
-//import com.example.android.jugadorandroid.R;
-//import com.example.android.jugadorandroid.controllers.LoginController;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -51,6 +47,7 @@ public class LoginFragment extends Fragment {
      * @return A new instance of fragment LoginFragment.
      */
     // TODO: Rename and change types and number of parameters
+
     public static LoginFragment newInstance(String param1, String param2) {
         LoginFragment fragment = new LoginFragment();
         Bundle args = new Bundle();

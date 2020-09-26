@@ -1,6 +1,8 @@
 package com.pacman.controllers;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -9,6 +11,8 @@ import androidx.room.Room;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 
+import com.pacman.AndroidLauncher;
+import com.pacman.MainActivity;
 import com.pacman.R;
 import com.pacman.config.Constantes;
 import com.pacman.database.AppDatabase;
@@ -73,5 +77,15 @@ public class MenuPrincipalController extends AndroidApplication {
             bd.usuarioDao().updateEntities(userAux);
             miVista.mostrarText("Se actualizo el puntaje");
         }
+    }
+
+    public void lanzarJuego() {
+
+            NavController nav= Navigation.findNavController(findViewById(R.id.fragment1));
+
+            Bundle bundle = new Bundle();
+            bundle.putString("usuario",idUsuarioLog);
+
+            nav.navigate(R.id.fragment1,bundle);
     }
 }

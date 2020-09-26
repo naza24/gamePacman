@@ -58,7 +58,7 @@ public class GameOverScreen extends BasicScreen{
         retry.setPosition(stage.getWidth()/2 -this.retry.getWidth()/2 ,stage.getHeight()/4 );
 
         quit.setSize(100,30);
-        quit.setPosition(stage.getWidth()/2 -this.retry.getWidth()/2 ,stage.getHeight()/5 );
+        quit.setPosition(stage.getWidth()/2 -this.retry.getWidth()/2 ,stage.getHeight()/7 );
 
 
         // agrego el cartel y el boton al escenario
@@ -71,7 +71,7 @@ public class GameOverScreen extends BasicScreen{
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 // a el juego le damos la pantalla del juego principal (una nueva)
-                game.setScreen(new GameScreen(game));
+                game.setScreen(new GameScreen(game)); // aca hay q setearle el usuario de nuevo
             }
         });
 
@@ -80,8 +80,8 @@ public class GameOverScreen extends BasicScreen{
             public void changed(ChangeEvent event, Actor actor) {
                 // obtenemos la llamada de retorno de mainGame y ejecutamos
                 // el metodo para volver al menu principal con el puntaje
-
-                game.getMyGameCallBack().volverMenuPrincipal(game.getUsuario(),3);
+                /*System.out.println(game.getUsuario()+" ........ ");*/
+                game.getMyGameCallBack().volverMenuPrincipal(game.getUsuario(),game.getPuntajePlayer());
             }
         });
     }
