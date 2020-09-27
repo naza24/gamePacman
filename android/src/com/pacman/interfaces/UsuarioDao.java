@@ -10,6 +10,7 @@ import com.pacman.entidades.Usuario;
 //import com.example.android.jugadorandroid.entidades.Usuario;
 
 import java.util.List;
+import java.util.Set;
 
 // Aqui se desarrollan los metodos que se comunicaran con la bd , las querys
 @Dao
@@ -52,5 +53,10 @@ public interface UsuarioDao {
     @Query("SELECT * FROM "+ Usuario.TABLE_NAME + " WHERE nombre like :nom ")
     Usuario getUsuario(String nom);
 
+    @Update
+    int updateUsuario(Usuario user);
 
+    // ACTUALIZO EL PUNTAJE
+    @Query("UPDATE "+ Usuario.TABLE_NAME + " SET puntajeMaximo =:puntaje WHERE nombre like :nom")
+    int updateUsuarioPuntaje(int puntaje, String nom);
 }

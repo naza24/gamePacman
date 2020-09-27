@@ -36,6 +36,7 @@ public class Usuario {
     public Usuario( String nombre, String contrasenia, int puntajeMaximo) {
         this.nombre = nombre;
         this.contrasenia = contrasenia;
+        this.puntajeMaximo=puntajeMaximo;
     }
 
     // Se agrega esto para que room no tnga en cuenta el constructor vacio
@@ -61,11 +62,11 @@ public class Usuario {
     }
 
     public int getPuntajeMaximo() {
-        return puntajeMaximo;
+            return puntajeMaximo;
     }
 
-    public void setPuntajeMaximo(int puntajeMaximo) {
-        this.puntajeMaximo = puntajeMaximo;
+    public void setPuntajeMaximo(int puntaje) {
+        this.puntajeMaximo = puntaje;
     }
 }
 

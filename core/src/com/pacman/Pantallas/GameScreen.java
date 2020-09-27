@@ -173,7 +173,7 @@ public class GameScreen extends BasicScreen {
 
                 return retorno;
             }
-            private void pacmanChocoFantasma(Pacman pacman, Ghost fantasma, Contact contact){
+            private void pacmanChocoFantasma(final Pacman pacman, Ghost fantasma, Contact contact){
 
                 if(pacman.isBonificado() || !fantasma.isAlive()){
                     if(pacman.isBonificado()){
@@ -199,8 +199,9 @@ public class GameScreen extends BasicScreen {
                                             public void run() {
                                                 // el hilo ejecutara el lanzamiento de la pantalla con
                                                 // la variable que se inicializo en main game, pero antes le asigno el puntaje
-                                                String aux = labelScore.getText().toString().trim();
-                                                int score = Integer.parseInt(aux);
+                                                //String aux = labelScore.getText().toString().trim();
+                                                //int score = Integer.parseInt(aux);
+                                                int score = (pacman.getPuntaje()).getScore();
                                                 game.setPuntajePlayer(score);
                                                 game.irGameOver();
                                             }

@@ -67,12 +67,7 @@ public class MenuPrincipalFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {/*
-            this.puntaje = getArguments().getInt("puntaje");
-            this.idUsuario = getArguments().getString("usuario");
-
-            Toast.makeText(getContext(),"  puntaje: "+puntaje+" usuario: "+idUsuario, Toast.LENGTH_LONG).show();*/
-
+        if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
@@ -102,20 +97,24 @@ public class MenuPrincipalFragment extends Fragment {
         /* recupero el usuario del bundle q se mando desde el login, si es nulo por
          que estoy en la pantalla de juego no lo analizo*/
 
+        // despues acomodar esto ,, el controlador esta despues por lo que salta error si llama al controlador
+        // creo el controller y le paso el idUsuario por que seguramente se necesite para en futuro actualizar los scores
+
         // si es distinto de null es por q esta logueado y estamos en esa pantalla
         if(usuario!=null) {
             idUsuario = getArguments().getString("usuario");
             puntaje = getArguments().getInt("puntaje");
-
+/*
+            if(puntaje!=0){
+                menuPrincipalController.actualizarPuntaje(puntaje);
+            }*/
             // cargo el txtView con el idUsuario
             usuario.setText("Usuario: "+idUsuario);
 
             Toast.makeText(getContext(),"  puntaje: "+puntaje+" usuario: "+idUsuario, Toast.LENGTH_LONG).show();
         }
-        // despues acomodar esto ,, el controlador esta despues por lo que salta error si llama al controlador
-        // creo el controller y le paso el idUsuario por que seguramente se necesite para en futuro actualizar los scores
-        this.menuPrincipalController = new MenuPrincipalController(this);
-
+        menuPrincipalController = new MenuPrincipalController(this);
+        menuPrincipalController.actualizarPuntaje(puntaje);
 
          /*llamamos a este metodo que se encarga de cargar los campos que se
          recuperaron luego de la nueva creacion del fragment */
@@ -144,7 +143,8 @@ public class MenuPrincipalFragment extends Fragment {
         btnJugar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent lanzadorJuego = new Intent(getActivity(), AndroidLauncher.class);
+                menuPrincipalController.lanzarJuego();
+              /*  Intent lanzadorJuego = new Intent(getActivity(), AndroidLauncher.class);
                 // Le mando el usuario al juego
                 Bundle bun = new Bundle();
                 bun.putString("usuario",idUsuario);
@@ -155,7 +155,7 @@ public class MenuPrincipalFragment extends Fragment {
                 startActivity(lanzadorJuego);
 
                 // finalizo la mainActivity antes de lanzar el juego
-               getActivity().finish();
+               getActivity().finish();*/
 
             }
         });

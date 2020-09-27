@@ -69,23 +69,33 @@ public class MenuPrincipalController extends AndroidApplication {
     public void actualizarPuntaje(int pun) {
         // recupero el usuario para actualizar el puntaje en caso de que sea necesario
         Usuario userAux = bd.usuarioDao().getUsuario(this.idUsuarioLog);
+//        System.out.println("usuario a actualizar puntaje "+userAux.getNombre()+" con: "+userAux.getContrasenia()+" puntaje: "+userAux.getPuntajeMaximo());
 
-        if(userAux.getPuntajeMaximo()<pun){
-            userAux.setPuntajeMaximo(pun);
-
+        if(pun > userAux.getPuntajeMaximo()){
+          /*  userAux.setPuntajeMaximo(pun);
+            System.out.println("puntaje del usuario luego del set: "+userAux.getPuntajeMaximo());*/
             // actualizo el usuario en la bd
-            bd.usuarioDao().updateEntities(userAux);
-            miVista.mostrarText("Se actualizo el puntaje");
+           // System.out.println("usuario "+idUsuarioLog+" puntaje: "+pun);
+//            if(bd.usuarioDao().updateUsuario(userAux)>0){
+                if(bd.usuarioDao().updateUsuarioPuntaje(pun,idUsuarioLog)>0){
+                miVista.mostrarText("Se actualizo el puntaje");
+            }/*
+            Usuario userAux2 = bd.usuarioDao().getUsuario(this.idUsuarioLog);
+            System.out.println("usuario actualizado "+userAux2.getNombre()+" con: "+userAux2.getContrasenia()+" puntaje: "+userAux2.getPuntajeMaximo());*/
         }
     }
 
     public void lanzarJuego() {
 
-            NavController nav= Navigation.findNavController(findViewById(R.id.fragment1));
+        Intent lanzadorJuego = new Intent(miVista.getActivity(), AndroidLauncher.class);
+        // Le mando el usuario al juego
+        Bundle bun = new Bundle();
+        bun.putString("usuario",idUsuarioLog);
+        Toast.makeText(miVista.getContext(), "idUsuario : "+ idUsuarioLog , Toast.LENGTH_SHORT).show();
+        lanzadorJuego.putExtras(bun);
 
-            Bundle bundle = new Bundle();
-            bundle.putString("usuario",idUsuarioLog);
+        miVista.startActivity(lanzadorJuego);
 
-            nav.navigate(R.id.fragment1,bundle);
-    }
+        // finalizo la mainActivity antes de lanzar el juego
+        miVista.getActivity().finish();    }
 }
