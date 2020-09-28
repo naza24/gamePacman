@@ -2,6 +2,8 @@ package com.pacman;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.pacman.Pantallas.GameOverScreen;
 import com.pacman.Pantallas.GameScreen;
@@ -53,6 +55,12 @@ public class MainGame extends Game {
 		puntajePlayer=0;
 
 		// cargamos los recursos
+
+		// Sonidos de Pacman
+		manager.load("datos/sounds/pacman-song.mp3", Sound.class);
+		manager.load("datos/sounds/pacman-dies.mp3", Sound.class);
+		manager.load("datos/sounds/pacman-waka-waka.mp3", Music.class);
+		manager.load("datos/sounds/pacman-eating-ghost.mp3", Sound.class);
 
 		// Textura de pacman
 		manager.load("datos/pac_man_0.png",Texture.class);

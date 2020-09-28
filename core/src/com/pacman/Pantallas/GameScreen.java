@@ -1,6 +1,8 @@
 package com.pacman.Pantallas;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -63,6 +65,12 @@ public class GameScreen extends BasicScreen {
     private ControllerButton botonDerecha;
     private ControllerButton botonAbajo;
 
+    // sonidos
+    private Sound soundDie;
+    private Music soundWaka;
+    private Sound soundInit;
+    private Sound soundGhostDie;
+
     public MainGame game;
 
     public GameScreen(MainGame game) {
@@ -85,6 +93,11 @@ public class GameScreen extends BasicScreen {
 
         labelScore.setPosition(stage.getWidth() - labelScore.getWidth() , labelScore.getHeight()/7);
 
+        //cargo los sonidos
+        soundDie = game.getAssetManager().get("datos/sounds/pacman-dies.mp3");
+        soundGhostDie = game.getAssetManager().get("datos/sounds/pacman-eating-ghost.mp3");
+        soundInit = game.getAssetManager().get("datos/sounds/pacman-song.mp3");
+        soundWaka = game.getAssetManager().get("datos/sounds/pacman-waka-waka.mp3");
 
         // Defino el mundo y le paso los paramtros para la gravedad
         world = new World(new Vector2(0,0),true);
@@ -175,16 +188,15 @@ public class GameScreen extends BasicScreen {
             }
             private void pacmanChocoFantasma(final Pacman pacman, Ghost fantasma, Contact contact){
 
-                if(pacman.isBonificado() || !fantasma.isAlive()){
-                    if(pacman.isBonificado()){
-                        fantasma.setAlive(false);
-                    }
-                    contact.getFixtureA().setSensor(true);
+                if(pacman.isBonificado() && fantasma.isAlive()){
+                    fantasma.setAlive(false);
+                    soundGhostDie.play(0.5f);
                 }
-                if(!pacman.isBonificado()){
+
+                 if(!pacman.isBonificado()){
                     if(pacman.isAlive()&& fantasma.isAlive()){
                         pacman.dead();
-                        //game.setScreen(game.gameOverScreen);
+                        soundDie.play(0.5f,0.9f,0);
                         // addaction es para hacer animaciones
                         stage.addAction(
                                 // para efectuar una secuencia de acciones utilizamos Actions Secuences.
@@ -199,8 +211,6 @@ public class GameScreen extends BasicScreen {
                                             public void run() {
                                                 // el hilo ejecutara el lanzamiento de la pantalla con
                                                 // la variable que se inicializo en main game, pero antes le asigno el puntaje
-                                                //String aux = labelScore.getText().toString().trim();
-                                                //int score = Integer.parseInt(aux);
                                                 int score = (pacman.getPuntaje()).getScore();
                                                 game.setPuntajePlayer(score);
                                                 game.irGameOver();
@@ -209,11 +219,10 @@ public class GameScreen extends BasicScreen {
                                 )
                         );
                     }
-                    // espera unos segundos y lanza la pantalla game over
-                    contact.getFixtureA().setSensor(true);
                 }
+                 // los actores se traspasan el uno al otro  para continuar el recorrido
+                contact.getFixtureA().setSensor(true);
             }
-
         });
 
         // recupero las texturas
@@ -331,6 +340,7 @@ public class GameScreen extends BasicScreen {
         stage.addActor(botonArriba);
         stage.addActor(botonDerecha);
         stage.addActor(botonAbajo);
+
     }
 
     // cada vez q se cierra la pantalla o se va a otra
@@ -413,6 +423,13 @@ public class GameScreen extends BasicScreen {
 
             }
 
+            if(pacman.enMovimimento()){
+                if(!soundWaka.isPlaying()){
+                    soundWaka.play();
+                }
+            }else{
+                soundWaka.pause();
+            }
         tmr.setView((OrthographicCamera) stage.getCamera());
 
         tmr.render();

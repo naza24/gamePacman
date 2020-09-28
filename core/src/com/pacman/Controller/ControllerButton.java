@@ -60,9 +60,6 @@ public class ControllerButton extends Actor {
         this.addListener(new InputListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                Gdx.app.log("Ejemplo", "se toco la pantalla en  (" + x + ", " + y + ")");
-
-
                 pacman.avanzar(direccion);
                 return true;
             }

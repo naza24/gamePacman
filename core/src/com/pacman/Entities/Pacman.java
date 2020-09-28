@@ -1,6 +1,8 @@
 package com.pacman.Entities;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -13,6 +15,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.pacman.MainGame;
 
 import static com.pacman.Constantes.Constants.PACMAN_VELOCITY;
 import static com.pacman.Constantes.Constants.PIXELS_IN_METER;
@@ -56,7 +59,7 @@ public class Pacman extends Actor {
     private Score score;
 
     // Al constructor se le pasa el mundo, la textura y un vector con la posicion inicial
-    public Pacman(World myWorld, Texture tex[], Vector2 position,TiledMapTileLayer pointsLayer,  TiledMapTileLayer collision ){
+    public Pacman(World myWorld, Texture[] tex, Vector2 position, TiledMapTileLayer pointsLayer, TiledMapTileLayer collision){
 
         // inicia pacman con estado normal y vivo
         this.alive=true;
@@ -137,7 +140,7 @@ public class Pacman extends Actor {
         if(!this.alive){
 
             // recupero el tiempo para saber q frame mostrar
-            this.time= time + 0.01f;
+            this.time= time + 0.03f;
             retorno = (Texture) this.animacionMuerte.getKeyFrame(time,false);
 
         }else{
@@ -185,7 +188,6 @@ public class Pacman extends Actor {
         int posiciony=0;
 
         if((velocidad.x!=0 || velocidad.y!=0) && !collisionX && !collisionY ){
-
        if(velocidad.x!=0){
            //adelanto el actor para ver la colission
            setX(getX()+(velocidad.x *delta));
@@ -324,5 +326,14 @@ public class Pacman extends Actor {
         this.alive= false;
         this.bodyPacman.setLinearVelocity(0,0);
         this.time=0f;
+    }
+
+    public boolean enMovimimento(){
+        if(bodyPacman.getLinearVelocity().x != 0 ||
+           bodyPacman.getLinearVelocity().y != 0){
+            return true;
+        }else{
+            return false;
+        }
     }
 }
