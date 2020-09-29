@@ -313,12 +313,20 @@ public class Ghost extends Actor {
     }
 
 
-    public void setFear(boolean fear) {
-        this.fear = fear;
+    public void fearOn() {
+        this.fear = true;
     }
 
-    public void setAlive(boolean alive) {
-        this.alive = alive;
+    public void fearOff() {
+        this.fear = false;
+    }
+
+    public void dead() {
+        this.alive = false;
+    }
+
+    public void live() {
+        this.alive = true;
     }
 
     public boolean isFear() {
@@ -327,5 +335,9 @@ public class Ghost extends Actor {
 
     public boolean isAlive() {
         return alive;
+    }
+
+    public void setRecorrido(int numRecorrido){
+        this.recorrido=  new Recorrido(numRecorrido,0);
     }
 }

@@ -24,8 +24,6 @@ public class Pacman extends Actor {
 
     // Animacion de movimiento
     private Animation animacionMovimiento;
-
-    // Animacion de muerte
     private Animation animacionMuerte;
 
     // Necesita conocer su textura
@@ -34,10 +32,8 @@ public class Pacman extends Actor {
     // tiempo para rotar las animacione
     private float time;
 
-    // si pacman esta vivo
+    // si pacman esta vivo o bonificado para comer fantasmas
     private boolean alive=true;
-
-    //tiene la bonificacion para comer fantasmas
     private boolean bonificado=false;
 
     // almacena la direccion y segun esta su rotacion
@@ -49,13 +45,12 @@ public class Pacman extends Actor {
     private World world;
 
     // mapa de bloques, para analizar colisiones
-    private
-    TiledMapTileLayer collisionLayer;
+    private TiledMapTileLayer collisionLayer;
 
     // mapa de bloques para analizar las coliciones pero con los puntos
     private TiledMapTileLayer pointsLayer;
 
-    // puntaje del jugador (referenciando a cada jugador )
+    // puntaje del jugador, el cual se ingrementa cuando pacman choca con un punto
     private Score score;
 
     // Al constructor se le pasa el mundo, la textura y un vector con la posicion inicial
@@ -128,7 +123,6 @@ public class Pacman extends Actor {
         /* Lo dibujo con la Textura, Posicion X e Y inicial que q le asignamos previamente
          (SetPosition)con el alto y el ancho que dimos en el metodo setSize*/
         TextureRegion textureRegion = new TextureRegion(frameActual);
-
 
         batch.draw(textureRegion,getX(),getY(),getOriginX(),getOriginY(),getWidth(),getHeight(),1,1,direccion.getRotacion());
 
