@@ -313,23 +313,23 @@ public class GameScreen extends BasicScreen {
         // limpio el buffer de video
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-            if(this.pacman.isBonificado() ){
+            if(this.pacman.isBonificado() ) {
                 fantasmaRojo.fearOn();
                 fantasmaAzul.fearOn();
-                fantasmaNaranja.fearOn();;
-                fantasmaRosa.fearOn();;
+                fantasmaNaranja.fearOn();
+                fantasmaRosa.fearOn();
 
                 // si el fantasma fue comido se le va el fear
-                if(!fantasmaRojo.isAlive()){
+                if (!fantasmaRojo.isAlive()) {
                     fantasmaRojo.fearOff();
                 }
-                if(!fantasmaAzul.isAlive()){
+                if (!fantasmaAzul.isAlive()) {
                     fantasmaAzul.fearOff();
                 }
-                if(!fantasmaNaranja.isAlive()){
+                if (!fantasmaNaranja.isAlive()) {
                     fantasmaNaranja.fearOff();
                 }
-                if(!fantasmaRosa.isAlive()){
+                if (!fantasmaRosa.isAlive()) {
                     fantasmaRosa.fearOff();
                 }
 
@@ -339,9 +339,9 @@ public class GameScreen extends BasicScreen {
 
                 /* cuando llega a 0 o menos lo desactivo,
                 seteo de nuevo el tiempo y desactivo las animaciones*/
-                if(this.tiempoFear<=0 && !pacman.isBonificado()){
+                if(this.tiempoFear<=0){
                     this.pacman.setBonificado(false);
-                    tiempoFear = 10f;
+                    this.tiempoFear = 10f;
                     fantasmaRojo.fearOff();
                     fantasmaAzul.fearOff();
                     fantasmaNaranja.fearOff();
