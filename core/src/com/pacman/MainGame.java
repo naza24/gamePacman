@@ -61,6 +61,7 @@ public class MainGame extends Game {
 		manager.load("datos/sounds/pacman-dies.mp3", Sound.class);
 		manager.load("datos/sounds/pacman-waka-waka.mp3", Music.class);
 		manager.load("datos/sounds/pacman-eating-ghost.mp3", Sound.class);
+		manager.load("datos/sounds/pacman-alarm.mp3", Music.class);
 
 		// Textura de pacman
 		manager.load("datos/pac_man_0.png",Texture.class);

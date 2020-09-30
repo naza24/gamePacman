@@ -57,9 +57,6 @@ public class GameScreen extends BasicScreen {
     private Ghost fantasmaAzul;
     private Ghost fantasmaNaranja;
 
-    // tiempo en segundos que dura el modo fear
-    private float tiempoFear;
-
     // Label que muestar el puntaje
     private Label labelScore;
 
@@ -76,6 +73,7 @@ public class GameScreen extends BasicScreen {
     private Sound soundDie;
     private Music soundWaka;
     private Sound soundInit;
+    private Music soundAlarm;
     private Sound soundGhostDie;
 
     public MainGame game;
@@ -104,6 +102,7 @@ public class GameScreen extends BasicScreen {
         soundGhostDie = game.getAssetManager().get("datos/sounds/pacman-eating-ghost.mp3");
         soundInit = game.getAssetManager().get("datos/sounds/pacman-song.mp3");
         soundWaka = game.getAssetManager().get("datos/sounds/pacman-waka-waka.mp3");
+        soundAlarm = game.getAssetManager().get("datos/sounds/pacman-alarm.mp3");
 
         // Defino el mundo y le paso los paramtros para la gravedad
         world = new World(new Vector2(0,0),true);
@@ -113,9 +112,6 @@ public class GameScreen extends BasicScreen {
     // Cuando se muestra la pantalla se carga lo que aparece dentro de este metodo
     @Override
     public void show() {
-
-        // recupero el tiempo
-        tiempoFear = 10f;
 
         /* Las coordenadas centrales de dond quiero el pad,
          en base a esto se posicionan los controllerButtons */
@@ -129,9 +125,6 @@ public class GameScreen extends BasicScreen {
         world.setContactListener(new ContactListener() {
             @Override
             public void beginContact(Contact contact) {
-                /*String c1 = (String) contact.getFixtureA().getUserData();
-                String c2 = (String) contact.getFixtureB().getUserData();
-*/
                 /* si colisionan dos fantasmas, desactivo la colision en uno al iniciar el
                  contacto y lo vuelvo a activar al finalizar el choque */
 
@@ -193,6 +186,7 @@ public class GameScreen extends BasicScreen {
 
                 if(pacman.isBonificado() && fantasma.isAlive()){
                     fantasma.dead();
+                    fantasma.fearOff();
                     soundGhostDie.play(0.5f);
                 }
 
@@ -313,49 +307,32 @@ public class GameScreen extends BasicScreen {
         // limpio el buffer de video
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-            if(this.pacman.isBonificado() ) {
-                fantasmaRojo.fearOn();
-                fantasmaAzul.fearOn();
-                fantasmaNaranja.fearOn();
-                fantasmaRosa.fearOn();
+        if(pacman.isBonificado()){
 
-                // si el fantasma fue comido se le va el fear
-                if (!fantasmaRojo.isAlive()) {
-                    fantasmaRojo.fearOff();
-                }
-                if (!fantasmaAzul.isAlive()) {
-                    fantasmaAzul.fearOff();
-                }
-                if (!fantasmaNaranja.isAlive()) {
-                    fantasmaNaranja.fearOff();
-                }
-                if (!fantasmaRosa.isAlive()) {
-                    fantasmaRosa.fearOff();
-                }
+            if(pacman.resetBonificacion(delta)){
 
-             /*disminuyo el tiempo de tiempo fear,el proporcional
-              de veces por segundo correspondientes a frame*/
-                this.tiempoFear= this.tiempoFear-delta;
-
-                /* cuando llega a 0 o menos lo desactivo,
-                seteo de nuevo el tiempo y desactivo las animaciones*/
-                if(this.tiempoFear<=0){
-                    this.pacman.setBonificado(false);
-                    this.tiempoFear = 10f;
-                    fantasmaRojo.fearOff();
-                    fantasmaAzul.fearOff();
-                    fantasmaNaranja.fearOff();
-                    fantasmaRosa.fearOff();
+                if(fantasmaRojo.isAlive()){
+                    fantasmaRojo.fearOn();
+                }
+                if(fantasmaAzul.isAlive()){
+                    fantasmaAzul.fearOn();
+                }
+                if(fantasmaNaranja.isAlive()){
+                    fantasmaNaranja.fearOn();
+                }
+                if(fantasmaRosa.isAlive()){
+                    fantasmaRosa.fearOn();
                 }
             }
+        }else {
+            fantasmaRojo.fearOff();
+            fantasmaAzul.fearOff();
+            fantasmaNaranja.fearOff();
+            fantasmaRosa.fearOff();
+        }
 
-            if(pacman.enMovimimento()){
-                if(!soundWaka.isPlaying()){
-                    soundWaka.play();
-                }
-            }else{
-                soundWaka.pause();
-            }
+        playAlarma();
+        playWaka();
         tmr.setView((OrthographicCamera) stage.getCamera());
 
         tmr.render();
@@ -365,13 +342,11 @@ public class GameScreen extends BasicScreen {
         // Actualizo los actores
         stage.act();
 
-
         //Actualizo el mundo, delta indica cuando fue la ultima vez que se ejecuto render
         world.step(delta,6,2);
 
         /*dibujar todos los actores, Siempre dibujar despues de hacer
         las actualizaciones y cualquier comprobacion que se requiera*/
-
         stage.draw();
     }
 
@@ -379,8 +354,25 @@ public class GameScreen extends BasicScreen {
     sin esto cada vez q se inicia el juego se iria sobrecargando la memoria */
     @Override
     public void dispose() {
-
         stage.dispose();
         world.dispose();
+    }
+
+    private void playAlarma(){
+        if(pacman.isBonificado() & !soundAlarm.isPlaying()){
+            soundAlarm.setVolume(0.5f);
+            soundAlarm.play();
+        }else{
+            soundAlarm.stop();
+        }
+    }
+
+    private void playWaka(){
+
+        if(pacman.enMovimimento() & !soundWaka.isPlaying()){
+                soundWaka.play();
+        }else{
+            soundWaka.pause();
+        }
     }
 }

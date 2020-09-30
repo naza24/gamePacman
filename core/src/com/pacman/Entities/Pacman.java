@@ -33,8 +33,8 @@ public class Pacman extends Actor {
     private float time;
 
     // si pacman esta vivo o bonificado para comer fantasmas
-    private boolean alive=true;
-    private boolean bonificado=false;
+    private boolean alive;
+    private float tiempoBonificado;
 
     // almacena la direccion y segun esta su rotacion
     Direccion direccion;
@@ -58,7 +58,9 @@ public class Pacman extends Actor {
 
         // inicia pacman con estado normal y vivo
         this.alive=true;
-        this.bonificado=false;
+
+        // inicia sin tiempo Bonificado para comer fantasmas
+        tiempoBonificado=0;
 
         this.world= myWorld;
         this.texturePacman = new Texture[]{tex[0], tex[1], tex[2], tex[3], tex[4], tex[5],
@@ -132,7 +134,6 @@ public class Pacman extends Actor {
         Texture retorno;
 
         if(!this.alive){
-
             // recupero el tiempo para saber q frame mostrar
             this.time= time + 0.03f;
             retorno = (Texture) this.animacionMuerte.getKeyFrame(time,false);
@@ -252,12 +253,14 @@ public class Pacman extends Actor {
             result = (Integer) cell.getTile().getProperties().get("valor");
             // si recupero algo es por que ese bloque tenia ese atributo
             if(cell.getTile().getProperties().containsKey("miedo")){
-                this.setBonificado(true);
+               // this.setBonificado(true);
+                tiempoBonificado=10;
             }
                 return result.intValue();
         }
         return result.intValue();
     }
+
     // para destruir los objetos de nuestro mundo
     public void detach(){
 
@@ -300,16 +303,17 @@ public class Pacman extends Actor {
         this.alive = alive;
     }
 
-    public void setBonificado(boolean bonificado) {
-        this.bonificado = bonificado;
-    }
-
     public boolean isAlive() {
         return alive;
     }
 
     public boolean isBonificado() {
-        return bonificado;
+
+        if(tiempoBonificado>=0){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     public Score getPuntaje(){
@@ -329,5 +333,18 @@ public class Pacman extends Actor {
         }else{
             return false;
         }
+    }
+
+    /* sirve para ver si el pacman reinicio su bonificacion agarrando un puntoMax,
+     y actualiza el tiempo de bonificacion de pacman, del lado de gamScreen*/
+    public boolean resetBonificacion(float tiempoDelta){
+        boolean reset = false;
+            if(tiempoBonificado==10){
+                reset=true;
+            }
+            // actualizo el tiempo bonificado de pacman, con el tiempo de cada render de gameScreen
+            tiempoBonificado= tiempoBonificado - tiempoDelta;
+
+            return reset;
     }
 }

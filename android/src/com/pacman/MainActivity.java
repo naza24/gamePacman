@@ -23,10 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         if(bundle!=null){
-          /*  int pun =  bundle.getInt("puntaje");
-            Toast.makeText(this, "esta mierda es "+pun+ " nom:"+bundle.getString("usuario"), Toast.LENGTH_SHORT).show();*/
             NavController nav= Navigation.findNavController(findViewById(R.id.fragment1));
-
             nav.navigate(R.id.menuPrincipalFragment,bundle);
 
         }
