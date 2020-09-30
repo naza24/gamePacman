@@ -18,7 +18,7 @@ public abstract class FabricaActores{
 
     // se le pasa un objeto recurso , en el caso del pacman y los fantasmas sera un mapa,
     // en el caso de el pad sera el pacman que se vea afectado por la interaccion sobre este
-    public abstract Actor crearActor( World myWorld, Vector2 posicion, Object Recurso);
+    //public abstract Actor crearActor( World myWorld, Vector2 posicion, Object Recurso);
 
     // comportamiento comun a todos los actores,
     public void setManager(AssetManager manager){

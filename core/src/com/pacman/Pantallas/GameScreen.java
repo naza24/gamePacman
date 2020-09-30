@@ -24,14 +24,11 @@ import com.pacman.Controller.ControllerButton;
 import com.pacman.Entities.Ghost;
 import com.pacman.Entities.Pacman;
 import com.pacman.MainGame;
-import com.pacman.factoryMethod.factoryController.FabricaBtnAbajo;
+import com.pacman.factoryMethod.factoryController.FabricaBotones;
 import com.pacman.factoryMethod.factoryController.FabricaBtnArriba;
 import com.pacman.factoryMethod.factoryController.FabricaBtnDerecho;
 import com.pacman.factoryMethod.factoryController.FabricaBtnIzquierdo;
-import com.pacman.factoryMethod.factoryEntities.FabricaGhostBlue;
-import com.pacman.factoryMethod.factoryEntities.FabricaGhostOrange;
-import com.pacman.factoryMethod.factoryEntities.FabricaGhostPink;
-import com.pacman.factoryMethod.factoryEntities.FabricaGhostRed;
+import com.pacman.factoryMethod.factoryEntities.FabricaGhost;
 import com.pacman.factoryMethod.factoryEntities.FabricaPacman;
 
 public class GameScreen extends BasicScreen {
@@ -222,30 +219,20 @@ public class GameScreen extends BasicScreen {
             }
         });
 
-        FabricaGhostBlue fabBlue = new FabricaGhostBlue(game.getAssetManager());
-        fantasmaAzul = (Ghost)fabBlue.crearActor(world, new Vector2(6.3f,3.2f), map);
-
-        FabricaGhostRed fabRed = new FabricaGhostRed(game.getAssetManager());
-        fantasmaRojo = (Ghost)fabRed.crearActor(world, new Vector2(6.6f,3.2f), map);
-
-        FabricaGhostPink fabPink = new FabricaGhostPink(game.getAssetManager());
-        fantasmaRosa = (Ghost)fabPink.crearActor(world, new Vector2(7.6f,3.2f), map);
-
-        FabricaGhostOrange fabOrange = new FabricaGhostOrange(game.getAssetManager());
-        fantasmaNaranja = (Ghost)fabOrange.crearActor(world, new Vector2(8.2f,3.2f), map);
-
         FabricaPacman fabPacman = new FabricaPacman(game.getAssetManager());
         pacman = (Pacman) fabPacman.crearActor(world, new Vector2(7.3f,2.1f), map);
 
-        FabricaBtnDerecho fabDerecho = new FabricaBtnDerecho(game.getAssetManager());
-        FabricaBtnIzquierdo fabIzquierdo = new FabricaBtnIzquierdo(game.getAssetManager());
-        FabricaBtnArriba fabArriba = new FabricaBtnArriba(game.getAssetManager());
-        FabricaBtnAbajo fabAbajo = new FabricaBtnAbajo(game.getAssetManager());
+        FabricaGhost fabricaGhost = new FabricaGhost(game.getAssetManager());
+        fantasmaAzul = (Ghost) fabricaGhost.crearGhostBlue(world, new Vector2(6.3f,3.2f), map);
+        fantasmaRojo = (Ghost) fabricaGhost.crearGhostRed(world, new Vector2(6.6f,3.2f), map);
+        fantasmaRosa = (Ghost) fabricaGhost.crearGhostPink(world,  new Vector2(7.6f,3.2f), map);
+        fantasmaNaranja = (Ghost) fabricaGhost.crearGhostOrange(world, new Vector2(8.2f,3.2f), map);
 
-        botonIzquierdo = (ControllerButton) fabIzquierdo.crearActor(world,controls,pacman);
-        botonArriba    = (ControllerButton) fabArriba.crearActor(world,controls,pacman);
-        botonDerecha   = (ControllerButton) fabDerecho.crearActor(world,controls,pacman);
-        botonAbajo     = (ControllerButton) fabAbajo.crearActor(world,controls,pacman);
+        FabricaBotones fabBotones = new FabricaBotones(game.getAssetManager());
+        botonIzquierdo = (ControllerButton) fabBotones.crearBotonIzquierdo(world,controls,pacman);
+        botonDerecha = (ControllerButton) fabBotones.crearBotonDerecho(world,controls,pacman);
+        botonArriba = (ControllerButton) fabBotones.crearBotonArriba(world,controls,pacman);
+        botonAbajo = (ControllerButton) fabBotones.crearBotonAbajo(world,controls,pacman);
 
         /*Agrego los actores al escenario*/
 

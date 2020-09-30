@@ -20,7 +20,7 @@ public class FabricaGhostRed extends FabricaActores {
         super(manager);
     }
 
-    @Override
+
     public Actor crearActor(World myWorld, Vector2 posicion, Object map) {
 
 
