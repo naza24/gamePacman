@@ -356,40 +356,41 @@ public class GameScreen extends BasicScreen {
     }
 
     private void playAlarma() {
-        //if(sonidoOn){
-        if (pacman.isBonificado()) {
-            if (!soundAlarm.isPlaying()) {
-                //soundAlarm.setVolume(0.5f);
-                soundAlarm.play();
+        if(sonidoOn) {
+            if (pacman.isBonificado()) {
+                if (!soundAlarm.isPlaying()) {
+                    //soundAlarm.setVolume(0.5f);
+                    soundAlarm.play();
+                }
             }
-        }
 
-        if (soundAlarm.isPlaying() & !pacman.isBonificado()) {
-            soundAlarm.pause();
+            if (soundAlarm.isPlaying() & !pacman.isBonificado()) {
+                soundAlarm.pause();
+            }
         }
     }
 
     private void playWaka() {
-        //if (sonidoOn) {
-        if (pacman.enMovimimento()) {
-            if (!soundWaka.isPlaying()) {
-                soundWaka.play();
+        if (sonidoOn) {
+            if (pacman.enMovimimento()) {
+                if (!soundWaka.isPlaying()) {
+                    soundWaka.play();
+                }
             }
+            if (!pacman.enMovimimento() & soundWaka.isPlaying())
+                soundWaka.pause();
         }
-        if (!pacman.enMovimimento() & soundWaka.isPlaying())
-            soundWaka.pause();
     }
 
-
     private void playGhostDead() {
-    //    if(sonidoOn){
+        if(sonidoOn){
             soundGhostDie.play(0.5f);
-      //  }
+        }
     }
 
     private void playPacmanDead() {
-        //if(sonidoOn){
+        if(sonidoOn){
             soundDie.play(0.5f,0.9f,0);
-        //}
+        }
     }
 }
