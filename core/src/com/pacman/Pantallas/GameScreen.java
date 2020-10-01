@@ -359,13 +359,13 @@ public class GameScreen extends BasicScreen {
         //if(sonidoOn){
         if (pacman.isBonificado()) {
             if (!soundAlarm.isPlaying()) {
-                soundAlarm.setVolume(0.5f);
+                //soundAlarm.setVolume(0.5f);
                 soundAlarm.play();
             }
         }
 
         if (soundAlarm.isPlaying() & !pacman.isBonificado()) {
-            soundAlarm.stop();
+            soundAlarm.pause();
         }
     }
 
