@@ -104,14 +104,10 @@ public class MenuPrincipalFragment extends Fragment {
         if(usuario!=null) {
             idUsuario = getArguments().getString("usuario");
             puntaje = getArguments().getInt("puntaje");
-/*
-            if(puntaje!=0){
-                menuPrincipalController.actualizarPuntaje(puntaje);
-            }*/
+
             // cargo el txtView con el idUsuario
             usuario.setText("Usuario: "+idUsuario);
 
-            Toast.makeText(getContext(),"  puntaje: "+puntaje+" usuario: "+idUsuario, Toast.LENGTH_LONG).show();
         }
         menuPrincipalController = new MenuPrincipalController(this);
         menuPrincipalController.actualizarPuntaje(puntaje);

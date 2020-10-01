@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -24,6 +25,7 @@ public class LoginFragment extends Fragment {
 
     private LoginController loginController;
     EditText nombre, contrasenia;
+    Switch sonido;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -86,7 +88,7 @@ public class LoginFragment extends Fragment {
         Button ingresar = (Button)view.findViewById(R.id.idBtnRegis);
         nombre = (EditText) view.findViewById(R.id.etUsuario);
         contrasenia = (EditText) view.findViewById(R.id.etContrasenia);
-
+        sonido = (Switch) view.findViewById(R.id.idVolumen);
         loginController = new LoginController(this);
 
         /*llamamos a este metodo que se encarga de cargar los campos que se
@@ -160,6 +162,11 @@ public class LoginFragment extends Fragment {
     // retorno la contraseña en un string para analizarlo desde el controlador
     public String getContraseña() {
         return this.contrasenia.getText().toString();
+    }
+
+    // retorno la configuracion de sonido
+    public boolean sonidoOn() {
+        return sonido.isChecked();
     }
 
     //Muestra un texto por pantalla segun lo que el controlador le pase de text

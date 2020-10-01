@@ -1,6 +1,7 @@
 package com.pacman.controllers;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -77,6 +78,13 @@ public class LoginController {
         // simplemente deriba al llamador a la pantalla de menu principal y le paso el usuario q logueo
         Bundle arg = new Bundle();
         arg.putString("usuario", nombre);
+
+        // creo el archivo de sharedPreferences de la app con nombre configPacman y el modo private para q solo la app pueda leerlo
+        SharedPreferences config = miVista.getContext().getSharedPreferences("configPacman", Context.MODE_PRIVATE);
+        // editor del archivo
+        SharedPreferences.Editor editor = config.edit();
+        editor.putBoolean("sonido", miVista.sonidoOn());
+        editor.apply();     // actualizo los valores
 
         navController.navigate(R.id.menuPrincipalFragment, arg);
     }

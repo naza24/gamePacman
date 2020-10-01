@@ -11,6 +11,7 @@ import com.pacman.Pantallas.LoadingScreen;
 
 
 public class MainGame extends Game {
+
 // Game se usa para poder hacer juegos de pantallas multiples, que extiende a AplicationAdapter
 
 	// defino la interfaz de callback (llamada de retorno) al android launcher
@@ -46,6 +47,9 @@ public class MainGame extends Game {
 
 	// player que esta jugando
 	private String idPlayer;
+
+	// configuracion del sonido
+	private boolean sonido;
 
 	private int puntajePlayer;
 
@@ -166,5 +170,12 @@ public class MainGame extends Game {
 
 	public void setPuntajePlayer(int puntajePlayer) {
 		this.puntajePlayer = puntajePlayer;
+	}
+
+	public void setSonido(boolean sonidoAux) {
+		sonido = sonidoAux;
+	}
+	public boolean getSonido(){
+		return sonido;
 	}
 }

@@ -1,6 +1,8 @@
 package com.pacman;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -16,14 +18,17 @@ import androidx.navigation.Navigation;
 
 public class AndroidLauncher extends AndroidApplication implements MainGame.MyGameCallBack {
 
-	String idUsuario;
+	private String idUsuario;
+	private boolean sonido;
 
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 
-		idUsuario="";
+		SharedPreferences pref = getContext().getSharedPreferences("configPacman", Context.MODE_PRIVATE);
+
+//		idUsuario="";
 
 		// creamos una instancia de juego y le seteamos la callBack
 		MainGame game = new MainGame();
@@ -37,9 +42,10 @@ public class AndroidLauncher extends AndroidApplication implements MainGame.MyGa
 		if(bundle!=null) {
 		   idUsuario = bundle.getString("usuario");
 		}
+		sonido = pref.getBoolean("sonido", false);
 
-		System.out.println("usuario en andoridLauncher: "+idUsuario);
 		game.setUsuario(idUsuario);
+		game.setSonido(sonido);
 
 		// lanzo el juego
 		initialize(game, config);

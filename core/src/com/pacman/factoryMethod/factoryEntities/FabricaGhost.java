@@ -12,10 +12,6 @@ import com.pacman.factoryMethod.FabricaActores;
 
 public class FabricaGhost extends FabricaActores {
 
-    private Texture[] ghostGral;
-    private Texture [] ghostMiedoMuerte;
-    private Ghost ghost;
-
 
     public FabricaGhost(AssetManager manager) {
         super(manager);
@@ -49,10 +45,8 @@ public class FabricaGhost extends FabricaActores {
 
         TiledMapTileLayer capaTerreno = (TiledMapTileLayer)mapAux.getLayers().get(1);
 
-        ghost = new Ghost(myWorld, ghostOrange, ghostMiedoMuerte, posicion,
+        return  new Ghost(myWorld, ghostOrange, ghostMiedoMuerte, posicion,
                 capaTerreno,4, "naranja");
-
-        return ghost;
 
     }
     public Actor crearGhostBlue(World myWorld, Vector2 posicion, Object map) {
@@ -83,10 +77,8 @@ public class FabricaGhost extends FabricaActores {
 
         TiledMapTileLayer capaTerreno = (TiledMapTileLayer)mapAux.getLayers().get(1);
 
-        ghost = new Ghost(myWorld, ghostBlue, ghostMiedoMuerte, posicion,
+        return  new Ghost(myWorld, ghostBlue, ghostMiedoMuerte, posicion,
                 capaTerreno,1, "azul");
-
-        return ghost;
 
     }
 
@@ -117,10 +109,8 @@ public class FabricaGhost extends FabricaActores {
 
         TiledMapTileLayer capaTerreno = (TiledMapTileLayer)mapAux.getLayers().get(1);
 
-        ghost = new Ghost(myWorld, ghostPink, ghostMiedoMuerte, posicion,
+        return  new Ghost(myWorld, ghostPink, ghostMiedoMuerte, posicion,
                 capaTerreno,3, "rosa");
-
-        return ghost;
 
     }
 
@@ -151,10 +141,8 @@ public class FabricaGhost extends FabricaActores {
 
         TiledMapTileLayer capaTerreno = (TiledMapTileLayer)mapAux.getLayers().get(1);
 
-        ghost = new Ghost(myWorld, ghostRojo, ghostMiedoMuerte, posicion,
+        return  new Ghost(myWorld, ghostRojo, ghostMiedoMuerte, posicion,
                 capaTerreno,2, "rojo");
-
-        return ghost;
 
     }
 }
