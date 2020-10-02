@@ -21,13 +21,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.pacman.Constantes.Constants;
 import com.pacman.Controller.ControllerButton;
+import com.pacman.Entities.Fruta;
 import com.pacman.Entities.Ghost;
 import com.pacman.Entities.Pacman;
 import com.pacman.MainGame;
 import com.pacman.factoryMethod.factoryController.FabricaBotones;
-import com.pacman.factoryMethod.factoryController.FabricaBtnArriba;
-import com.pacman.factoryMethod.factoryController.FabricaBtnDerecho;
-import com.pacman.factoryMethod.factoryController.FabricaBtnIzquierdo;
+import com.pacman.factoryMethod.factoryEntities.FabricaFrutas;
 import com.pacman.factoryMethod.factoryEntities.FabricaGhost;
 import com.pacman.factoryMethod.factoryEntities.FabricaPacman;
 
@@ -65,6 +64,9 @@ public class GameScreen extends BasicScreen {
     private ControllerButton botonArriba;
     private ControllerButton botonDerecha;
     private ControllerButton botonAbajo;
+
+    // frutas
+    private Fruta fruta1;
 
     // sonidos
     private Sound soundDie;
@@ -114,6 +116,7 @@ public class GameScreen extends BasicScreen {
     @Override
     public void show() {
 
+        stage.setDebugAll(true);
         /* Las coordenadas centrales de dond quiero el pad,
          en base a esto se posicionan los controllerButtons */
         Vector2 controls = new Vector2(12, 0.9f);
@@ -128,8 +131,23 @@ public class GameScreen extends BasicScreen {
             public void beginContact(Contact contact) {
                 /* si colisionan dos fantasmas, desactivo la colision en uno al iniciar el
                  contacto y lo vuelvo a activar al finalizar el choque */
-
                 if (collisionGhostGhost(contact)) {
+                    contact.getFixtureA().setSensor(true);
+                }
+
+                if(colisionaron(contact, "pacman", "fruta123")){
+                    // si choco con una fruta , faltaria agregar otros tipo
+                    // de fruta y tratar la colision con un id segun la fruta
+                    System.out.println("choco con fruta");
+                    pacman.actualizarPuntaje(fruta1.getValor());
+                    fruta1.fueComida();
+                    soundGhostDie.play();
+                    contact.getFixtureA().setSensor(true);
+                }
+                if (colisionaron(contact, "rojo","fruta123") ||
+                    colisionaron(contact, "azul","fruta123") ||
+                    colisionaron(contact, "naranja","fruta123") ||
+                    colisionaron(contact, "rosa","fruta123")) {
                     contact.getFixtureA().setSensor(true);
                 }
 
@@ -189,14 +207,14 @@ public class GameScreen extends BasicScreen {
 
             private void pacmanChocoFantasma(final Pacman pacman, Ghost fantasma, Contact contact) {
 
-                if (pacman.isBonificado() && fantasma.isAlive()) {
+                if (pacman.isBonificado() & (fantasma.isAlive() & fantasma.isFear())) {
                     fantasma.dead();
                     fantasma.fearOff();
                     playGhostDead();
                 }
 
                 if (!pacman.isBonificado()) {
-                    if (pacman.isAlive() && fantasma.isAlive()) {
+                    if (pacman.isAlive() & fantasma.isAlive()) {
                         pacman.dead();
                         playPacmanDead();
 
@@ -243,6 +261,10 @@ public class GameScreen extends BasicScreen {
         botonArriba = (ControllerButton) fabBotones.crearBotonArriba(world, controls, pacman);
         botonAbajo = (ControllerButton) fabBotones.crearBotonAbajo(world, controls, pacman);
 
+        FabricaFrutas fabFrut = new FabricaFrutas(game.getAssetManager());
+        //fruta1 =(Fruta)fabFrut.crearFruta(world,new Vector2(22,9),map);
+        fruta1 =(Fruta)fabFrut.crearFruta(world,new Vector2(0.5f,0.5f),map);
+
         /*Agrego los actores al escenario*/
 
         stage.addActor(pacman);
@@ -258,6 +280,7 @@ public class GameScreen extends BasicScreen {
         stage.addActor(botonDerecha);
         stage.addActor(botonAbajo);
 
+        stage.addActor(fruta1);
     }
 
 
@@ -275,8 +298,10 @@ public class GameScreen extends BasicScreen {
         botonArriba.detach();
         botonDerecha.detach();
         botonAbajo.detach();
-        //remueve el actor del stage;
 
+        fruta1.detach();
+
+        //remueve el actor del stage;
         pacman.remove();
         fantasmaRosa.remove();
         fantasmaRojo.remove();
@@ -287,6 +312,8 @@ public class GameScreen extends BasicScreen {
         botonArriba.remove();
         botonDerecha.remove();
         botonAbajo.remove();
+
+        fruta1.remove();
 
         map.dispose();
         tmr.dispose();
@@ -359,7 +386,6 @@ public class GameScreen extends BasicScreen {
         if(sonidoOn) {
             if (pacman.isBonificado()) {
                 if (!soundAlarm.isPlaying()) {
-                    //soundAlarm.setVolume(0.5f);
                     soundAlarm.play();
                 }
             }
@@ -376,9 +402,11 @@ public class GameScreen extends BasicScreen {
                 if (!soundWaka.isPlaying()) {
                     soundWaka.play();
                 }
+            }else {
+                if(soundWaka.isPlaying()){
+                    soundWaka.pause();
+                }
             }
-            if (!pacman.enMovimimento() & soundWaka.isPlaying())
-                soundWaka.pause();
         }
     }
 

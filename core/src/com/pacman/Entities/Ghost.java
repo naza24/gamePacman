@@ -56,7 +56,6 @@ public class Ghost extends Actor {
     private
     TiledMapTileLayer collisionLayer;
 
-
     public Ghost(World myWorld, Texture tex[], Texture gral[] ,Vector2 position, TiledMapTileLayer collision, int numRecorrido , String id){
 
         // inicializo el fantasma sin modo fear y vivo
@@ -188,7 +187,6 @@ public class Ghost extends Actor {
         return retorno;
     }
 
-
     @Override
     public void act(float delta) {
 
@@ -280,7 +278,6 @@ public class Ghost extends Actor {
         world.destroyBody(bodyGhost);
     }
 
-
     public void avanzar(int direccion){
         // agregar esta sentencia cuando se agrega el escenari o
         // agregar primero todos los puntos para comer y luego agregar el escenario encima de estos puntos
@@ -300,6 +297,7 @@ public class Ghost extends Actor {
                 break;
             }
     }
+
     private boolean collisionedBlock( int posicionX,int posicionY, String key){
 
      boolean aux =false;
@@ -311,7 +309,6 @@ public class Ghost extends Actor {
         }
         return aux;
     }
-
 
     public void fearOn() {
         this.fear = true;

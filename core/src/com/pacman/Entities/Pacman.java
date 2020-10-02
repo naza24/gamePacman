@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -90,7 +91,7 @@ public class Pacman extends Actor {
         // le doy forma a la figura (como la posicion que se le da al box2d se centra en el 0,0),
         // le indicamos que tiene 0,5 de la longitud tanto de alto como de ancho
         PolygonShape shapePacman = new PolygonShape();
-        shapePacman.setAsBox(0.2f,0.2f);
+        shapePacman.setAsBox(0.5f,0.2f);
 
         // instancio la figura y le paso el poligono
         this.fixturePacman = bodyPacman.createFixture(shapePacman,3);
@@ -207,7 +208,7 @@ public class Pacman extends Actor {
                    posicionx = (int) ((getX()+getWidth()/2) / tileWidth);
                    posiciony = (int) ((getY()+getHeight()) / tileHeight);
                }else{
-                   posicionx = (int) ((getX()+getWidth()/ 2)/ tileWidth);
+                   posicionx = (int) ((getX()+getWidth()/2)/ tileWidth);
                    posiciony = (int)(getY() / tileHeight);
                }
                collisionY = collisionedBlock(posicionx,posiciony,"blocked");
@@ -235,10 +236,28 @@ public class Pacman extends Actor {
         }
     }
 
-    private boolean collisionedBlock( int posicionX,int posicionY, String key){
+    private boolean collisionedBlock( int posicionX,int posicionY, String key) {
+        /*boolean result =false;
+        TiledMapTileLayer.Cell cell = collisionLayer.getCell(posicionX, posicionY);
+        if (cell.getTile() != null) {
+            result= cell.getTile().getProperties().containsKey(key);
+        */
+        boolean result =false;
+        TiledMapTileLayer.Cell cell = collisionLayer.getCell(posicionX,posicionY);
 
+        // si no cayo en un lugar vacio
+        if(cell != null){
+            // recupero el valor de ese punto
+            if(cell.getTile().getProperties().containsKey(key)){
+                result =true;
+            }
+        }
+        return result;
+
+        /*
         return this.collisionLayer.getCell(posicionX,posicionY)
-                                  .getTile().getProperties().containsKey(key);
+                                  .getTile().getProperties().containsKey(key);*/
+       // return  result;
     }
 
    // retorna 0 si es nulo o si no tiene valor y de lo contrario retorna el valor de ese punto con el que colisiono
@@ -335,6 +354,9 @@ public class Pacman extends Actor {
         }
     }
 
+    public void actualizarPuntaje(int diferencia){
+        score.addScore(diferencia);
+    }
     /* sirve para ver si el pacman reinicio su bonificacion agarrando un puntoMax,
      y actualiza el tiempo de bonificacion de pacman, del lado de gamScreen*/
     public boolean resetBonificacion(float tiempoDelta){

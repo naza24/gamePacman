@@ -51,7 +51,7 @@ public class Recorrido {
 
                 this.direccionRecorrido = new int [16];
 
-                this.direccionRecorrido[0]=2; // arriba
+                this.direccionRecorrido[0]=2; // derecha
                 this.direccionRecorrido[1]=1; // arriba
                 this.direccionRecorrido[2]=0; // izquierda
                 this.direccionRecorrido[3]=1;

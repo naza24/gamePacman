@@ -13,10 +13,8 @@ import com.pacman.factoryMethod.FabricaActores;
 
 public class FabricaFrutas extends FabricaActores {
 
-    int [] pos;
     public FabricaFrutas(AssetManager manager) {
         super(manager);
-        //pos[1]=;
     }
 
 
@@ -24,12 +22,12 @@ public class FabricaFrutas extends FabricaActores {
 
         TiledMap mapAux= (TiledMap) map;
 
-        Texture tex = this.getManager().get("datos/orange ghost/orange_ghost_arriba_1.png");
+        Texture tex = this.getManager().get("datos/afraid ghost/afraid_ghost_2.png");
 
         // recupero la capa superior dnd estan los puntos del mapa
-        TiledMapTileLayer capaPuntos = (TiledMapTileLayer)mapAux.getLayers().get(0);
+        TiledMapTileLayer capaTerreno = (TiledMapTileLayer)mapAux.getLayers().get(1);
 
-        return  new Fruta(myWorld, tex , posicion, capaPuntos);
+        return  new Fruta(myWorld, tex , posicion, capaTerreno, 50);
 
     }
 }
