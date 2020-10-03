@@ -116,7 +116,7 @@ public class GameScreen extends BasicScreen {
     @Override
     public void show() {
 
-        stage.setDebugAll(true);
+       // stage.setDebugAll(true);
         /* Las coordenadas centrales de dond quiero el pad,
          en base a esto se posicionan los controllerButtons */
         Vector2 controls = new Vector2(12, 0.9f);
@@ -207,11 +207,6 @@ public class GameScreen extends BasicScreen {
 
             private void pacmanChocoFantasma(final Pacman pacman, Ghost fantasma, Contact contact) {
 
-/*
-                    if(pacman.isBonificado() && fantasma.isAlive() && !fantasma.isFear()){
-
-                    }
-*/
                 if (pacman.isBonificado() && fantasma.isAlive() && fantasma.isFear()) {
                     fantasma.dead();
                     fantasma.fearOff();
@@ -268,9 +263,16 @@ public class GameScreen extends BasicScreen {
 
         FabricaFrutas fabFrut = new FabricaFrutas(game.getAssetManager());
         //fruta1 =(Fruta)fabFrut.crearFruta(world,new Vector2(22,9),map);
-//        fruta1 =(Fruta)fabFrut.crearFruta(world,new Vector2(0.4f,6.7f),map);
-        fruta1 =(Fruta)fabFrut.crearFruta(world,new Vector2(4f,0.6f),map);
-
+//       ubicacion 1 fruta1 =(Fruta)fabFrut.crearFruta(world,new Vector2(0.4f,6.7f),map);
+       // ubicacion 2 fruta1 =(Fruta)fabFrut.crearFruta(world,new Vector2(3.5f,1f),map);
+        // ubicacion 3 fruta1 =(Fruta)fabFrut.crearFruta(world,new Vector2(4.6f,4.6f),map);
+        // ubicacion 4 fruta1 =(Fruta)fabFrut.crearFruta(world,new Vector2(5.6f,6.55f),map);
+        // ubicacion 5 fruta1 =(Fruta)fabFrut.crearFruta(world,new Vector2(7.3f,3f),map);
+        // ubicacion 6 fruta1 =(Fruta)fabFrut.crearFruta(world,new Vector2(7.80f,5.95f),map);
+        // ubicacion 7 fruta1 =(Fruta)fabFrut.crearFruta(world,new Vector2(8.93f,0.8f),map);
+        // ubicacion 8 fruta1 =(Fruta)fabFrut.crearFruta(world,new Vector2(11.35f,3.9f),map);
+        // ubicacion 9 fruta1 =(Fruta)fabFrut.crearFruta(world,new Vector2(12.42f,6.33f),map);
+        fruta1 =(Fruta)fabFrut.crearFruta(world,new Vector2(12.1f,2.49f),map);
         /*Agrego los actores al escenario*/
 
         stage.addActor(pacman);
