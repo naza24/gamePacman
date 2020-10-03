@@ -91,7 +91,7 @@ public class Pacman extends Actor {
         // le doy forma a la figura (como la posicion que se le da al box2d se centra en el 0,0),
         // le indicamos que tiene 0,5 de la longitud tanto de alto como de ancho
         PolygonShape shapePacman = new PolygonShape();
-        shapePacman.setAsBox(0.5f,0.2f);
+        shapePacman.setAsBox(0.2f,0.2f);
 
         // instancio la figura y le paso el poligono
         this.fixturePacman = bodyPacman.createFixture(shapePacman,3);
@@ -328,7 +328,7 @@ public class Pacman extends Actor {
 
     public boolean isBonificado() {
 
-        if(tiempoBonificado>=0){
+        if(tiempoBonificado>0){
             return true;
         }else{
             return false;

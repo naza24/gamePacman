@@ -207,14 +207,19 @@ public class GameScreen extends BasicScreen {
 
             private void pacmanChocoFantasma(final Pacman pacman, Ghost fantasma, Contact contact) {
 
-                if (pacman.isBonificado() & (fantasma.isAlive() & fantasma.isFear())) {
+/*
+                    if(pacman.isBonificado() && fantasma.isAlive() && !fantasma.isFear()){
+
+                    }
+*/
+                if (pacman.isBonificado() && fantasma.isAlive() && fantasma.isFear()) {
                     fantasma.dead();
                     fantasma.fearOff();
                     playGhostDead();
                 }
 
-                if (!pacman.isBonificado()) {
-                    if (pacman.isAlive() & fantasma.isAlive()) {
+                if ((!pacman.isBonificado() &&  pacman.isAlive() && fantasma.isAlive()) ||
+                        (pacman.isBonificado() && fantasma.isAlive() && !fantasma.isFear())) {
                         pacman.dead();
                         playPacmanDead();
 
@@ -240,7 +245,7 @@ public class GameScreen extends BasicScreen {
                                 )
                         );
                     }
-                }
+
                 // los actores se traspasan el uno al otro  para continuar el recorrido
                 contact.getFixtureA().setSensor(true);
             }
@@ -263,7 +268,8 @@ public class GameScreen extends BasicScreen {
 
         FabricaFrutas fabFrut = new FabricaFrutas(game.getAssetManager());
         //fruta1 =(Fruta)fabFrut.crearFruta(world,new Vector2(22,9),map);
-        fruta1 =(Fruta)fabFrut.crearFruta(world,new Vector2(0.5f,0.5f),map);
+//        fruta1 =(Fruta)fabFrut.crearFruta(world,new Vector2(0.4f,6.7f),map);
+        fruta1 =(Fruta)fabFrut.crearFruta(world,new Vector2(4f,0.6f),map);
 
         /*Agrego los actores al escenario*/
 
@@ -335,7 +341,7 @@ public class GameScreen extends BasicScreen {
 
             if (pacman.resetBonificacion(delta)) {
 
-                if (fantasmaRojo.isAlive()) {
+                if (fantasmaRojo.isAlive() ) {
                     fantasmaRojo.fearOn();
                 }
                 if (fantasmaAzul.isAlive()) {

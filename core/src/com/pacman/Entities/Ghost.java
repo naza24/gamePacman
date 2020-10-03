@@ -217,6 +217,7 @@ public class Ghost extends Actor {
 
 
         if(this.recorrido.enInicio() && !this.alive){
+            this.fearOff();
             this.alive=true;
         }
             this.avanzar(this.recorrido.getDireccion());
