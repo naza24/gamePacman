@@ -66,10 +66,10 @@ public class GameScreen extends BasicScreen {
     private ControllerButton botonAbajo;
 
     // frutas
-    private Fruta fruta1;
-    private Fruta fruta2;
-    private Fruta fruta3;
-    private Fruta fruta4;
+    private Fruta fManzana;
+    private Fruta fCereza;
+    private Fruta fPera;
+    private Fruta fFrutilla;
 
     // sonidos
     private Sound soundDie;
@@ -134,39 +134,28 @@ public class GameScreen extends BasicScreen {
             public void beginContact(Contact contact) {
                 /* si colisionan dos fantasmas, desactivo la colision en uno al iniciar el
                  contacto y lo vuelvo a activar al finalizar el choque */
-                if (collisionGhostGhost(contact)) {
+                if (collisionGhostGhost(contact) /*|| collisionGhostFruta(contact)*/) {
+                    contact.getFixtureA().setSensor(true);
+                }
+                if(collisionGhost(contact) && collisionFruta(contact)){
                     contact.getFixtureA().setSensor(true);
                 }
 
-               /* if(colisionaron(contact, "pacman", "fruta123")){
-                    // si choco con una fruta , faltaria agregar otros tipo
-                    // de fruta y tratar la colision con un id segun la fruta
-                    System.out.println("choco con fruta");
-                    pacman.actualizarPuntaje(fruta1.getValor());
-                    fruta1.fueComida();
-                    fruta2.fueComida();
-                    fruta3.fueComida();
-                    fruta4.fueComida();
-
-                    soundGhostDie.play();
-                    contact.getFixtureA().setSensor(true);
-                }*/
-               /* if (colisionaron(contact, "rojo","fruta123") ||
-                    colisionaron(contact, "azul","fruta123") ||
-                    colisionaron(contact, "naranja","fruta123") ||
-                    colisionaron(contact, "rosa","fruta123")) {
-                    contact.getFixtureA().setSensor(true);
-
-                }*/
-/*                if(collisionFruta(contact) && collisionGhost(contact)){
-                    System.out.println("un fantasma colisiono con una fruta");
-                    contact.getFixtureA().setSensor(true);
-                }*/
-
-                // si colisiono con una fruta algun fantasma lo atravieza
-                if(collisionGhostFruta(contact)){
-                    contact.getFixtureA().setSensor(true);
+                // falta controlar que solo pueda comer la fruta cuando halla respawneado
+                if(colisionaron(contact,"pacman","manzana")) {
+                    pacmanChocoFruta(pacman,fManzana,contact);
                 }
+                if(colisionaron(contact,"pacman","frutilla")) {
+                    pacmanChocoFruta(pacman,fFrutilla,contact);
+                }
+                if(colisionaron(contact,"pacman","cereza")) {
+                    pacmanChocoFruta(pacman,fCereza,contact);
+                }
+                if(colisionaron(contact,"pacman","pera")) {
+                    pacmanChocoFruta(pacman,fPera,contact);
+                }
+
+
 
                 if (colisionaron(contact, "pacman", "rojo")) {
                     /* Si pacman esta bonificado el fantasma muere ,
@@ -207,22 +196,6 @@ public class GameScreen extends BasicScreen {
                         (contact.getFixtureB().getUserData().equals(a) && contact.getFixtureA().getUserData().equals(b));
             }
 
-            private boolean collisionGhostFruta(Contact contact){
-                boolean result= false;
-                if(colisionaron(contact,"rojo","manzana")    || colisionaron(contact,"rojo","pera")   ||
-                   colisionaron(contact,"rojo","frutilla")   || colisionaron(contact,"rojo","cereza") ||
-                   colisionaron(contact,"azul","manzana")    || colisionaron(contact,"azul","pera")   ||
-                   colisionaron(contact,"azul","frutilla")   || colisionaron(contact,"azul","cereza") ||
-                   colisionaron(contact,"rosa","manzana")    || colisionaron(contact,"rosa","pera")   ||
-                   colisionaron(contact,"rosa","frutilla")   || colisionaron(contact,"rosa","cereza") ||
-                   colisionaron(contact,"naranja","manzana") || colisionaron(contact,"naranja","pera")||
-                   colisionaron(contact,"naranja","frutilla")|| colisionaron(contact,"naranja","cereza")){
-
-                    result = true;
-                }
-                return result;
-            }
-/*
             private boolean collisionFruta(Contact contact) {
                 if (contact.getFixtureA().getUserData().equals("manzana") || contact.getFixtureB().getUserData().equals("manzana") ||
                         contact.getFixtureA().getUserData().equals("cereza") || contact.getFixtureB().getUserData().equals("cereza") ||
@@ -243,7 +216,18 @@ public class GameScreen extends BasicScreen {
                 } else {
                     return false;
                 }
-            }*/
+            }
+
+            private void pacmanChocoFruta(final Pacman pacman, Fruta fruta, Contact contact) {
+
+                        if(fruta.fueComida()){
+                            pacman.actualizarPuntaje(fruta.getValor());
+                            soundGhostDie.play();
+                        }
+
+                contact.getFixtureA().setSensor(true);
+            }
+
 
             private boolean collisionGhostGhost(Contact contact) {
                 boolean retorno = false;
@@ -260,9 +244,6 @@ public class GameScreen extends BasicScreen {
                 return retorno;
             }
 
-            /*private boolean ghostChocoFruta(Contact contact){
-                if(colisionaron(contact, "rojo", "frutilla"))
-            }*/
             private void pacmanChocoFantasma(final Pacman pacman, Ghost fantasma, Contact contact) {
 
                 if (pacman.isBonificado() && fantasma.isAlive() && fantasma.isFear()) {
@@ -320,20 +301,11 @@ public class GameScreen extends BasicScreen {
         botonAbajo = (ControllerButton) fabBotones.crearBotonAbajo(world, controls, pacman);
 
         FabricaFrutas fabFrut = new FabricaFrutas(game.getAssetManager());
-        //fruta1 =(Fruta)fabFrut.crearFruta(world,new Vector2(22,9),map);
-//       ubicacion 1 fruta1 =(Fruta)fabFrut.crearFruta(world,new Vector2(0.4f,6.7f),map);
-       // ubicacion 2 fruta1 =(Fruta)fabFrut.crearFruta(world,new Vector2(3.5f,1f),map);
-        // ubicacion 3 fruta1 =(Fruta)fabFrut.crearFruta(world,new Vector2(4.6f,4.6f),map);
-        // ubicacion 4 fruta1 =(Fruta)fabFrut.crearFruta(world,new Vector2(5.6f,6.55f),map);
-        // ubicacion 5 fruta1 =(Fruta)fabFrut.crearFruta(world,new Vector2(7.3f,3f),map);
-        // ubicacion 6 fruta1 =(Fruta)fabFrut.crearFruta(world,new Vector2(7.80f,5.95f),map);
-        // ubicacion 7 fruta1 =(Fruta)fabFrut.crearFruta(world,new Vector2(8.93f,0.8f),map);
-        // ubicacion 8 fruta1 =(Fruta)fabFrut.crearFruta(world,new Vector2(11.35f,3.9f),map);
-        // ubicacion 9 fruta1 =(Fruta)fabFrut.crearFruta(world,new Vector2(12.42f,6.33f),map);
-        fruta1 =(Fruta)fabFrut.crearFrutaManzana(world);
-        fruta2 =(Fruta)fabFrut.crearFrutaCereza(world);
-        fruta3 =(Fruta)fabFrut.crearFrutaFrutilla(world);
-        fruta4 =(Fruta)fabFrut.crearFrutaPera(world);
+
+        fManzana =(Fruta)fabFrut.crearFrutaManzana(world);
+        fCereza =(Fruta)fabFrut.crearFrutaCereza(world);
+        fFrutilla =(Fruta)fabFrut.crearFrutaFrutilla(world);
+        fPera =(Fruta)fabFrut.crearFrutaPera(world);
 
         /*Agrego los actores al escenario*/
 
@@ -350,10 +322,10 @@ public class GameScreen extends BasicScreen {
         stage.addActor(botonDerecha);
         stage.addActor(botonAbajo);
 
-        stage.addActor(fruta1);
-        stage.addActor(fruta2);
-        stage.addActor(fruta3);
-        stage.addActor(fruta4);
+        stage.addActor(fManzana);
+        stage.addActor(fCereza);
+        stage.addActor(fFrutilla);
+        stage.addActor(fPera);
 
 
     }
@@ -374,10 +346,10 @@ public class GameScreen extends BasicScreen {
         botonDerecha.detach();
         botonAbajo.detach();
 
-        fruta1.detach();
-        fruta2.detach();
-        fruta3.detach();
-        fruta4.detach();
+        fManzana.detach();
+        fCereza.detach();
+        fFrutilla.detach();
+        fPera.detach();
 
         //remueve el actor del stage;
         pacman.remove();
@@ -391,10 +363,10 @@ public class GameScreen extends BasicScreen {
         botonDerecha.remove();
         botonAbajo.remove();
 
-        fruta1.remove();
-        fruta2.remove();
-        fruta3.remove();
-        fruta4.remove();
+        fManzana.remove();
+        fCereza.remove();
+        fFrutilla.remove();
+        fPera.remove();
 
 
         map.dispose();

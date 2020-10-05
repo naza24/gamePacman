@@ -46,7 +46,8 @@ public class Fruta extends Actor {
 
         System.out.println("respawnd de la fruta"+ respawnd);
 
-        respawndFruta = respawnd;
+        respawndFruta =10f;
+//        respawndFruta = respawnd;
 
         // creo el bodyDef que internamente posee el Body
         BodyDef bodyDefFruta = new BodyDef();
@@ -66,7 +67,7 @@ public class Fruta extends Actor {
 
         // le asigno un identificador para las colisiones
 
-        fixtureFruta.setUserData("id");
+        fixtureFruta.setUserData(id);
 
         // declaro el tamaño del actor medio metro
         setSize(PIXELS_IN_METER*0.45f ,PIXELS_IN_METER*0.45f);
@@ -83,7 +84,7 @@ public class Fruta extends Actor {
             // si en el lugar no hay un punto
             if(respawndFruta<=0){
                 colocarFruta=true;
-                respawndFruta= respawndFruta;
+                respawndFruta= 10f;
             }
             respawndFruta = respawndFruta-delta;
 //            System.out.println("respawnd: "+respawndFruta);
@@ -139,10 +140,16 @@ public class Fruta extends Actor {
         return valorFruta;
     }
 
-    // hago que la fruta desaparezca hasta respawnear
-    public void fueComida(){
-        colocarFruta=false;
-        System.out.println("poscion de la fruta"+getX()+" "+getY());
+    // si la fruta ya aparecia en pantalla es comida , y retorna true, de lo contrario retorna false
+    // esto es para que  pacman no coma la fruta cuando no figura en pantalla dibujada
+    public boolean fueComida(){
+        if(colocarFruta){
+            colocarFruta=false;
+            return true;
+        }else{
+            return false;
+        }
+
     }
 
 }

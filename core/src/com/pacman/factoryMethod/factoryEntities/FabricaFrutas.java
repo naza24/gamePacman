@@ -68,12 +68,13 @@ public class FabricaFrutas extends FabricaActores {
 
     }
 
-    private Vector2 getPosicionAleatoria(){
+    private   Vector2 getPosicionAleatoria(){
         Random r= new Random();
         // retorna un numero aleatorio entre 0 y 9 la primera vez.. ya que son 10 elementos en la lista
         int numAleatorio = r.nextInt(posiciones.size()-1);
+        Vector2 retorno = posiciones.get(numAleatorio);
         posiciones.remove(numAleatorio);
-        return posiciones.get(numAleatorio);
+        return retorno;
 
         // que cada fruta tenga un arreglo que se recorre para respawnear la fruta dnd corresponda..
         // se le va a asignar dos ubicaciones a cada fruta
@@ -82,7 +83,7 @@ public class FabricaFrutas extends FabricaActores {
         // arreglo fijo en la fabrica que guarde la posicion de los fantasmas para que no sea toacado
         // desde el mainscram al igual que pacman
     }
-    private float getRespawndAleatorio(){
+    private  float getRespawndAleatorio(){
         Random r = new Random();
         // multiplo de 15 con un rango de multiplicacion de 0 a 5 , osea el maximo va a ser 150 seg
         int respawndAleatorio = r.nextInt(6)*30;

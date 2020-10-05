@@ -89,7 +89,7 @@ public class Ghost extends Actor {
         shapeGhost.setAsBox(0.1f,0.1f);
 
         // instancio la figura y le paso el poligono
-        this.fixtureGhost = bodyGhost.createFixture(shapeGhost,3);
+        this.fixtureGhost = bodyGhost.createFixture(shapeGhost,2);
 
         // le asigno un identificador para las colisiones, su color y el tipo osea fantasma
 
