@@ -23,7 +23,7 @@ public class Fruta extends Actor {
     private World world;
 
     // mapa de bloques, para analizar si en ese lugar hay un punto
-    private TiledMapTileLayer mapa;
+//    private TiledMapTileLayer mapa;
 
     private int valorFruta;
 
@@ -31,7 +31,7 @@ public class Fruta extends Actor {
 
     private float respawndFruta;
 
-    public Fruta(World myWorld, Texture tex , Vector2 position, TiledMapTileLayer mapaPuntos, int puntaje) {
+    public Fruta(World myWorld, Texture tex , Vector2 position , int puntaje, float respawnd, String id) {
 
         // el valor que tiene la fruta en cuanto a puntaje
         valorFruta= puntaje;
@@ -44,10 +44,9 @@ public class Fruta extends Actor {
         // texturas el modo miedo y de la muerte del fantasma
         texture = tex;
 
-        // bloques de colision
-        mapa=  mapaPuntos;
+        System.out.println("respawnd de la fruta"+ respawnd);
 
-        respawndFruta = 10f;
+        respawndFruta = respawnd;
 
         // creo el bodyDef que internamente posee el Body
         BodyDef bodyDefFruta = new BodyDef();
@@ -67,7 +66,7 @@ public class Fruta extends Actor {
 
         // le asigno un identificador para las colisiones
 
-        fixtureFruta.setUserData("fruta123");
+        fixtureFruta.setUserData("id");
 
         // declaro el tamaño del actor medio metro
         setSize(PIXELS_IN_METER*0.45f ,PIXELS_IN_METER*0.45f);
@@ -77,14 +76,14 @@ public class Fruta extends Actor {
 
     @Override
     public void act(float delta) {
-        TiledMapTileLayer.Cell cell = mapa.getCell((int)getX(),(int)getY());
+       // TiledMapTileLayer.Cell cell = mapa.getCell((int)getX(),(int)getY());
 
 
 
             // si en el lugar no hay un punto
             if(respawndFruta<=0){
                 colocarFruta=true;
-                respawndFruta= 10f;
+                respawndFruta= respawndFruta;
             }
             respawndFruta = respawndFruta-delta;
 //            System.out.println("respawnd: "+respawndFruta);
@@ -99,10 +98,10 @@ public class Fruta extends Actor {
         if(colocarFruta){
 
             // ancho de un bloque en pixeles
-            float tileWidth = mapa.getTileWidth();
+  //          float tileWidth = mapa.getTileWidth();
 
             // alto de un bloque en pixeles(son los mismos en los dos layers)
-            float tileHeight= mapa.getTileHeight();
+    //        float tileHeight= mapa.getTileHeight();
 
             // aqui agrego la altura y ancho de pixeles dnd quier colocar las cosas
             // seria 320 - 22,5 de ancho y 180 - 22.5 de alto

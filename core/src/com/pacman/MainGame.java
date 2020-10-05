@@ -67,6 +67,12 @@ public class MainGame extends Game {
 		manager.load("datos/sounds/pacman-eating-ghost.mp3", Sound.class);
 		manager.load("datos/sounds/pacman-alarm.mp3", Music.class);
 
+		// Texturas de las frutas
+		manager.load("datos/fruits/cereza.png",Texture.class);
+		manager.load("datos/fruits/manzana.png",Texture.class);
+		manager.load("datos/fruits/pera.png",Texture.class);
+		manager.load("datos/fruits/frutilla.png",Texture.class);
+
 		// Textura de pacman
 		manager.load("datos/pac_man_0.png",Texture.class);
 		manager.load("datos/pac_man_1.png",Texture.class);

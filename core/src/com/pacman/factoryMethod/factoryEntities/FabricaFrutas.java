@@ -39,30 +39,54 @@ public class FabricaFrutas extends FabricaActores {
     }
 
 
-    public Actor crearFruta(World myWorld, Vector2 posicion, Object map) {
+    public Actor crearFrutaFrutilla(World myWorld) {
 
-        TiledMap mapAux= (TiledMap) map;
+        Texture tex = this.getManager().get("datos/fruits/frutilla.png");
 
-        Texture tex = this.getManager().get("datos/afraid ghost/afraid_ghost_2.png");
-
-        // recupero la capa superior dnd estan los puntos del mapa
-        TiledMapTileLayer capaTerreno = (TiledMapTileLayer)mapAux.getLayers().get(1);
-
-        return  new Fruta(myWorld, tex , getPosicionAleatoria(), capaTerreno, 50);
+        return  new Fruta(myWorld, tex , getPosicionAleatoria(), 50, getRespawndAleatorio(), "frutilla");
 
     }
+    public Actor crearFrutaCereza(World myWorld) {
+
+        Texture tex = this.getManager().get("datos/fruits/cereza.png");
+
+        return  new Fruta(myWorld, tex , getPosicionAleatoria(), 50, getRespawndAleatorio(), "cereza");
+
+    }
+    public Actor crearFrutaManzana(World myWorld) {
+
+        Texture tex = this.getManager().get("datos/fruits/manzana.png");
+
+        return  new Fruta(myWorld, tex , getPosicionAleatoria(), 50, getRespawndAleatorio(), "manzana");
+
+    }
+    public Actor crearFrutaPera(World myWorld) {
+
+        Texture tex = this.getManager().get("datos/fruits/pera.png");
+
+        return  new Fruta(myWorld, tex , getPosicionAleatoria(), 50, getRespawndAleatorio(), "pera");
+
+    }
+
     private Vector2 getPosicionAleatoria(){
         Random r= new Random();
         // retorna un numero aleatorio entre 0 y 9 la primera vez.. ya que son 10 elementos en la lista
-        int numAleatorio = r.nextInt(posiciones.size());
+        int numAleatorio = r.nextInt(posiciones.size()-1);
         posiciones.remove(numAleatorio);
         return posiciones.get(numAleatorio);
 
-        // ver despues el tema del respawn aleatorio y el tema de ir cambiando dnd aparecen las frutas.
-        // llevar unna lista de las posiciones usadas y en base a eso calcular los posibles nuevos resawnd para la fruta
-        ///
+        // que cada fruta tenga un arreglo que se recorre para respawnear la fruta dnd corresponda..
+        // se le va a asignar dos ubicaciones a cada fruta
+
         // ademas sacar la posicion de los lguares dnd no corresponde y en los fantasmas dejar tmb un
         // arreglo fijo en la fabrica que guarde la posicion de los fantasmas para que no sea toacado
         // desde el mainscram al igual que pacman
+    }
+    private float getRespawndAleatorio(){
+        Random r = new Random();
+        // multiplo de 15 con un rango de multiplicacion de 0 a 5 , osea el maximo va a ser 150 seg
+        int respawndAleatorio = r.nextInt(6)*30;
+
+        return (float)respawndAleatorio;
     }
 }
