@@ -55,7 +55,7 @@ public class FabricaFrutas extends FabricaActores {
         Random r= new Random();
         // retorna un numero aleatorio entre 0 y 9 la primera vez.. ya que son 10 elementos en la lista
         int numAleatorio = r.nextInt(posiciones.size());
-
+        posiciones.remove(numAleatorio);
         return posiciones.get(numAleatorio);
 
         // ver despues el tema del respawn aleatorio y el tema de ir cambiando dnd aparecen las frutas.
