@@ -24,9 +24,9 @@ public class FabricaPacman extends FabricaActores {
 
         // recupero las texturas
         Texture[] texturePacman = new Texture[14];
-        texturePacman[0] = this.getManager().get("datos/pac_man_0.png");
-        texturePacman[1] = this.getManager().get("datos/pac_man_1.png");
-        texturePacman[2] = this.getManager().get("datos/pac_man_2.png");
+        texturePacman[0] = this.getManager().get("datos/pacman/pac_man_0.png");
+        texturePacman[1] = this.getManager().get("datos/pacman/pac_man_1.png");
+        texturePacman[2] = this.getManager().get("datos/pacman/pac_man_2.png");
 
         // texturas de la muerte de pacman
         texturePacman[3] = this.getManager().get("datos/dead pacman/dead_pacman_0.png");

@@ -20,7 +20,7 @@ public class FabricaBotones extends FabricaActores {
         Pacman pacman= (Pacman) actorAsociado;
 
         // texturas de los botones
-        Texture textBtn = this.getManager().get("datos/flechaAbajoBlanca.png");
+        Texture textBtn = this.getManager().get("datos/pad/flechaAbajoBlanca.png");
         return new ControllerButton(myWorld,pacman,textBtn,-1,new Vector2(posicion.x,posicion.y-0.6f));
     }
 
@@ -29,7 +29,7 @@ public class FabricaBotones extends FabricaActores {
         Pacman pacman= (Pacman) actorAsociado;
 
         // texturas de los botones
-        Texture textBtn = this.getManager().get("datos/flechaArribaBlanca.png");
+        Texture textBtn = this.getManager().get("datos/pad/flechaArribaBlanca.png");
 
         return new ControllerButton(myWorld,pacman,textBtn,1,new Vector2(posicion.x,posicion.y+0.6f));
     }
@@ -39,7 +39,7 @@ public class FabricaBotones extends FabricaActores {
         Pacman pacman= (Pacman) actorAsociado;
 
         // texturas de los botones
-        Texture textBtn= this.getManager().get("datos/flechaDerechaBlanca.png");
+        Texture textBtn= this.getManager().get("datos/pad/flechaDerechaBlanca.png");
 
         return new ControllerButton(myWorld,pacman,textBtn,2,new Vector2(posicion.x+0.6f,posicion.y));
     }
@@ -49,7 +49,7 @@ public class FabricaBotones extends FabricaActores {
         Pacman pacman= (Pacman) actorAsociado;
 
         // texturas de los botones
-        Texture textBtn = this.getManager().get("datos/flechaIzquierdaBlanca.png");
+        Texture textBtn = this.getManager().get("datos/pad/flechaIzquierdaBlanca.png");
 
         return new ControllerButton(myWorld,pacman,textBtn,-2,new Vector2(posicion.x-0.6f,posicion.y));
     }

@@ -65,7 +65,6 @@ public class MainGame extends Game {
 		// cargamos los recursos
 
 		// Sonidos de Pacman
-		manager.load("datos/sounds/pacman-song.mp3", Sound.class);
 		manager.load("datos/sounds/pacman-dies.mp3", Sound.class);
 		manager.load("datos/sounds/pacman-waka-waka.mp3", Music.class);
 		manager.load("datos/sounds/pacman-eating-ghost.mp3", Sound.class);
@@ -78,9 +77,9 @@ public class MainGame extends Game {
 		manager.load("datos/fruits/frutilla.png",Texture.class);
 
 		// Textura de pacman
-		manager.load("datos/pac_man_0.png",Texture.class);
-		manager.load("datos/pac_man_1.png",Texture.class);
-		manager.load("datos/pac_man_2.png",Texture.class);
+		manager.load("datos/pacman/pac_man_0.png",Texture.class);
+		manager.load("datos/pacman/pac_man_1.png",Texture.class);
+		manager.load("datos/pacman/pac_man_2.png",Texture.class);
 		manager.load("datos/dead pacman/dead_pacman_0.png",Texture.class);
 		manager.load("datos/dead pacman/dead_pacman_1.png",Texture.class);
 		manager.load("datos/dead pacman/dead_pacman_2.png",Texture.class);
@@ -94,10 +93,10 @@ public class MainGame extends Game {
 		manager.load("datos/dead pacman/dead_pacman_10.png",Texture.class);
 
 		// Texturas de los controles
-		manager.load("datos/flechaArribaBlanca.png",Texture.class);
-		manager.load("datos/flechaIzquierdaBlanca.png",Texture.class);
-		manager.load("datos/flechaDerechaBlanca.png",Texture.class);
-		manager.load("datos/flechaAbajoBlanca.png",Texture.class);
+		manager.load("datos/pad/flechaArribaBlanca.png",Texture.class);
+		manager.load("datos/pad/flechaIzquierdaBlanca.png",Texture.class);
+		manager.load("datos/pad/flechaDerechaBlanca.png",Texture.class);
+		manager.load("datos/pad/flechaAbajoBlanca.png",Texture.class);
 
 		// textura de los fantasmas
 		manager.load("datos/red ghost/red_ghost_derecha_0.png",Texture.class);
@@ -158,14 +157,6 @@ public class MainGame extends Game {
 		// setear el player al game screen aca , gamescreen tendra PLAYER Y SCORE
 		// se lo pasara al gameover y en caso de apretar retry el score se volvera a 0
 		setScreen(gameScreen);
-	}
-
-	public void irGameOver(){
-		this.setScreen(gameOverScreen);
-	}
-
-	public void irGameWin(){
-		this.setScreen(gameWinScreen);
 	}
 
 	//Metodos observadores

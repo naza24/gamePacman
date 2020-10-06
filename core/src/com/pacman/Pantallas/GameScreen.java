@@ -57,9 +57,6 @@ public class GameScreen extends BasicScreen {
     // Label que muestar el puntaje
     private Label labelScore;
 
-    // Skin que contiene los caracteres a usar
-    private Skin skin;
-
     // botones
     private ControllerButton botonIzquierdo;
     private ControllerButton botonArriba;
@@ -89,7 +86,7 @@ public class GameScreen extends BasicScreen {
         super(game);
 
         // esta variable almacena el puntaje del nivel, el cual si llega gana el juego
-        puntajeEscenario = 50;
+        puntajeEscenario = 386;
 
         this.game = game;
 
@@ -97,7 +94,8 @@ public class GameScreen extends BasicScreen {
         stage = new Stage(new FitViewport(640, 360));
 
         // declaro el skin y el cartel (Label) con dicho skin
-        this.skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
+        // Skin que contiene los caracteres a usar
+        Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
 
 
         // cargo el cartel de puntaje
@@ -123,7 +121,6 @@ public class GameScreen extends BasicScreen {
     @Override
     public void show() {
 
-        stage.setDebugAll(true);
         /* Las coordenadas centrales de dond quiero el pad,
          en base a esto se posicionan los controllerButtons */
         Vector2 controls = new Vector2(12, 0.9f);
@@ -139,6 +136,7 @@ public class GameScreen extends BasicScreen {
 
                 // sin importar si chocan dos fantasmas o alguno de estos con una fruta ,q lo atraviese sin accion
                 contact.getFixtureA().setSensor(true);
+
                 // falta controlar que solo pueda comer la fruta cuando halla respawneado
                 if(colisionaron(contact,"pacman","manzana")) {
                     pacmanChocoFruta(pacman,fManzana,contact);
@@ -153,8 +151,7 @@ public class GameScreen extends BasicScreen {
                     pacmanChocoFruta(pacman,fPera,contact);
                 }
 
-
-
+                // logica de colision entre pacman y fantasmas
                 if (colisionaron(contact, "pacman", "rojo")) {
                     /* Si pacman esta bonificado el fantasma muere ,
                         caso contrario de q ya este muerto evita la colision*/
@@ -265,8 +262,6 @@ public class GameScreen extends BasicScreen {
         stage.addActor(fCereza);
         stage.addActor(fFrutilla);
         stage.addActor(fPera);
-
-
     }
 
 
@@ -347,6 +342,7 @@ public class GameScreen extends BasicScreen {
             fantasmaNaranja.fearOff();
             fantasmaRosa.fearOff();
         }
+
         if(pacman.getContadorPuntosNivel() == puntajeEscenario){
             cambiarPantalla(game.gameWinScreen,2f);
 
