@@ -43,28 +43,28 @@ public class FabricaFrutas extends FabricaActores {
 
         Texture tex = this.getManager().get("datos/fruits/frutilla.png");
 
-        return  new Fruta(myWorld, tex , getPosicionAleatoria(), 50, getRespawndAleatorio(), "frutilla");
+        return  new Fruta(myWorld, tex , getPosicionAleatoria(), 50, "frutilla");
 
     }
     public Actor crearFrutaCereza(World myWorld) {
 
         Texture tex = this.getManager().get("datos/fruits/cereza.png");
 
-        return  new Fruta(myWorld, tex , getPosicionAleatoria(), 50, getRespawndAleatorio(), "cereza");
+        return  new Fruta(myWorld, tex , getPosicionAleatoria(), 70, "cereza");
 
     }
     public Actor crearFrutaManzana(World myWorld) {
 
         Texture tex = this.getManager().get("datos/fruits/manzana.png");
 
-        return  new Fruta(myWorld, tex , getPosicionAleatoria(), 50, getRespawndAleatorio(), "manzana");
+        return  new Fruta(myWorld, tex , getPosicionAleatoria(), 80, "manzana");
 
     }
     public Actor crearFrutaPera(World myWorld) {
 
         Texture tex = this.getManager().get("datos/fruits/pera.png");
 
-        return  new Fruta(myWorld, tex , getPosicionAleatoria(), 50, getRespawndAleatorio(), "pera");
+        return  new Fruta(myWorld, tex , getPosicionAleatoria(), 30, "pera");
 
     }
 
@@ -82,12 +82,5 @@ public class FabricaFrutas extends FabricaActores {
         // ademas sacar la posicion de los lguares dnd no corresponde y en los fantasmas dejar tmb un
         // arreglo fijo en la fabrica que guarde la posicion de los fantasmas para que no sea toacado
         // desde el mainscram al igual que pacman
-    }
-    private  float getRespawndAleatorio(){
-        Random r = new Random();
-        // multiplo de 15 con un rango de multiplicacion de 0 a 5 , osea el maximo va a ser 150 seg
-        int respawndAleatorio = r.nextInt(6)*30;
-
-        return (float)respawndAleatorio;
     }
 }

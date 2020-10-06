@@ -11,6 +11,9 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+
+import java.util.Random;
+
 import static com.pacman.Constantes.Constants.PIXELS_IN_METER;
 
 public class Fruta extends Actor {
@@ -31,7 +34,7 @@ public class Fruta extends Actor {
 
     private float respawndFruta;
 
-    public Fruta(World myWorld, Texture tex , Vector2 position , int puntaje, float respawnd, String id) {
+    public Fruta(World myWorld, Texture tex , Vector2 position , int puntaje, String id) {
 
         // el valor que tiene la fruta en cuanto a puntaje
         valorFruta= puntaje;
@@ -44,10 +47,7 @@ public class Fruta extends Actor {
         // texturas el modo miedo y de la muerte del fantasma
         texture = tex;
 
-        System.out.println("respawnd de la fruta"+ respawnd);
-
-        respawndFruta =10f;
-//        respawndFruta = respawnd;
+        respawndFruta = getRespawndAleatorio();
 
         // creo el bodyDef que internamente posee el Body
         BodyDef bodyDefFruta = new BodyDef();
@@ -77,20 +77,13 @@ public class Fruta extends Actor {
 
     @Override
     public void act(float delta) {
-       // TiledMapTileLayer.Cell cell = mapa.getCell((int)getX(),(int)getY());
-
-
 
             // si en el lugar no hay un punto
             if(respawndFruta<=0){
                 colocarFruta=true;
-                respawndFruta= 10f;
+                respawndFruta= getRespawndAleatorio();
             }
             respawndFruta = respawndFruta-delta;
-//            System.out.println("respawnd: "+respawndFruta);
-
-
-
     }
 
     // dibujamos el actor
@@ -98,30 +91,8 @@ public class Fruta extends Actor {
     public void draw(Batch batch, float parentAlpha) {
         if(colocarFruta){
 
-            // ancho de un bloque en pixeles
-  //          float tileWidth = mapa.getTileWidth();
-
-            // alto de un bloque en pixeles(son los mismos en los dos layers)
-    //        float tileHeight= mapa.getTileHeight();
-
-            // aqui agrego la altura y ancho de pixeles dnd quier colocar las cosas
-            // seria 320 - 22,5 de ancho y 180 - 22.5 de alto
-/*
-        System.out.println("se dibujo la fruta"+bodyFruta.getPosition().x * tileWidth+
-                            "   "+bodyFruta.getPosition().y  * tileHeight);
-*/
-
-/*            this.setPosition(bodyFruta.getPosition().x * tileWidth,
-                    bodyFruta.getPosition().y * tileHeight);*/
             this.setPosition(bodyFruta.getPosition().x * PIXELS_IN_METER,
                     bodyFruta.getPosition().y * PIXELS_IN_METER);
-
-            // le doy origen al actor en el centro de masa
-//            this.setOrigin(getX()*tileWidth,getY()*tileHeight);
-
-//            TextureRegion textureRegion = new TextureRegion(texture);
-
-//            batch.draw(textureRegion,getX(),getY(),getOriginX(),getOriginY(),getWidth(),getHeight(),1,1,0f);
 
             batch.draw(texture,getX(),getY(),getWidth(),getHeight());
         }
@@ -142,6 +113,7 @@ public class Fruta extends Actor {
 
     // si la fruta ya aparecia en pantalla es comida , y retorna true, de lo contrario retorna false
     // esto es para que  pacman no coma la fruta cuando no figura en pantalla dibujada
+
     public boolean fueComida(){
         if(colocarFruta){
             colocarFruta=false;
@@ -149,7 +121,13 @@ public class Fruta extends Actor {
         }else{
             return false;
         }
-
     }
 
+    private  float getRespawndAleatorio(){
+        Random r = new Random();
+        // multiplo de 10 con un rango de multiplicacion de 1 a 6 , osea el maximo va a ser 60 seg
+        int respawndAleatorio = (r.nextInt(6)+1)*10;
+
+        return (float)respawndAleatorio;
+    }
 }

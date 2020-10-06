@@ -134,13 +134,15 @@ public class GameScreen extends BasicScreen {
             public void beginContact(Contact contact) {
                 /* si colisionan dos fantasmas, desactivo la colision en uno al iniciar el
                  contacto y lo vuelvo a activar al finalizar el choque */
-                if (collisionGhostGhost(contact) /*|| collisionGhostFruta(contact)*/) {
+                /*if (collisionGhostGhost(contact) *//*|| collisionGhostFruta(contact)*//*) {
                     contact.getFixtureA().setSensor(true);
                 }
                 if(collisionGhost(contact) && collisionFruta(contact)){
                     contact.getFixtureA().setSensor(true);
                 }
-
+*/
+                // sin importar si chocan dos fantasmas o alguno de estos con una fruta , q lo atravieze sin accion
+                contact.getFixtureA().setSensor(true);
                 // falta controlar que solo pueda comer la fruta cuando halla respawneado
                 if(colisionaron(contact,"pacman","manzana")) {
                     pacmanChocoFruta(pacman,fManzana,contact);
@@ -195,6 +197,7 @@ public class GameScreen extends BasicScreen {
                 return (contact.getFixtureA().getUserData().equals(a) && contact.getFixtureB().getUserData().equals(b)) ||
                         (contact.getFixtureB().getUserData().equals(a) && contact.getFixtureA().getUserData().equals(b));
             }
+/*
 
             private boolean collisionFruta(Contact contact) {
                 if (contact.getFixtureA().getUserData().equals("manzana") || contact.getFixtureB().getUserData().equals("manzana") ||
@@ -217,6 +220,7 @@ public class GameScreen extends BasicScreen {
                     return false;
                 }
             }
+*/
 
             private void pacmanChocoFruta(final Pacman pacman, Fruta fruta, Contact contact) {
 
@@ -229,6 +233,7 @@ public class GameScreen extends BasicScreen {
             }
 
 
+/*
             private boolean collisionGhostGhost(Contact contact) {
                 boolean retorno = false;
 
@@ -243,6 +248,7 @@ public class GameScreen extends BasicScreen {
 
                 return retorno;
             }
+*/
 
             private void pacmanChocoFantasma(final Pacman pacman, Ghost fantasma, Contact contact) {
 
