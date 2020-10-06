@@ -89,6 +89,8 @@ public class LoginFragment extends Fragment {
         nombre = (EditText) view.findViewById(R.id.etUsuario);
         contrasenia = (EditText) view.findViewById(R.id.etContrasenia);
         sonido = (Switch) view.findViewById(R.id.idVolumen);
+        // por defecto lo tngo siempre con sonido
+        sonido.setChecked(true);
         loginController = new LoginController(this);
 
         /*llamamos a este metodo que se encarga de cargar los campos que se
