@@ -54,6 +54,10 @@ public class Pacman extends Actor {
     // puntaje del jugador, el cual se ingrementa cuando pacman choca con un punto
     private Score score;
 
+    // como pacman controla la colision con la capa de puntos, es el que llevav el contador que va
+    // analizando la pantalla de juego , hasta llegar al juego ganado
+    private int contadorPuntosNivel;
+
     // Al constructor se le pasa el mundo, la textura y un vector con la posicion inicial
     public Pacman(World myWorld, Texture[] tex, Vector2 position, TiledMapTileLayer pointsLayer, TiledMapTileLayer collision){
 
@@ -107,7 +111,10 @@ public class Pacman extends Actor {
                                             texturePacman[8], texturePacman[9], texturePacman[10],
                                             texturePacman[11],texturePacman[12],texturePacman[13]);
 
+        // referencia al tiempo, para efectuar las animaciones
         this.time= 0f;
+
+        contadorPuntosNivel=0;
 
         // declaro el tamaño del actor medio metro
         setSize(PIXELS_IN_METER*0.45f ,PIXELS_IN_METER*0.45f);
@@ -237,11 +244,6 @@ public class Pacman extends Actor {
     }
 
     private boolean collisionedBlock( int posicionX,int posicionY, String key) {
-        /*boolean result =false;
-        TiledMapTileLayer.Cell cell = collisionLayer.getCell(posicionX, posicionY);
-        if (cell.getTile() != null) {
-            result= cell.getTile().getProperties().containsKey(key);
-        */
         boolean result =false;
         TiledMapTileLayer.Cell cell = collisionLayer.getCell(posicionX,posicionY);
 
@@ -253,11 +255,6 @@ public class Pacman extends Actor {
             }
         }
         return result;
-
-        /*
-        return this.collisionLayer.getCell(posicionX,posicionY)
-                                  .getTile().getProperties().containsKey(key);*/
-       // return  result;
     }
 
    // retorna 0 si es nulo o si no tiene valor y de lo contrario retorna el valor de ese punto con el que colisiono
@@ -270,9 +267,9 @@ public class Pacman extends Actor {
         if(cell != null){
             // recupero el valor de ese punto
             result = (Integer) cell.getTile().getProperties().get("valor");
+            contadorPuntosNivel++;
             // si recupero algo es por que ese bloque tenia ese atributo
             if(cell.getTile().getProperties().containsKey("miedo")){
-               // this.setBonificado(true);
                 tiempoBonificado=10;
             }
                 return result.intValue();
@@ -368,5 +365,8 @@ public class Pacman extends Actor {
             tiempoBonificado= tiempoBonificado - tiempoDelta;
 
             return reset;
+    }
+    public int getContadorPuntosNivel(){
+        return contadorPuntosNivel;
     }
 }

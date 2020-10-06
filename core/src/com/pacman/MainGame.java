@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.pacman.Pantallas.GameOverScreen;
 import com.pacman.Pantallas.GameScreen;
 import com.pacman.Pantallas.LoadingScreen;
+import com.pacman.Pantallas.WinScreen;
 
 
 public class MainGame extends Game {
@@ -37,6 +38,9 @@ public class MainGame extends Game {
 
 	// creo la pantalla de juego perdido
 	public GameOverScreen gameOverScreen;
+
+	// creo la pantalla de juego ganado
+	public WinScreen gameWinScreen;
 
 	// pantalla de carga
 	public LoadingScreen loadingScreen;
@@ -148,8 +152,9 @@ public class MainGame extends Game {
 }
 
 	public void terminarDeCargar (){
-		this.gameOverScreen = new GameOverScreen(this);
-		this.gameScreen = new GameScreen(this);
+		gameOverScreen = new GameOverScreen(this);
+		gameWinScreen = new WinScreen(this);
+		gameScreen = new GameScreen(this);
 		// setear el player al game screen aca , gamescreen tendra PLAYER Y SCORE
 		// se lo pasara al gameover y en caso de apretar retry el score se volvera a 0
 		setScreen(gameScreen);
@@ -157,6 +162,10 @@ public class MainGame extends Game {
 
 	public void irGameOver(){
 		this.setScreen(gameOverScreen);
+	}
+
+	public void irGameWin(){
+		this.setScreen(gameWinScreen);
 	}
 
 	//Metodos observadores
@@ -181,6 +190,7 @@ public class MainGame extends Game {
 	public void setSonido(boolean sonidoAux) {
 		sonido = sonidoAux;
 	}
+
 	public boolean getSonido(){
 		return sonido;
 	}

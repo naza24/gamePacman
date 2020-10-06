@@ -1,6 +1,7 @@
 package com.pacman.Pantallas;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
@@ -80,11 +81,16 @@ public class GameScreen extends BasicScreen {
 
     public MainGame game;
 
+    private int puntajeEscenario;
+
     // variable que indica si la app tiene q tener sonido
     private boolean sonidoOn;
 
     public GameScreen(MainGame game) {
         super(game);
+
+        // esta variable almacena el puntaje del nivel, el cual si llega gana el juego
+        puntajeEscenario = 50;
 
         this.game = game;
 
@@ -132,16 +138,8 @@ public class GameScreen extends BasicScreen {
         world.setContactListener(new ContactListener() {
             @Override
             public void beginContact(Contact contact) {
-                /* si colisionan dos fantasmas, desactivo la colision en uno al iniciar el
-                 contacto y lo vuelvo a activar al finalizar el choque */
-                /*if (collisionGhostGhost(contact) *//*|| collisionGhostFruta(contact)*//*) {
-                    contact.getFixtureA().setSensor(true);
-                }
-                if(collisionGhost(contact) && collisionFruta(contact)){
-                    contact.getFixtureA().setSensor(true);
-                }
-*/
-                // sin importar si chocan dos fantasmas o alguno de estos con una fruta , q lo atravieze sin accion
+
+                // sin importar si chocan dos fantasmas o alguno de estos con una fruta ,q lo atraviese sin accion
                 contact.getFixtureA().setSensor(true);
                 // falta controlar que solo pueda comer la fruta cuando halla respawneado
                 if(colisionaron(contact,"pacman","manzana")) {
@@ -197,93 +195,30 @@ public class GameScreen extends BasicScreen {
                 return (contact.getFixtureA().getUserData().equals(a) && contact.getFixtureB().getUserData().equals(b)) ||
                         (contact.getFixtureB().getUserData().equals(a) && contact.getFixtureA().getUserData().equals(b));
             }
-/*
-
-            private boolean collisionFruta(Contact contact) {
-                if (contact.getFixtureA().getUserData().equals("manzana") || contact.getFixtureB().getUserData().equals("manzana") ||
-                        contact.getFixtureA().getUserData().equals("cereza") || contact.getFixtureB().getUserData().equals("cereza") ||
-                        contact.getFixtureA().getUserData().equals("frutilla") || contact.getFixtureB().getUserData().equals("frutilla") ||
-                        contact.getFixtureA().getUserData().equals("pera") || contact.getFixtureB().getUserData().equals("pera")) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-
-            private boolean collisionGhost(Contact contact) {
-                if (contact.getFixtureA().getUserData().equals("rojo") || contact.getFixtureB().getUserData().equals("rojo") ||
-                        contact.getFixtureA().getUserData().equals("azul") || contact.getFixtureB().getUserData().equals("azul") ||
-                        contact.getFixtureA().getUserData().equals("naranja") || contact.getFixtureB().getUserData().equals("naranja") ||
-                        contact.getFixtureA().getUserData().equals("rosa") || contact.getFixtureB().getUserData().equals("rosa")) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-*/
 
             private void pacmanChocoFruta(final Pacman pacman, Fruta fruta, Contact contact) {
 
                         if(fruta.fueComida()){
                             pacman.actualizarPuntaje(fruta.getValor());
-                            soundGhostDie.play();
+                            playComer();
                         }
 
                 contact.getFixtureA().setSensor(true);
             }
-
-
-/*
-            private boolean collisionGhostGhost(Contact contact) {
-                boolean retorno = false;
-
-                if (colisionaron(contact, "rojo", "azul")
-                        || colisionaron(contact, "rojo", "rosa")
-                        || colisionaron(contact, "rojo", "naranja")
-                        || colisionaron(contact, "azul", "rosa")
-                        || colisionaron(contact, "azul", "naranja")
-                        || colisionaron(contact, "rosa", "naranja")) {
-                    retorno = true;
-                }
-
-                return retorno;
-            }
-*/
 
             private void pacmanChocoFantasma(final Pacman pacman, Ghost fantasma, Contact contact) {
 
                 if (pacman.isBonificado() && fantasma.isAlive() && fantasma.isFear()) {
                     fantasma.dead();
                     fantasma.fearOff();
-                    playGhostDead();
+                    playComer();
                 }
 
                 if ((!pacman.isBonificado() &&  pacman.isAlive() && fantasma.isAlive()) ||
                         (pacman.isBonificado() && fantasma.isAlive() && !fantasma.isFear())) {
                         pacman.dead();
                         playPacmanDead();
-
-                        // addaction es para hacer animaciones
-                        stage.addAction(
-                                // para efectuar una secuencia de acciones utilizamos Actions Secuences.
-                                //Que es una secuencia de acciones
-
-                                // es para dar la accion de esperar unos segundos
-                                Actions.sequence(
-                                        Actions.delay(5f), // QUE ESPERO 1,5 SEGUNDOS
-                                        // Creo una accion de run para lanzar la pantalla de game Over
-                                        Actions.run(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                // el hilo ejecutara el lanzamiento de la pantalla con
-                                                // la variable que se inicializo en main game, pero antes le asigno el puntaje
-                                                int score = (pacman.getPuntaje()).getScore();
-                                                game.setPuntajePlayer(score);
-                                                game.irGameOver();
-                                            }
-                                        })
-                                )
-                        );
+                            cambiarPantalla(game.gameOverScreen,5f);
                     }
 
                 // los actores se traspasan el uno al otro  para continuar el recorrido
@@ -414,6 +349,11 @@ public class GameScreen extends BasicScreen {
             fantasmaNaranja.fearOff();
             fantasmaRosa.fearOff();
         }
+        if(pacman.getContadorPuntosNivel() == puntajeEscenario){
+            cambiarPantalla(game.gameWinScreen,2f);
+
+        }
+
 
         playAlarma();
         playWaka();
@@ -470,7 +410,7 @@ public class GameScreen extends BasicScreen {
         }
     }
 
-    private void playGhostDead() {
+    private void playComer() {
         if(sonidoOn){
             soundGhostDie.play(0.5f);
         }
@@ -480,5 +420,29 @@ public class GameScreen extends BasicScreen {
         if(sonidoOn){
             soundDie.play(0.5f,0.9f,0);
         }
+    }
+
+    private void cambiarPantalla(final Screen pantalla, float delay){
+        // addaction es para hacer animaciones
+        stage.addAction(
+                // para efectuar una secuencia de acciones utilizamos Actions Secuences.
+                //Que es una secuencia de acciones
+
+                // es para dar la accion de esperar unos segundos
+                Actions.sequence(
+                        Actions.delay(delay), // QUE ESPERO 1,5 SEGUNDOS
+                        // Creo una accion de run para lanzar la pantalla de game Over
+                        Actions.run(new Runnable() {
+                            @Override
+                            public void run() {
+                                // el hilo ejecutara el lanzamiento de la pantalla con
+                                // la variable que se inicializo en main game, pero antes le asigno el puntaje
+                                int score = (pacman.getPuntaje()).getScore();
+                                game.setPuntajePlayer(score);
+                                game.setScreen(pantalla);
+                            }
+                        })
+                )
+        );
     }
 }
