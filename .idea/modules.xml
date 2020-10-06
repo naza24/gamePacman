@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/android/android.iml" filepath="$PROJECT_DIR$/.idea/modules/android/android.iml" group="gameV1ga/android" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/core/core.iml" filepath="$PROJECT_DIR$/.idea/modules/core/core.iml" group="gameV1ga/core" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/desktop/desktop.iml" filepath="$PROJECT_DIR$/.idea/modules/desktop/desktop.iml" group="gameV1ga/desktop" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gameV1ga.iml" filepath="$PROJECT_DIR$/.idea/modules/gameV1ga.iml" group="gameV1ga" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/android/android.iml" filepath="$PROJECT_DIR$/.idea/modules/android/android.iml" group="gamePacman/android" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/core/core.iml" filepath="$PROJECT_DIR$/.idea/modules/core/core.iml" group="gamePacman/core" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/desktop/desktop.iml" filepath="$PROJECT_DIR$/.idea/modules/desktop/desktop.iml" group="gamePacman/desktop" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gamePacman.iml" filepath="$PROJECT_DIR$/.idea/modules/gamePacman.iml" group="gamePacman" />
     </modules>
   </component>
 </project>
