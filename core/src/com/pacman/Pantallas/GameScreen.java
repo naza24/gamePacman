@@ -75,7 +75,6 @@ public class GameScreen extends BasicScreen {
     // sonidos
     private Sound soundDie;
     private Music soundWaka;
-    private Sound soundInit;
     private Music soundAlarm;
     private Sound soundGhostDie;
 
@@ -111,7 +110,6 @@ public class GameScreen extends BasicScreen {
         //cargo los sonidos
         soundDie = game.getAssetManager().get("datos/sounds/pacman-dies.mp3");
         soundGhostDie = game.getAssetManager().get("datos/sounds/pacman-eating-ghost.mp3");
-        soundInit = game.getAssetManager().get("datos/sounds/pacman-song.mp3");
         soundWaka = game.getAssetManager().get("datos/sounds/pacman-waka-waka.mp3");
         soundAlarm = game.getAssetManager().get("datos/sounds/pacman-alarm.mp3");
 

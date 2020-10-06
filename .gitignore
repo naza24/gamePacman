@@ -125,3 +125,8 @@ Thumbs.db
 !/ios-moe/xcode/*.xcodeproj/xcshareddata
 !/ios-moe/xcode/*.xcodeproj/project.pbxproj
 /ios-moe/xcode/native/
+
+## exclusiones 
+imagenes/
+/android/assets/datos/pac_man_muerte0.png
+/android/assets/datos/pac_man_muerte1.png
