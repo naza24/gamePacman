@@ -130,7 +130,7 @@ Thumbs.db
 imagenes/
 /android/assets/datos/pac_man_muerte0.png
 /android/assets/datos/pac_man_muerte1.png
-/android/assets/datos/sounds/pacman_song.mp3
+/android/assets/datos/sounds/pacman-song.mp3
 
 /core/src/com/pacman/factoryMethod/factoryController/FabricaBtnArriba.java
 /core/src/com/pacman/factoryMethod/factoryController/FabricaBtnDerecho.java
