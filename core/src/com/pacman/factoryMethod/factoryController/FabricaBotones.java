@@ -41,7 +41,7 @@ public class FabricaBotones extends FabricaActores {
         // texturas de los botones
         Texture textBtn= this.getManager().get("datos/pad/flechaDerechaBlanca.png");
 
-        return new ControllerButton(myWorld,pacman,textBtn,2,new Vector2(posicion.x+0.6f,posicion.y));
+        return new ControllerButton(myWorld,pacman,textBtn,2,new Vector2(posicion.x+0.7f,posicion.y));
     }
 
     public Actor crearBotonIzquierdo(World myWorld, Vector2 posicion, Object actorAsociado) {
@@ -51,6 +51,6 @@ public class FabricaBotones extends FabricaActores {
         // texturas de los botones
         Texture textBtn = this.getManager().get("datos/pad/flechaIzquierdaBlanca.png");
 
-        return new ControllerButton(myWorld,pacman,textBtn,-2,new Vector2(posicion.x-0.6f,posicion.y));
+        return new ControllerButton(myWorld,pacman,textBtn,-2,new Vector2(posicion.x-0.7f,posicion.y));
     }
 }

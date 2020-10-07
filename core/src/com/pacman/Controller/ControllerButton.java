@@ -53,7 +53,7 @@ public class ControllerButton extends Actor {
         this.fixtureButton.setUserData(id);
 
         // declaro el tamaño del actor
-        setSize(PIXELS_IN_METER*0.5f ,PIXELS_IN_METER*0.5f);
+        setSize(PIXELS_IN_METER*0.8f ,PIXELS_IN_METER*0.8f);
 
         this.addListener(new InputListener(){
             @Override
