@@ -1,5 +1,7 @@
 package com.pacman.controllers;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,6 +20,7 @@ import com.pacman.fragments.BorrarFragment;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class BorrarController {
 
@@ -36,9 +39,6 @@ public class BorrarController {
 
     // navigation
     private final NavController navController;
-
-    ////////////////////////////////////////////////////////////////////////////////////////////
-    //  falta agregar la vista como parametro y sacar el spiner de ahi , luego navegar hacia el menu principal cuando no queden usuarios q borrar
 
     public BorrarController(BorrarFragment vista){
 
@@ -59,7 +59,6 @@ public class BorrarController {
 
         // inicializo el navegador
         navController = Navigation.findNavController(miVista.getView());
-
     }
 
 
@@ -89,7 +88,12 @@ public class BorrarController {
             Bundle arg = new Bundle();
             arg.putString("usuario",miVista.getUsuarioLogueado());
             navController.navigate(R.id.menuPrincipalFragment, arg);
-            miVista.mostrarText("No hay mas usuarios para eliminar");
+
+            if(idiomaIngles()){
+                miVista.mostrarText("There aren´t more users for delete");
+            }else{
+                miVista.mostrarText("No hay mas usuarios para eliminar");
+            }
         }
     }
     /* carga el spinner y retorna la cantidad de elementos que contiene el spinner
@@ -105,7 +109,11 @@ public class BorrarController {
         cantidadElem = arrayString.size();
 
        /* agrego dos items al arreglo el primero va a ser un cartel de interfaz */
-        arrayString.add(0, "Seleccione el usuario");
+        if(idiomaIngles()){
+            arrayString.add(0, "Select user");
+        }else{
+            arrayString.add(0, "Seleccione el usuario");
+        }
 
         // creo el adaptador
         ArrayAdapter<String> adaptador = new ArrayAdapter(miVista.getContext(), android.R.layout.simple_spinner_dropdown_item, arrayString);
@@ -138,7 +146,11 @@ public class BorrarController {
         int result = bd.usuarioDao().deleteByKey(this.usuarioBorrar);
 
         if(result>0){
-            miVista.mostrarText(" se a eliminado " + usuarioBorrar);
+            if(idiomaIngles()){
+                miVista.mostrarText(" user "+ usuarioBorrar+ " was delete" );
+            }else{
+                miVista.mostrarText(" el usuario "+ usuarioBorrar+ " fue eliminado ");
+            }
             // si no quedan mas usuarios que borrar retorno al menu principal
             if(cargarSpinner()==0){
                 Bundle arg = new Bundle();
@@ -146,9 +158,19 @@ public class BorrarController {
                 navController.navigate(R.id.menuPrincipalFragment, arg);
             }
         }else{
-            miVista.mostrarText(usuarioBorrar+" ya fue eliminado");
+            if(idiomaIngles()){
+                miVista.mostrarText(usuarioBorrar+" was previously delete");
+            }else{
+                miVista.mostrarText(usuarioBorrar+" fue eliminado previamente");
             }
+        }
+    }
 
-
+    private boolean idiomaIngles(){
+        if(Locale.getDefault().getDisplayLanguage().equalsIgnoreCase("english")){
+            return true;
+        }else{
+            return false;
+        }
     }
 }

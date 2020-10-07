@@ -17,6 +17,8 @@ import com.pacman.database.AppDatabase;
 import com.pacman.entidades.Usuario;
 import com.pacman.fragments.LoginFragment;
 
+import java.util.Locale;
+
 
 public class LoginController {
 
@@ -43,6 +45,15 @@ public class LoginController {
         // inicializo el navegador
         navController = Navigation.findNavController(miVista.getView());
 
+/*        // recupero el idioma de el sharedPreferences y lo asigno a la variable
+        SharedPreferences pref = miVista.getContext().getSharedPreferences("configPacman", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+
+        idioma = Locale.getDefault().getDisplayLanguage();
+        // mostrara español o English segun sea la configuracion del mobile
+        editor.putString("idioma",idioma);
+        editor.apply();     // actualizo los valores*/
+
     }
 
     public void loguearUsuario() {
@@ -52,13 +63,21 @@ public class LoginController {
         String contraseniaAux = miVista.getContraseña();
 
         if (existeUsuarioContrasenia(nombreAux, contraseniaAux)) {
-            miVista.mostrarText("LOGEO correctamente: " + nombreAux);
+                if(idiomaIngles()){
+                    miVista.mostrarText("correctly LOGIN : " + nombreAux);
+                }else{
+                    miVista.mostrarText("LOGEO correctamente: " + nombreAux);
+                }
             miVista.vaciarNombre();
 
             irMenuPrincipal(nombreAux);
 
         } else {
-            miVista.mostrarText(" usuario o contrasenia no existe ");
+            if(idiomaIngles()){
+                miVista.mostrarText(" user or password not found");
+            }else{
+                miVista.mostrarText(" usuario o contrasenia no existe ");
+            }
        }
         miVista.vaciarContraseña();
     }
@@ -84,6 +103,9 @@ public class LoginController {
         // editor del archivo
         SharedPreferences.Editor editor = config.edit();
         editor.putBoolean("sonido", miVista.sonidoOn());
+
+        // mostrara español o English segun sea la configuracion del mobile
+//        editor.putString("idioma",idioma);
         editor.apply();     // actualizo los valores
 
         navController.navigate(R.id.menuPrincipalFragment, arg);
@@ -92,5 +114,12 @@ public class LoginController {
     public void irPantallaRegistro() {
         // simplemente deriba al llamador a la pantalla de registro
         navController.navigate(R.id.registroFragment);
+    }
+    private boolean idiomaIngles(){
+        if(Locale.getDefault().getDisplayLanguage().equalsIgnoreCase("english")){
+            return true;
+        }else{
+            return false;
+        }
     }
 }

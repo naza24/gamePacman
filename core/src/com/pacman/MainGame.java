@@ -55,6 +55,9 @@ public class MainGame extends Game {
 	// configuracion del sonido
 	private boolean sonido;
 
+	// configuracion de idioma
+	private String idioma;
+
 	private int puntajePlayer;
 
 	@Override
@@ -184,5 +187,17 @@ public class MainGame extends Game {
 
 	public boolean getSonido(){
 		return sonido;
+	}
+
+	public void setIdioma(String idiomaAux) {
+		idioma = idiomaAux;
+	}
+
+	public boolean idiomaIngles(){
+		if(idioma.equalsIgnoreCase("english")){
+			return true;
+		}else{
+			return false;
+		}
 	}
 }

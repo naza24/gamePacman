@@ -20,15 +20,13 @@ public class AndroidLauncher extends AndroidApplication implements MainGame.MyGa
 
 	private String idUsuario;
 	private boolean sonido;
-
+	private String idioma;
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 
 		SharedPreferences pref = getContext().getSharedPreferences("configPacman", Context.MODE_PRIVATE);
-
-//		idUsuario="";
 
 		// creamos una instancia de juego y le seteamos la callBack
 		MainGame game = new MainGame();
@@ -43,9 +41,11 @@ public class AndroidLauncher extends AndroidApplication implements MainGame.MyGa
 		   idUsuario = bundle.getString("usuario");
 		}
 		sonido = pref.getBoolean("sonido", false);
+		idioma = pref.getString("idioma","english");
 
 		game.setUsuario(idUsuario);
 		game.setSonido(sonido);
+		game.setIdioma(idioma);
 
 		// lanzo el juego
 		initialize(game, config);

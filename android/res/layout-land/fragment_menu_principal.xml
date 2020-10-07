@@ -52,13 +52,15 @@
         app:layout_constraintBottom_toBottomOf="@+id/btnSalir"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btnSalir"
-        app:layout_constraintTop_toTopOf="@+id/btnSalir" />
+        app:layout_constraintTop_toTopOf="@+id/btnSalir"
+        android:layout_marginRight="93dp" />
 
     <TextView
         android:id="@+id/txtUser"
         android:layout_width="251dp"
         android:layout_height="0dp"
         android:layout_marginStart="43dp"
+        android:layout_marginLeft="43dp"
         android:layout_marginTop="32dp"
         android:layout_marginBottom="49dp"
         android:text="@string/user"

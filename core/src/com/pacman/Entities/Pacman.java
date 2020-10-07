@@ -315,10 +315,6 @@ public class Pacman extends Actor {
      }
     }
 
-    public void setAlive(boolean alive) {
-        this.alive = alive;
-    }
-
     public boolean isAlive() {
         return alive;
     }

@@ -25,8 +25,6 @@ public class Fruta extends Actor {
     private Body bodyFruta;
     private World world;
 
-    // mapa de bloques, para analizar si en ese lugar hay un punto
-//    private TiledMapTileLayer mapa;
 
     private int valorFruta;
 

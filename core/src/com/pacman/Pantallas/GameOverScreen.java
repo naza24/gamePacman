@@ -41,14 +41,29 @@ public class GameOverScreen extends BasicScreen{
             que esta en la ruta "skin/..." */
         skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
 
+        // Inicializo por defecto los botones
+        String cartel ="";
+        String bSalir = "";
+        String bReintentar ="";
+
+        if(game.idiomaIngles()){
+            cartel = "Game Over";
+            bSalir = "Quit";
+            bReintentar = "Retry";
+        }else{
+            cartel = "Has Perdido";
+            bSalir = "Salir";
+            bReintentar = "Reintentar";
+        }
+
         // creo el cartel
-        gameover = new Label("Game Over", skin);
+        gameover = new Label(cartel, skin);
 
         // creo el boton para reintentar y le paso el skin
-        retry = new TextButton("Reintentar",skin);
+        retry = new TextButton(bReintentar,skin);
 
         // creo el boton para volver al menu principal
-        quit = new TextButton("Salir",skin);
+        quit = new TextButton(bSalir,skin);
 
         // posiciono el cartel de gameover en el centro
         this.gameover.setPosition(stage.getWidth()/2 -this.gameover.getWidth()/2, stage.getHeight()/2-this.gameover.getHeight()/2);

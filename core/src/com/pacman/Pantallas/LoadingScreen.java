@@ -17,6 +17,8 @@ public class LoadingScreen extends BasicScreen {
 
     private MainGame game;
 
+    private String cartel;
+
     public LoadingScreen(final MainGame game) {
         super(game);
 
@@ -28,7 +30,13 @@ public class LoadingScreen extends BasicScreen {
         skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
 
         // cargo el cartel de carga y lo agrego al escenario
-        carga = new Label("Cargando...",skin);
+        if(game.idiomaIngles()){
+            cartel ="Loading...";
+        }else{
+            cartel ="Cargando...";
+        }
+        carga = new Label(cartel,skin);
+
         carga.setPosition(320 - carga.getWidth  ()/2 , 180 - carga.getHeight()/2);
         stage.addActor(carga);
 
@@ -49,7 +57,7 @@ public class LoadingScreen extends BasicScreen {
         }else{
             // get progress nos da un valor entre 0 y 1 que nos dice como va la carga
             int porcentaje = (int) (game.getAssetManager().getProgress() * 100) ;
-            carga.setText("Cargando..."+porcentaje);
+            carga.setText(cartel+" "+porcentaje);
 
         }
 

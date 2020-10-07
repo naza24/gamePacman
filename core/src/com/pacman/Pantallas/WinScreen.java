@@ -41,14 +41,28 @@ public class WinScreen extends BasicScreen{
             que esta en la ruta "skin/..." */
             skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
 
+            String cartel="";
+            String bReintentar="";
+            String bSalir="";
+
+            if(game.idiomaIngles()){
+                cartel= "You Win"+game.getUsuario()+", your score: 0";
+                bReintentar= "Improve your score";
+                bSalir= "Quit";
+            }else{
+                cartel= "Has Ganado "+game.getUsuario()+", tu puntaje: 0";
+                bReintentar= "Mejorar Puntaje";
+                bSalir= "Salir";
+
+            }
             // creo el cartel
-            win = new Label("Has Ganado "+game.getUsuario()+", tu puntaje: 0", skin);
+            win = new Label(cartel, skin);
 
             // creo el boton para reintentar y le paso el skin
-            retry = new TextButton("Mejorar Puntaje",skin);
+            retry = new TextButton(bReintentar,skin);
 
             // creo el boton para volver al menu principal
-            quit = new TextButton("Salir",skin);
+            quit = new TextButton(bSalir,skin);
 
             // posiciono el cartel de gameover en el centro
             win.setPosition(stage.getWidth()/2 -win.getWidth()/2, stage.getHeight()/2-win.getHeight()/2);

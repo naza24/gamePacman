@@ -1,10 +1,5 @@
 package com.pacman.controllers;
 
-import android.content.Context;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.Toast;
-
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.room.Room;
@@ -14,6 +9,8 @@ import com.pacman.R;
 import com.pacman.database.AppDatabase;
 import com.pacman.entidades.Usuario;
 import com.pacman.fragments.RegistroFragment;
+
+import java.util.Locale;
 
 public class RegistroController {
 
@@ -59,19 +56,36 @@ public class RegistroController {
             long codigoRetorno = bd.usuarioDao().insert(obj);
 
             if(codigoRetorno > 0){
-                miVista.mostrarText(" Se inserto correctamente: "+nombreAux);
-                miVista.mostrarText(" Ingrese los datos del Registro");
+                if(idiomaIngles()){
+                    miVista.mostrarText(" Corretly user insert: "+nombreAux);
+                    miVista.mostrarText(" Login with the register's data");
+                }else {
+                    miVista.mostrarText(" Se inserto correctamente: "+nombreAux);
+                    miVista.mostrarText(" Ingrese los datos del Registro");
+                }
 
                 navController.navigate(R.id.loginFragment);
             }else{
-                miVista.mostrarText(" no se a podido insertar: "+nombreAux);
+                if(idiomaIngles()){
+                    miVista.mostrarText("you can't register data: "+nombreAux);
+                }else {
+                    miVista.mostrarText(" no se a podido insertar: "+nombreAux);
+                }
             }
         }else{
 
             if(camposValidos(nombreAux,contraseniaAux)){
-                miVista.mostrarText(""+nombreAux+", ya existe en la bd");
+                if(idiomaIngles()){
+                    miVista.mostrarText(""+nombreAux+", is exist on database");
+                }else{
+                    miVista.mostrarText(""+nombreAux+", ya existe en la bd");
+                }
             }else{
-                miVista.mostrarText(" Hay campos ingresados invalidos, corroborelos");
+                if(idiomaIngles()){
+                    miVista.mostrarText("There are fields not valid, check it");
+                }else{
+                    miVista.mostrarText(" Hay campos ingresados invalidos, corroborelos");
+                }
             }
          }
 
@@ -95,6 +109,13 @@ public class RegistroController {
             return false;
         }else{
             return true;
+        }
+    }
+    private boolean idiomaIngles(){
+        if(Locale.getDefault().getDisplayLanguage().equalsIgnoreCase("english")){
+            return true;
+        }else{
+            return false;
         }
     }
 }

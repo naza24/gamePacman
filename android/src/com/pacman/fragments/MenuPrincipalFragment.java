@@ -100,15 +100,16 @@ public class MenuPrincipalFragment extends Fragment {
         // despues acomodar esto ,, el controlador esta despues por lo que salta error si llama al controlador
         // creo el controller y le paso el idUsuario por que seguramente se necesite para en futuro actualizar los scores
 
+
         // si es distinto de null es por q esta logueado y estamos en esa pantalla
         if(usuario!=null) {
             idUsuario = getArguments().getString("usuario");
             puntaje = getArguments().getInt("puntaje");
 
             // cargo el txtView con el idUsuario
-            usuario.setText("Usuario: "+idUsuario);
-
+                usuario.setText(((TextView) view.findViewById(R.id.txtUser)).getText()+" "+idUsuario);
         }
+
         menuPrincipalController = new MenuPrincipalController(this);
         menuPrincipalController.actualizarPuntaje(puntaje);
 
@@ -140,19 +141,6 @@ public class MenuPrincipalFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 menuPrincipalController.lanzarJuego();
-              /*  Intent lanzadorJuego = new Intent(getActivity(), AndroidLauncher.class);
-                // Le mando el usuario al juego
-                Bundle bun = new Bundle();
-                bun.putString("usuario",idUsuario);
-                Toast.makeText(getContext(), "idUsuario : "+ idUsuario , Toast.LENGTH_SHORT).show();
-                lanzadorJuego.putExtras(bun);
-
-                Toast.makeText(getContext(), "la concha de tu madre "+idUsuario, Toast.LENGTH_SHORT).show();
-                startActivity(lanzadorJuego);
-
-                // finalizo la mainActivity antes de lanzar el juego
-               getActivity().finish();*/
-
             }
         });
     }

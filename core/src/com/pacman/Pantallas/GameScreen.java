@@ -197,13 +197,13 @@ public class GameScreen extends BasicScreen {
                             pacman.actualizarPuntaje(fruta.getValor());
                             playComer();
                         }
-
-                contact.getFixtureA().setSensor(true);
             }
 
             private void pacmanChocoFantasma(final Pacman pacman, Ghost fantasma, Contact contact) {
 
                 if (pacman.isBonificado() && fantasma.isAlive() && fantasma.isFear()) {
+                    // agrego 35 de puntaje si pacman come un fantasma
+                    pacman.actualizarPuntaje(35);
                     fantasma.dead();
                     fantasma.fearOff();
                     playComer();
@@ -215,10 +215,7 @@ public class GameScreen extends BasicScreen {
                         playPacmanDead();
                             cambiarPantalla(game.gameOverScreen,5f);
                     }
-
-                // los actores se traspasan el uno al otro  para continuar el recorrido
-                contact.getFixtureA().setSensor(true);
-            }
+             }
         });
 
         FabricaPacman fabPacman = new FabricaPacman(game.getAssetManager());

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.widget.Toast;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.room.Room;
@@ -15,6 +14,8 @@ import com.pacman.config.Constantes;
 import com.pacman.database.AppDatabase;
 import com.pacman.entidades.Usuario;
 import com.pacman.fragments.MenuPrincipalFragment;
+
+import java.util.Locale;
 
 // implementar una clase abstracta , session de usuario que guarde una instancia del
 // usuario logueado para que las  clases puedan acceder a ella y no tener variables publicas  y cosas feas
@@ -69,7 +70,11 @@ public class MenuPrincipalController extends AndroidApplication {
 
         if(pun > userAux.getPuntajeMaximo()){
           if(bd.usuarioDao().updateUsuarioPuntaje(pun,idUsuarioLog)>0){
-                miVista.mostrarText("Se actualizo el puntaje");
+                if(idiomaIngles()){
+                    miVista.mostrarText("score was update");
+                }else{
+                    miVista.mostrarText("Se actualizo el puntaje");
+                }
             }
         }
     }
@@ -81,13 +86,26 @@ public class MenuPrincipalController extends AndroidApplication {
         Bundle bun = new Bundle();
         bun.putString("usuario",idUsuarioLog);
         lanzadorJuego.putExtras(bun);
-        /*SharedPreferences config = miVista.getContext().getSharedPreferences("configPacman", Context.MODE_PRIVATE);
 
-        Toast.makeText(miVista.getContext(), "sonido: "+config.getBoolean("sonido", false), Toast.LENGTH_SHORT).show();
-*/
+        // recupero el documento sharedPreferences o lo creo en caso de que no exista
+        SharedPreferences pref = miVista.getContext().getSharedPreferences("configPacman", Context.MODE_PRIVATE);
+        // creo un editor para agregar el idioma
+        SharedPreferences.Editor editor = pref.edit();
+
+        // mostrara español o English segun sea la configuracion del mobile
+        editor.putString("idioma",Locale.getDefault().getDisplayLanguage());
+        editor.apply();     // actualizo los valores
         miVista.startActivity(lanzadorJuego);
 
         // finalizo la mainActivity antes de lanzar el juego
         miVista.getActivity().finish();
+    }
+
+    public boolean idiomaIngles(){
+        if(Locale.getDefault().getDisplayLanguage().equalsIgnoreCase("english")){
+            return true;
+        }else{
+            return false;
+        }
     }
 }

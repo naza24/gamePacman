@@ -15,6 +15,8 @@ import androidx.fragment.app.Fragment;
 import com.pacman.R;
 import com.pacman.controllers.LoginController;
 
+import java.util.Locale;
+
 
 /**
  * A simple {@link Fragment} subclass.

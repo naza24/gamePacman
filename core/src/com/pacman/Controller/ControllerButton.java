@@ -19,7 +19,6 @@ public class ControllerButton extends Actor {
 
     private Texture textureButton;
     private World world;
-    private Pacman pacman;
     private Fixture fixtureButton;
     private Body bodyButton;
 

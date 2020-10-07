@@ -216,6 +216,9 @@ public class Ghost extends Actor {
         int posiciony=0;
 
 
+        /*si el recorrido fijo que tiene los fantasmas llego al inicio de nuevo y esta muerto
+        (osea fue comido), le saco el estado fear y vuelve a estar vivo*/
+
         if(this.recorrido.enInicio() && !this.alive){
             this.fearOff();
             this.alive=true;
@@ -229,6 +232,7 @@ public class Ghost extends Actor {
                     //adelanto el actor para ver la colission
                     setX(getX()+(velocidad.x *delta));
 
+                    // segun la direccion calculo el siguiente bloque, para verificar las propiedades del mismo
                     if(velocidad.x > 0){
                         posicionx = (int) ((getX()+getWidth()) / tileWidth);
                         posiciony = (int) ((getY()+getHeight()/2) / tileHeight);
@@ -323,10 +327,6 @@ public class Ghost extends Actor {
         this.alive = false;
     }
 
-    public void live() {
-        this.alive = true;
-    }
-
     public boolean isFear() {
         return fear;
     }
@@ -335,7 +335,4 @@ public class Ghost extends Actor {
         return alive;
     }
 
-    public void setRecorrido(int numRecorrido){
-        this.recorrido=  new Recorrido(numRecorrido,0);
-    }
 }

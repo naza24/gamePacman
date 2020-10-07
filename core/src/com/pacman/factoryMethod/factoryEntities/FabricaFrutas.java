@@ -21,20 +21,17 @@ public class FabricaFrutas extends FabricaActores {
     public FabricaFrutas(AssetManager manager) {
         super(manager);
         // creo un arreglo y cargo todas las posiciones aleatorias que tendra la fruta
-        ArrayList<Vector2>pos = new ArrayList<Vector2>();
-        pos.add(new Vector2(0.4f,6.7f));
-        pos.add(new Vector2(3.5f,1f));
-        pos.add(new Vector2(4.6f,4.6f));
-        pos.add(new Vector2(5.6f,6.55f));
-        pos.add(new Vector2(7.3f,3f));
-        pos.add(new Vector2(7.80f,5.95f));
-        pos.add(new Vector2(8.93f,0.8f));
-        pos.add(new Vector2(11.35f,3.9f));
-        pos.add(new Vector2(12.42f,6.33f));
-        pos.add(new Vector2(12.1f,2.49f));
-
-        posiciones= pos;
-        //ArrayList<Vector2>posicionesUsadas = new ArrayList<Vector2>();
+        posiciones = new ArrayList<Vector2>();
+        posiciones.add(new Vector2(0.4f,6.7f));
+        posiciones.add(new Vector2(3.5f,1f));
+        posiciones.add(new Vector2(4.6f,4.6f));
+        posiciones.add(new Vector2(5.6f,6.55f));
+        posiciones.add(new Vector2(7.3f,3f));
+        posiciones.add(new Vector2(7.80f,5.95f));
+        posiciones.add(new Vector2(8.93f,0.8f));
+        posiciones.add(new Vector2(11.35f,3.9f));
+        posiciones.add(new Vector2(12.42f,6.33f));
+        posiciones.add(new Vector2(12.1f,2.49f));
 
     }
 
@@ -76,11 +73,5 @@ public class FabricaFrutas extends FabricaActores {
         posiciones.remove(numAleatorio);
         return retorno;
 
-        // que cada fruta tenga un arreglo que se recorre para respawnear la fruta dnd corresponda..
-        // se le va a asignar dos ubicaciones a cada fruta
-
-        // ademas sacar la posicion de los lguares dnd no corresponde y en los fantasmas dejar tmb un
-        // arreglo fijo en la fabrica que guarde la posicion de los fantasmas para que no sea toacado
-        // desde el mainscram al igual que pacman
     }
 }
