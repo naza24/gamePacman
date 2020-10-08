@@ -8,9 +8,6 @@ import androidx.room.RoomDatabase;
 import com.pacman.entidades.Usuario;
 import com.pacman.interfaces.UsuarioDao;
 
-//import com.example.android.jugadorandroid.entidades.Usuario;
-//import com.example.android.jugadorandroid.interfaces.UsuarioDao;
-
 // primero declaramos todas las tablas a las cuales se tendra acceso, y la version de la bd
 @Database(entities = {Usuario.class}, version =1)
 public abstract class AppDatabase extends RoomDatabase {

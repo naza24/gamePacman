@@ -1,4 +1,4 @@
-package com.pacman.Controller;
+package com.pacman.Entities;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;

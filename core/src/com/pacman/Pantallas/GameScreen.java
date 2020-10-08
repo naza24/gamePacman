@@ -21,7 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.pacman.Constantes.Constants;
-import com.pacman.Controller.ControllerButton;
+import com.pacman.Entities.ControllerButton;
 import com.pacman.Entities.Fruta;
 import com.pacman.Entities.Ghost;
 import com.pacman.Entities.Pacman;

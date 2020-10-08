@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.pacman.Controller.ControllerButton;
+import com.pacman.Entities.ControllerButton;
 import com.pacman.Entities.Pacman;
 import com.pacman.factoryMethod.FabricaActores;
 
