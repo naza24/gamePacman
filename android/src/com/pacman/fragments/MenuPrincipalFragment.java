@@ -1,6 +1,5 @@
 package com.pacman.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,13 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.pacman.AndroidLauncher;
-import com.pacman.MainActivity;
-import com.pacman.MainGame;
 import com.pacman.R;
 import com.pacman.controllers.MenuPrincipalController;
-//import com.example.android.jugadorandroid.R;
-//import com.example.android.jugadorandroid.controllers.MenuPrincipalController;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -96,10 +90,6 @@ public class MenuPrincipalFragment extends Fragment {
 
         /* recupero el usuario del bundle q se mando desde el login, si es nulo por
          que estoy en la pantalla de juego no lo analizo*/
-
-        // despues acomodar esto ,, el controlador esta despues por lo que salta error si llama al controlador
-        // creo el controller y le paso el idUsuario por que seguramente se necesite para en futuro actualizar los scores
-
 
         // si es distinto de null es por q esta logueado y estamos en esa pantalla
         if(usuario!=null) {

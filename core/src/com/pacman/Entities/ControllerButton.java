@@ -11,7 +11,6 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.pacman.Entities.Pacman;
 
 import static com.pacman.Constantes.Constants.PIXELS_IN_METER;
 
@@ -73,7 +72,6 @@ public class ControllerButton extends Actor {
         public void draw(Batch batch, float parentAlpha) {
 
             // aqui agrego la altura y ancho de pixeles dnd quier colocar las cosas
-            // seria 320 - 22,5 de ancho y 180 - 22.5 de alto,
             this.setPosition(this.bodyButton.getPosition().x * PIXELS_IN_METER, this.bodyButton.getPosition().y *PIXELS_IN_METER);
 
         /* Lo dibujo con la Textura, Posicion X e Y inicial que q le asignamos previamente

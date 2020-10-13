@@ -15,9 +15,6 @@ import androidx.fragment.app.Fragment;
 import com.pacman.R;
 import com.pacman.controllers.RegistroController;
 
-//import com.example.android.jugadorandroid.R;
-//import com.example.android.jugadorandroid.controllers.RegistroController;
-
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link RegistroFragment#newInstance} factory method to

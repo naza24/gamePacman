@@ -27,7 +27,6 @@ public class WinScreen extends BasicScreen{
         // cartel de gameOver
         private Label win;
 
-
         public MainGame game;
 
         public WinScreen(final MainGame game) {
@@ -64,7 +63,7 @@ public class WinScreen extends BasicScreen{
             // creo el boton para volver al menu principal
             quit = new TextButton(bSalir,skin);
 
-            // posiciono el cartel de gameover en el centro
+            // posiciono el cartel de juego ganada en el centro
             win.setPosition(stage.getWidth()/2 -win.getWidth()/2, stage.getHeight()/2-win.getHeight()/2);
 
             // le doy tamaño y posiciono los botones
@@ -94,7 +93,7 @@ public class WinScreen extends BasicScreen{
                 public void changed(ChangeEvent event, Actor actor) {
                     // obtenemos la llamada de retorno de mainGame y ejecutamos
                     // el metodo para volver al menu principal con el puntaje
-                    /*System.out.println(game.getUsuario()+" ........ ");*/
+
                     game.getMyGameCallBack().volverMenuPrincipal(game.getUsuario(),game.getPuntajePlayer());
                 }
             });
@@ -109,7 +108,7 @@ public class WinScreen extends BasicScreen{
             // limpio el buffer de video
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-            // actualizar los actores, x ejemplo acercar el fuego en cada iteracion
+            // actualizar los actores en cada iteracion
             stage.act();
 
             //dibujar todos los actores, Siempre dibujar despues de hacer las actualizaciones
@@ -119,7 +118,7 @@ public class WinScreen extends BasicScreen{
         }
         @Override
         public void show() {
-            // lo creo cada vez q e muestra la pantalla
+            // lo creo cada vez q se muestra la pantalla
             Gdx.input.setInputProcessor(stage);
 
             win.setText("Has Ganado "+game.getUsuario()+", tu puntaje: "+game.getPuntajePlayer());

@@ -2,13 +2,10 @@ package com.pacman.factoryMethod.factoryEntities;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.pacman.Entities.Fruta;
-import com.pacman.Entities.Ghost;
 import com.pacman.factoryMethod.FabricaActores;
 
 import java.util.ArrayList;

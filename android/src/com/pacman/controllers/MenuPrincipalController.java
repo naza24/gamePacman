@@ -17,8 +17,6 @@ import com.pacman.fragments.MenuPrincipalFragment;
 
 import java.util.Locale;
 
-// implementar una clase abstracta , session de usuario que guarde una instancia del
-// usuario logueado para que las  clases puedan acceder a ella y no tener variables publicas  y cosas feas
 public class MenuPrincipalController extends AndroidApplication {
 
 

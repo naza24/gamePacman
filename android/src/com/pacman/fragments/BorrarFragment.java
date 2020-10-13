@@ -1,7 +1,6 @@
 package com.pacman.fragments;
 
 import android.os.Bundle;
-import android.sax.TextElementListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +14,6 @@ import androidx.fragment.app.Fragment;
 
 import com.pacman.R;
 import com.pacman.controllers.BorrarController;
-
-//import com.example.android.jugadorandroid.R;
-//import com.example.android.jugadorandroid.controllers.BorrarController;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -95,8 +91,6 @@ public class BorrarFragment extends Fragment {
 
         // inicializo el spinner junto con su comportamiento
         borrarController.logicaBorrado();
-
-       // restaurarCampos(savedInstanceState);
 
         btn_borrar.setOnClickListener(new View.OnClickListener() {
             @Override

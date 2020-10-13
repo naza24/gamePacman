@@ -41,7 +41,7 @@ public class LoadingScreen extends BasicScreen {
         stage.addActor(carga);
 
     }
-    // ESTE METODO SE EJECUTA SIEMPRE
+
     @Override
     public void render(float delta) {
 

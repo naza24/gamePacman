@@ -27,7 +27,6 @@ public class GameOverScreen extends BasicScreen{
     // cartel de gameOver
     private Label gameover;
 
-
     public MainGame game;
 
     public GameOverScreen(final MainGame game) {
@@ -110,7 +109,7 @@ public class GameOverScreen extends BasicScreen{
         // limpio el buffer de video
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        // actualizar los actores, x ejemplo acercar el fuego en cada iteracion
+        // actualizar los actores en cada iteracion
         stage.act();
 
         //dibujar todos los actores, Siempre dibujar despues de hacer las actualizaciones

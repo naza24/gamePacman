@@ -1,7 +1,5 @@
 package com.pacman.Entities;
 
-import com.badlogic.gdx.Screen;
-
 public class Score  {
     // contador que almacena el puntaje
 

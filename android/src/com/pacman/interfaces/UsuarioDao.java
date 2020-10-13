@@ -7,10 +7,7 @@ import androidx.room.Update;
 
 import com.pacman.entidades.Usuario;
 
-//import com.example.android.jugadorandroid.entidades.Usuario;
-
 import java.util.List;
-import java.util.Set;
 
 // Aqui se desarrollan los metodos que se comunicaran con la bd , las querys
 @Dao

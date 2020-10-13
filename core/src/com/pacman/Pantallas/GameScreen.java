@@ -121,8 +121,7 @@ public class GameScreen extends BasicScreen {
     @Override
     public void show() {
 
-        /* Las coordenadas centrales de dond quiero el pad,
-         en base a esto se posicionan los controllerButtons */
+        /* Las coordenadas centrales de dond quiero el pad*/
         Vector2 controls = new Vector2(12, 0.9f);
 
         map = new TmxMapLoader().load("maps/nivel1.tmx");
@@ -305,7 +304,6 @@ public class GameScreen extends BasicScreen {
 
     }
 
-    // FALTA REINICIAR EL CONTADOR CUANDO TOCA OTRO PNTO MAX ,
     /* este metodo es el que se usa para representar la aplicacion o para actualizar el juego ,
         se ejecuta de 30 a 60 veces por segundo muestra imagenes, movimiento de los personajes etc*/
     @Override
